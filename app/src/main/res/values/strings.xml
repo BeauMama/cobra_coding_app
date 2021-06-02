@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Miyagi Conversionator 1000</string>
+    <string name="recipe_image">Recipe</string>
+    <string name="new_recipe">New Recipe</string>
+    <string name="my_recipe">My Recipe</string>
+    <string name="my_recipe_list">My Recipe List</string>
+    <string name="add_recipe">Add New Recipe</string>
+    <string name="ingredent_name">Ingredent Name</string>
+    <string name="tempature_to_cook">Tempature to cook</string>
+    <string name="time_to_cook">Cook Time</string>
+    <string name="recipe_quanity">Servings</string>
+
+    <string name="quantity">Quantity</string>
+    <string-array name="measurement">
+        <item>Cup</item>
+        <item>Teaspoon</item>
+        <item>Tablespoon</item>
+    </string-array>
+
+</resources>
