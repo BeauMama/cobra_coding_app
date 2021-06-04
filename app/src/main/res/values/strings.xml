@@ -9,12 +9,26 @@
     <string name="tempature_to_cook">Tempature to cook</string>
     <string name="time_to_cook">Cook Time</string>
     <string name="recipe_quanity">Servings</string>
+    <string name="recipe_name">Recipe Name</string>
+    <string name="recipe_description">Recipe Description</string>
+    <string name="conversion_amount">Convert to</string>
+    <string name="add_new_ingredient">Ingredient List</string>
+    <string name="save_recipe_button">Save Recipe</string>
 
     <string name="quantity">Quantity</string>
+    <string name="picture">Picture</string>
+    <string name="add_button">Add</string>
+    <string name="delete_button">Delete</string>
+    <string name="add_ingredient">Add Ingredient</string>
     <string-array name="measurement">
         <item>Cup</item>
         <item>Teaspoon</item>
         <item>Tablespoon</item>
+    </string-array>
+
+    <string-array name="measurement_system">
+        <item>Metric</item>
+        <item>Imperial</item>
     </string-array>
 
 </resources>
