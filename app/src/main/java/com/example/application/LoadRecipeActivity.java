@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LoadRecipeActivity extends AppCompatActivity {
 
-    DataRecipeDao dataRecipeDao;
+    public DataRecipeDao dataRecipeDao;
     List<Recipe> recipes;
 
     @Override
@@ -18,9 +18,9 @@ public class LoadRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_recipe);
 
-        //AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-        //        AppDatabase.class, "").build();
-        //dataRecipeDao = db.dataRecipeDao();
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "database").build();
+        dataRecipeDao = db.dataRecipeDao();
     }
 
     public void addDataTest(View view) {
@@ -30,9 +30,10 @@ public class LoadRecipeActivity extends AppCompatActivity {
 
     public void printDataTest(View view) {
 
-        recipes = dataRecipeDao.getAll();
+        GetRecipeData recipeData = new GetRecipeData(this);
+        Thread thread = new Thread(recipeData, "Get recipe data");
+        thread.start();;
 
-        Log.d("printDataTest()", "Records: " + recipes.size());
 
     }
 
