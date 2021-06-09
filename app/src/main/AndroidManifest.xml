@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Application">
         <activity android:name=".NewRecipe"></activity>
-        <activity android:name=".MyRecipe" />
+        <activity android:name=".LoadRecipeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
