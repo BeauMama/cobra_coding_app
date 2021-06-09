@@ -1,10 +1,11 @@
 package com.example.application;
 
 public class Recipe {
-    private int recipeId;
-    private String name;
-    private String notes;
-    private String temperature;
-    private float servingSize;
-    private float conversionAmount;
+    public int recipeId;
+    public String name;
+    public String notes;
+    public String temperature;
+    public float servingSize;
+    public float conversionAmount;
+
 }
