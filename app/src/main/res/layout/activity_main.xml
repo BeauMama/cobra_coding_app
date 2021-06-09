@@ -23,8 +23,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/picture1"
-        tools:srcCompat="@drawable/picture1" />
+        app:srcCompat="@drawable/cartoon_ingredients_2"
+        tools:srcCompat="@drawable/cartoon_ingredients_2" />
 
     <Button
         android:id="@+id/button2"
