@@ -30,7 +30,7 @@ public class LoadRecipeActivity extends AppCompatActivity {
 
     public void printDataTest(View view) {
 
-        GetRecipeData recipeData = new GetRecipeData(this);
+        GetRecipeData recipeData = new GetRecipeData(this.dataRecipeDao, this.recipes);
         Thread thread = new Thread(recipeData, "Get recipe data");
         thread.start();;
 
