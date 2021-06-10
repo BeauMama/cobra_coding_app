@@ -19,12 +19,16 @@ public class LoadRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_load_recipe);
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database").build();
+                AppDatabase.class, "database")
+                .fallbackToDestructiveMigration()
+                .build();
         dataRecipeDao = db.dataRecipeDao();
     }
 
     public void addDataTest(View view) {
-
+        SaveRecipeData recipeData = new SaveRecipeData(this.dataRecipeDao, this.recipes);
+        Thread thread = new Thread(recipeData, "Save recipe data");
+        thread.start();
 
     }
 
@@ -32,7 +36,7 @@ public class LoadRecipeActivity extends AppCompatActivity {
 
         GetRecipeData recipeData = new GetRecipeData(this.dataRecipeDao, this.recipes);
         Thread thread = new Thread(recipeData, "Get recipe data");
-        thread.start();;
+        thread.start();
 
 
     }

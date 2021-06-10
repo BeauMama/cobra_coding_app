@@ -21,7 +21,17 @@ public class GetRecipeData implements Runnable {
     public void run() {
 
         recipes = dataRecipeDao.getAll();
-        Log.d("printDataTest()", "Records: " + recipes.size());
+        Log.d("GetRecipeData.run()", "Records: " + recipes.size());
+
+        for(Recipe recipe : recipes) {
+            System.out.println("recipeId: " + recipe.recipeId);
+            System.out.println("name: " + recipe.name);
+            System.out.println("notes: " + recipe.notes);
+            System.out.println("temperature: " + recipe.temperature);
+            System.out.println("servingSize: " + recipe.servingSize);
+            System.out.println("conversionAmount: " + recipe.conversionAmount);
+            System.out.println("----------");
+        }
 
         //Activity loadRecipeActivity = this.activity.get();
         //if (loadRecipeActivity != null) {
