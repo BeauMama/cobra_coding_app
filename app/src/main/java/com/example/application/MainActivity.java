@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickNewRecipe(View view) {
-        Intent intent = new Intent(this, NewRecipe.class);
+        Intent intent = new Intent(this, RecipeActivity.class);
         startActivity(intent);
     }
 }
