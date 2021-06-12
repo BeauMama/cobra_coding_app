@@ -3,7 +3,20 @@ package com.example.application;
 public enum MeasurementDetails {
     CUP("cup","Imperial","Volume"),
     TEASPOON("teaspoon","Imperial","volume"),
-    TABLESPOON("tablespoon","Imperial","volume");
+    TABLESPOON("tablespoon","Imperial","volume"),
+    PINTS("pints", "Metric", "volume"),
+    QUARTS("quarts", "Imperial", "volume"),
+    GALLONS("gallons", "Imperial", "volume"),
+    OUNCES("ounces", "Imperial", "volume"),
+    POUNDS("pounds","Imperial","weight"),
+    MILLILITERS("milliliters","Metric", "volume"),
+    LITERS("liters", "Metric", "volume"),
+    GRAMS("grams", "Metric","weight"),
+    KILOGRAMS("kilograms", "Metric", "weight"),
+    FAHRENHEIT("fahrenheit", "Imperial","temperature"),
+    CELSIUS("celsius", "Metric","temperature"),
+    UNITS("units","Both","quanity");
+
 
     private final String measurement;
     private final String measurementSystem;
