@@ -6,12 +6,12 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class GetRecipeData implements Runnable {
+public class DataGetRecipe implements Runnable {
 
     private DataRecipeDao dataRecipeDao;
     private List<Recipe> recipes;
     //private WeakReference<Activity> activity;
-    public GetRecipeData(DataRecipeDao dataRecipeDao, List<Recipe> recipes) {
+    public DataGetRecipe(DataRecipeDao dataRecipeDao, List<Recipe> recipes) {
         this.dataRecipeDao = dataRecipeDao;
         this.recipes = recipes;
         //this.activity = new WeakReference<>(activity);
