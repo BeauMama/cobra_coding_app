@@ -1,9 +1,9 @@
 package com.example.application;
 
 public enum MeasurementDetails {
-    CUP("cup","Imperial","Volume"),
-    TEASPOON("teaspoon","Imperial","volume"),
-    TABLESPOON("tablespoon","Imperial","volume"),
+    CUPS("cups","Imperial","Volume"),
+    TEASPOONS("teaspoons","Imperial","volume"),
+    TABLESPOONS("tablespoons","Imperial","volume"),
     PINTS("pints", "Metric", "volume"),
     QUARTS("quarts", "Imperial", "volume"),
     GALLONS("gallons", "Imperial", "volume"),
