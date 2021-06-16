@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".RecipeActivity">
 
-    <EditText
+
+ <EditText
         android:id="@+id/recipeName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -292,24 +293,19 @@
      app:layout_constraintStart_toEndOf="@+id/measurements"
      app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
-
- <TextView
-     android:id="@+id/convMeasurement"
-     android:layout_width="60dp"
-     android:layout_height="30dp"
+ <Spinner
+     android:id="@+id/measurements2"
+     android:layout_width="93dp"
+     android:layout_height="27dp"
      android:layout_marginStart="16dp"
      android:layout_marginLeft="16dp"
      android:layout_marginTop="16dp"
-     android:layout_marginEnd="16dp"
-     android:layout_marginRight="16dp"
-     android:background="@android:drawable/editbox_dropdown_light_frame"
+     android:layout_marginEnd="8dp"
+     android:layout_marginRight="8dp"
+     android:entries="@array/measurement"
      app:layout_constraintEnd_toEndOf="parent"
-     app:layout_constraintHorizontal_bias="0.0"
      app:layout_constraintStart_toEndOf="@+id/convQty"
      app:layout_constraintTop_toBottomOf="@+id/checkBox" />
-
-
-
 
  <Button
      android:id="@+id/button7"
