@@ -7,10 +7,12 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Ingredient")
 public class DataIngredient {
     @PrimaryKey(autoGenerate = true)
-    public int ingredientId;
+    public int id;
     public int recipeId;
     public int ingredientNameId;
     public float quantity;
+    @NonNull
     public String measurement;
-    public String newMeasurement;
+    @NonNull
+    public String conversionMeasurement;
 }

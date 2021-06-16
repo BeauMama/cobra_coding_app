@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "IngredientName")
 public class DataIngredientName {
     @PrimaryKey(autoGenerate = true)
-    public int ingredientNameId;
+    public int id;
     @NonNull
     public String name;
 }

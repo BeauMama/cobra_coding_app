@@ -6,10 +6,14 @@ import androidx.room.Relation;
 import java.util.List;
 
 public class DataRecipeWithIngredients {
-    @Embedded public Recipe recipe;
+    @Embedded
+    public Recipe recipe;
     @Relation(
-            parentColumn = "recipeId",
-            entityColumn = "recipeId"
+            parentColumn = "id",
+            entityColumn = "recipeId",
+            entity = DataIngredient.class
     )
     public List<DataIngredient> ingredients;
+
+
 }

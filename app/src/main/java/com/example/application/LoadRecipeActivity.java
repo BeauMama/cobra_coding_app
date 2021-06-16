@@ -10,7 +10,7 @@ import java.util.List;
 public class LoadRecipeActivity extends AppCompatActivity {
 
     public DataRecipeDao dataRecipeDao;
-    List<Recipe> recipes;
+    List<DataRecipeWithIngredients> recipes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

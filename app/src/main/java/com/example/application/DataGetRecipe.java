@@ -9,9 +9,10 @@ import java.util.List;
 public class DataGetRecipe implements Runnable {
 
     private DataRecipeDao dataRecipeDao;
-    private List<Recipe> recipes;
+    private List<DataRecipeWithIngredients> recipes;
+    //private List<Recipe> recipes;
     //private WeakReference<Activity> activity;
-    public DataGetRecipe(DataRecipeDao dataRecipeDao, List<Recipe> recipes) {
+    public DataGetRecipe(DataRecipeDao dataRecipeDao, List<DataRecipeWithIngredients> recipes) {
         this.dataRecipeDao = dataRecipeDao;
         this.recipes = recipes;
         //this.activity = new WeakReference<>(activity);
@@ -20,16 +21,16 @@ public class DataGetRecipe implements Runnable {
     @Override
     public void run() {
 
-        recipes = dataRecipeDao.getAll();
+        recipes = dataRecipeDao.getRecipeWithIngredients();
         Log.d("GetRecipeData.run()", "Records: " + recipes.size());
 
-        for(Recipe recipe : recipes) {
-            System.out.println("recipeId: " + recipe.recipeId);
-            System.out.println("name: " + recipe.name);
-            System.out.println("notes: " + recipe.notes);
-            System.out.println("temperature: " + recipe.temperature);
-            System.out.println("servingSize: " + recipe.servingSize);
-            System.out.println("conversionAmount: " + recipe.conversionAmount);
+        for(DataRecipeWithIngredients recipe : recipes) {
+            System.out.println("recipeId: " + recipe.recipe.id);
+            System.out.println("name: " + recipe.recipe.name);
+            System.out.println("notes: " + recipe.recipe.notes);
+            System.out.println("temperature: " + recipe.recipe.temperature);
+            System.out.println("servingSize: " + recipe.recipe.servingSize);
+            System.out.println("conversionAmount: " + recipe.recipe.conversionAmount);
             System.out.println("----------");
         }
 

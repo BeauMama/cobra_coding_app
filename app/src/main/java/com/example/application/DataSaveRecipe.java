@@ -8,9 +8,9 @@ import java.util.List;
 public class DataSaveRecipe implements Runnable {
 
     private DataRecipeDao dataRecipeDao;
-    private List<Recipe> recipes;
+    private List<DataRecipeWithIngredients> recipes;
     //private WeakReference<Activity> activity;
-    public DataSaveRecipe(DataRecipeDao dataRecipeDao, List<Recipe> recipes) {
+    public DataSaveRecipe(DataRecipeDao dataRecipeDao, List<DataRecipeWithIngredients> recipes) {
         this.dataRecipeDao = dataRecipeDao;
         this.recipes = recipes;
         //this.activity = new WeakReference<>(activity);
@@ -19,8 +19,8 @@ public class DataSaveRecipe implements Runnable {
     @Override
     public void run() {
 
-        Recipe recipe = new Recipe();
-        recipe.name  = "A recipe with null";
+        DataRecipe recipe = new DataRecipe();
+        recipe.name = "A recipe with null";
         //recipe.servingSize = (float) 2.4;
         //recipe.conversionAmount = 3;
         System.out.println("The name is: " + recipe.name);

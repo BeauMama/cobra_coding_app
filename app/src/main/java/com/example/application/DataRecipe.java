@@ -9,13 +9,15 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Recipe")
 public class DataRecipe {
     @PrimaryKey(autoGenerate = true)
-    public int recipeId;
+    public int id;
     @NonNull
     public String name;
     public String notes;
+    @Nullable
     public float temperature;
     public String temperatureMeasurement;
-    public String temperatureNewMeasurement;
+    public String conversionTemperatureMeasurement;
     public float servingSize;
     public float conversionAmount;
+    public float cookTime;
 }

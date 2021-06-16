@@ -9,9 +9,10 @@ import java.util.List;
 @Dao
 public interface DataRecipeDao {
     @Query("SELECT * FROM Recipe")
-    List<Recipe> getAll();
+    //List<Recipe> getRecipeWithIngredients();
+    List<DataRecipeWithIngredients> getRecipeWithIngredients();
 
     @Insert(entity = DataRecipe.class)
-    public void insertRecipe(Recipe recipe);
+    public void insertRecipe(DataRecipe dataRecipe);
 
 }
