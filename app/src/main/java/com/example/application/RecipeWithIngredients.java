@@ -5,15 +5,13 @@ import androidx.room.Relation;
 
 import java.util.List;
 
-public class DataRecipeWithIngredients {
+public class RecipeWithIngredients {
     @Embedded
     public Recipe recipe;
     @Relation(
             parentColumn = "id",
             entityColumn = "recipeId",
-            entity = DataIngredient.class
+            entity = Ingredient.class
     )
-    public List<DataIngredient> ingredients;
-
-
+    public List<Ingredient> ingredients;
 }
