@@ -43,6 +43,8 @@ public class RecipeActivity extends AppCompatActivity {
                 } else {
                     System.out.println("Invalid Entry");
                 }
+
+                break;
             case "cups":
                 if ("fluid ounces".equals(endingUnit)) {
                     quantity *= 8;
@@ -277,6 +279,7 @@ public class RecipeActivity extends AppCompatActivity {
                 }
 
                 break;
+
             case "celsius": //Temperature
                 if ("fahrenheit".equals(endingUnit)) {
                     quantity = (quantity * 9 / 5) + 32;
@@ -287,13 +290,8 @@ public class RecipeActivity extends AppCompatActivity {
             case "units": //Units
                 if (!endingUnit.equals("units")){ System.out.println("Invalid Entry"); }
                 else { return quantity; }
-
         }
-
-
-
 
         return quantity;
     }
-
 }
