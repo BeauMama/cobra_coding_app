@@ -19,4 +19,7 @@ public interface DataDao {
     @Insert(entity = Ingredient.class)
     public long insertIngredient(Ingredient ingredient);
 
+    @Insert(entity = IngredientName.class)
+    public long insertIngredientName(IngredientName ingredientName);
+
 }

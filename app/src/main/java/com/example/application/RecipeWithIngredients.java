@@ -13,5 +13,5 @@ public class RecipeWithIngredients {
             entityColumn = "recipeId",
             entity = Ingredient.class
     )
-    public List<Ingredient> ingredients;
+    public List<IngredientWithName> ingredients;
 }
