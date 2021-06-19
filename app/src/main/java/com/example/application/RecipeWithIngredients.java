@@ -9,9 +9,9 @@ public class RecipeWithIngredients {
     @Embedded
     public Recipe recipe;
     @Relation(
-            parentColumn = "id",
-            entityColumn = "recipeId",
-            entity = Ingredient.class
+        parentColumn = "id",
+        entityColumn = "recipeId",
+        entity = Ingredient.class
     )
-    public List<IngredientWithName> ingredients;
+    public List<Ingredient> ingredients;
 }

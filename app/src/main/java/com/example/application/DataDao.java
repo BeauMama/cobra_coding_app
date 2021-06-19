@@ -11,15 +11,11 @@ import java.util.List;
 public interface DataDao {
     @Transaction
     @Query("SELECT * FROM Recipe")
-    List<RecipeWithIngredients> getRecipeWithIngredients();
+    List<RecipeWithIngredients> getAllRecipes();
 
     @Insert(entity = Recipe.class)
     public long insertRecipe(Recipe recipe);
 
     @Insert(entity = Ingredient.class)
     public long insertIngredient(Ingredient ingredient);
-
-    @Insert(entity = IngredientName.class)
-    public long insertIngredientName(IngredientName ingredientName);
-
 }
