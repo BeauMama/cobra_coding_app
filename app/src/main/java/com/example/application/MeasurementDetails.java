@@ -15,7 +15,8 @@ public enum MeasurementDetails {
     KILOGRAMS("kilograms", "Metric", "weight"),
     FAHRENHEIT("fahrenheit", "Imperial","temperature"),
     CELSIUS("celsius", "Metric","temperature"),
-    UNITS("units","Both","quantity");
+    UNITS("units","Both","quantity"),
+    FLUIDOUNCES("fluid ounces","Imperial","volume");
 
 
     private final String measurement;
