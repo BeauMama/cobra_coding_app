@@ -10,6 +10,8 @@ public class Recipe {
     public int id;
     @NonNull
     public String name;
+    @NonNull
+    public String conversionType;
     public String notes;
     public int temperature;
     public String temperatureMeasurement;

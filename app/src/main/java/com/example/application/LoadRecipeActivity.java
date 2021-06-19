@@ -24,16 +24,15 @@ public class LoadRecipeActivity extends AppCompatActivity {
         dataDao = db.dataDao();
     }
 
+    public void getAllRecipes(View view) {
+        DataGetAllRecipes recipes = new DataGetAllRecipes(this.dataDao, this.recipes);
+        Thread thread = new Thread(recipes, "Get all recipes");
+        thread.start();
+    }
+
     public void addDataTest(View view) {
         DataSaveRecipe recipeData = new DataSaveRecipe(this.dataDao, this.recipes);
         Thread thread = new Thread(recipeData, "Save recipe data");
-        thread.start();
-
-    }
-
-    public void printDataTest(View view) {
-        DataGetRecipe recipeData = new DataGetRecipe(this.dataDao, this.recipes);
-        Thread thread = new Thread(recipeData, "Get recipe data");
         thread.start();
     }
 }
