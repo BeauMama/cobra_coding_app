@@ -3,22 +3,24 @@ package com.example.application;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataSaveRecipe implements Runnable {
 
     private DataDao dataDao;
-    private List<RecipeWithIngredients> recipes;
+    private List<RecipeWithIngredients> recipes = new ArrayList<>();
 
-    public DataSaveRecipe(DataDao dataDao, List<RecipeWithIngredients> recipes) {
+    public DataSaveRecipe(DataDao dataDao) {
         this.dataDao = dataDao;
-        this.recipes = recipes;
+        //this.recipes = recipes;
     }
 
     @Override
     public void run() {
         Recipe recipe = new Recipe();
-        recipe.name = "My first recipe";
+        recipe.name = "My first recipe 2";
         recipe.conversionType = "Multiply By";
         int recipeId = (int) dataDao.insertRecipe(recipe);
         Log.d("SaveRecipeData.run()", "Recipe saved as id " + recipeId);
