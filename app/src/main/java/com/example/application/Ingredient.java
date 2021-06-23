@@ -9,9 +9,9 @@ public class Ingredient {
     @PrimaryKey(autoGenerate = true)
     public int id;
     public int recipeId;
-    public float quantity;
     @NonNull
     public String name;
+    public float quantity;
     @NonNull
     public String measurement;
     @NonNull

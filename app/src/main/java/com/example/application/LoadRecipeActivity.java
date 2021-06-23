@@ -14,6 +14,7 @@ public class LoadRecipeActivity extends AppCompatActivity {
 
     public DataDao dataDao;
     List<Recipe> recipes;
+    List<String> ingredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,22 +27,11 @@ public class LoadRecipeActivity extends AppCompatActivity {
                 .build();
         dataDao = db.dataDao();
 
-        List<Recipe> recipes = new ArrayList<>();
-/*
-        Recipe recipe = new Recipe();
-        recipe.name = "My recipe 1";
-        //recipe.conversionType = "Multiply";
-        recipes.add(recipe);
-        recipe = new Recipe();
-        recipe.name = "My recipe 2";
-        //recipe.conversionType = "Multiply";
-        recipes.add(recipe);
-
- */
 
         RecyclerView recyclerView = findViewById(R.id.recipeList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new ViewRecipeListAdapter(recipes));
+
+        getAllRecipes(null);
 
     }
 
@@ -54,6 +44,12 @@ public class LoadRecipeActivity extends AppCompatActivity {
     public void addDataTest(View view) {
         DataSaveRecipe recipeData = new DataSaveRecipe(this.dataDao);
         Thread thread = new Thread(recipeData, "Save recipe data");
+        thread.start();
+    }
+
+    public void getIngredientNames(View view) {
+        DataGetIngredientNames ingredientNames = new DataGetIngredientNames(this, this.dataDao, this.ingredients);
+        Thread thread = new Thread(ingredientNames, "Get all ingredient names");
         thread.start();
     }
 }

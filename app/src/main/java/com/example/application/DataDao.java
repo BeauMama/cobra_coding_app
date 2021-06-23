@@ -13,8 +13,11 @@ public interface DataDao {
     @Query("SELECT * FROM Recipe")
     List<RecipeWithIngredients> getAllRecipesWithIngredients();
 
-    @Query("SELECT * FROM Recipe")
+    @Query("SELECT * FROM Recipe ORDER BY id DESC")
     List<Recipe> getAllRecipes();
+
+    @Query("SELECT DISTINCT name FROM Ingredient ORDER BY name")
+    List<String> getIngredientNames();
 
     @Insert(entity = Recipe.class)
     public long insertRecipe(Recipe recipe);

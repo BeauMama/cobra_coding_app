@@ -4,12 +4,73 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class RecipeActivity extends AppCompatActivity {
+
+    private RecipeWithIngredients recipeWithIngredients;
+    private List<String> ingredientNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
+        // Temporarily setting data for testing.
+        recipeWithIngredients = new RecipeWithIngredients();
+        recipeWithIngredients.recipe = new Recipe();
+
+        recipeWithIngredients.recipe.name = "Scrambled eggs";
+        recipeWithIngredients.recipe.servingSize = 2;
+        recipeWithIngredients.recipe.cookTimeMinutes = 4;
+        recipeWithIngredients.recipe.temperature = 180;
+        recipeWithIngredients.recipe.temperatureMeasurement = "celsius";
+        recipeWithIngredients.recipe.conversionTemperatureMeasurement = "fahrenheit";
+        recipeWithIngredients.recipe.conversionType = "Multiply by";
+        recipeWithIngredients.recipe.conversionAmount = (float) 2.5;
+        recipeWithIngredients.recipe.notes = "This is my favorite scrambled egg recipe!";
+
+        recipeWithIngredients.ingredients = new ArrayList<>();
+        Ingredient ingredient = new Ingredient();
+        ingredient.name = "eggs";
+        ingredient.measurement = "units";
+        ingredient.conversionMeasurement = "units";
+        ingredient.quantity = (float) 2;
+        ingredient.conversionIngredient = false;
+        recipeWithIngredients.ingredients.add(ingredient);
+
+        ingredient = new Ingredient();
+        ingredient.name = "milk";
+        ingredient.measurement = "milliliters";
+        ingredient.conversionMeasurement = "cups";
+        ingredient.quantity = (float) 60;
+        ingredient.conversionIngredient = false;
+        recipeWithIngredients.ingredients.add(ingredient);
+
+        ingredient = new Ingredient();
+        ingredient.name = "salt";
+        ingredient.measurement = "grams";
+        ingredient.conversionMeasurement = "teaspoons";
+        ingredient.quantity = (float) 5;
+        ingredient.conversionIngredient = false;
+        recipeWithIngredients.ingredients.add(ingredient);
+
+        System.out.println("The recipe name: " + recipeWithIngredients.recipe.name);
+
+        System.out.println("List of ingredients");
+        for (Ingredient ingredient2 : recipeWithIngredients.ingredients) {
+            System.out.println("ingredient name: " + ingredient2.name);
+        }
+
+        // A list of ingredients to use for auto complete
+        ingredientNames = Arrays.asList("cinnamon", "eggs", "flour", "water");
+
+        System.out.println("Here is the list of ingredient names for autofill");
+        for (String ingredientName : ingredientNames) {
+            System.out.println(ingredientName);
+        }
     }
 
     public static Double convertMeasurement(Double quantity, String startingUnit, String endingUnit) {

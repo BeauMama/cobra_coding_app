@@ -10,13 +10,13 @@ public class Recipe {
     public int id;
     @NonNull
     public String name;
-    @NonNull
-    public String conversionType;
-    public String notes;
+    public int servingSize;
+    public int cookTimeMinutes;
     public int temperature;
     public String temperatureMeasurement;
     public String conversionTemperatureMeasurement;
-    public int servingSize;
+    @NonNull
+    public String conversionType;
     public float conversionAmount;
-    public int cookTimeMinutes;
+    public String notes;
 }
