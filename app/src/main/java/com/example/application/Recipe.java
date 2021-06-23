@@ -19,4 +19,6 @@ public class Recipe {
     public String conversionType;
     public float conversionAmount;
     public String notes;
+    public String fromSystem;
+    public String toSystem;
 }

@@ -31,6 +31,8 @@ public class RecipeActivity extends AppCompatActivity {
         recipeWithIngredients.recipe.conversionType = "Multiply by";
         recipeWithIngredients.recipe.conversionAmount = (float) 2.5;
         recipeWithIngredients.recipe.notes = "This is my favorite scrambled egg recipe!";
+        recipeWithIngredients.recipe.fromSystem = "Metric";
+        recipeWithIngredients.recipe.toSystem = "Imperial";
 
         recipeWithIngredients.ingredients = new ArrayList<>();
         Ingredient ingredient = new Ingredient();
@@ -62,6 +64,13 @@ public class RecipeActivity extends AppCompatActivity {
         System.out.println("List of ingredients");
         for (Ingredient ingredient2 : recipeWithIngredients.ingredients) {
             System.out.println("ingredient name: " + ingredient2.name);
+            System.out.println("quantity: " + ingredient2.quantity);
+            System.out.println("conversionAmount: " + recipeWithIngredients.recipe.conversionAmount);
+
+            // This should probably be put in a getter.
+            // conversion type needs to be looked at to know if it is Multiply by or something else.
+            float convertedQuantity = ingredient2.quantity * recipeWithIngredients.recipe.conversionAmount;
+            System.out.println("converted quantity: " + convertedQuantity);
         }
 
         // A list of ingredients to use for auto complete
