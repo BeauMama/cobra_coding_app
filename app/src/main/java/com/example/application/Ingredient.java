@@ -39,39 +39,39 @@ public class Ingredient {
     }
 
     public float getQuantityConverted(RecipeWithIngredients recipeWithIngredients) {
-        float quantityConverted = quantity;
+        float quantityConverted = getQuantity();
         Recipe recipe = recipeWithIngredients.recipe;
 
         switch (recipe.getConversionType().toLowerCase()) {
             case "multiply by":
-                quantityConverted = quantity * recipe.getConversionAmount();
+                quantityConverted = getQuantity() * recipe.getConversionAmount();
                 break;
             case "divide by":
                 if (recipe.getConversionAmount() != 0) {
-                    quantityConverted = quantity / recipe.getConversionAmount();
+                    quantityConverted = getQuantity() / recipe.getConversionAmount();
                 }
                 break;
             case "servings":
                 if (recipe.getServingSize() != 0) {
-                    quantityConverted = quantity * recipe.getConversionAmount() / recipe.getServingSize();
+                    quantityConverted = getQuantity() * recipe.getConversionAmount() / recipe.getServingSize();
                 }
                 break;
             case "one ingredient":
-                if(isConversionIngredient) {
+                if(getIsConversionIngredient()) {
                     // Don't convert the quantity if this ingredient is the conversion ingredient.
-                    quantityConverted = conversionIngredientQuantity;
+                    quantityConverted = getConversionIngredientQuantity();
                 } else {
                     List<Ingredient> ingredients = recipeWithIngredients.ingredients;
                     for (Ingredient ingredient : ingredients) {
                         if (ingredient.getIsConversionIngredient() && ingredient.getQuantity() != 0) {
-                            quantityConverted = quantity * ingredient.getConversionIngredientQuantity() / ingredient.getQuantity();
+                            quantityConverted = getQuantity() * ingredient.getConversionIngredientQuantity() / ingredient.getQuantity();
                             break;
                         }
                     }
                 }
                 break;
         }
-        
+
         return quantityConverted;
     }
 
