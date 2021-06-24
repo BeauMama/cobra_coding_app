@@ -22,55 +22,57 @@ public class RecipeActivity extends AppCompatActivity {
         recipeWithIngredients = new RecipeWithIngredients();
         recipeWithIngredients.recipe = new Recipe();
 
-        recipeWithIngredients.recipe.name = "Scrambled eggs";
-        recipeWithIngredients.recipe.servingSize = 2;
-        recipeWithIngredients.recipe.cookTimeMinutes = 4;
-        recipeWithIngredients.recipe.temperature = 180;
-        recipeWithIngredients.recipe.temperatureMeasurement = "celsius";
-        recipeWithIngredients.recipe.conversionTemperatureMeasurement = "fahrenheit";
-        recipeWithIngredients.recipe.conversionType = "Multiply by";
-        recipeWithIngredients.recipe.conversionAmount = (float) 2.5;
-        recipeWithIngredients.recipe.notes = "This is my favorite scrambled egg recipe!";
-        recipeWithIngredients.recipe.fromSystem = "Metric";
-        recipeWithIngredients.recipe.toSystem = "Imperial";
+        recipeWithIngredients.recipe.setName("Scrambled eggs");
+        //recipeWithIngredients.recipe.setServingSize(2); // Not needed for this example.
+        recipeWithIngredients.recipe.setCookTimeMinutes(4);
+        recipeWithIngredients.recipe.setTemperature(180);
+        recipeWithIngredients.recipe.setTemperatureMeasurement("celsius");
+        recipeWithIngredients.recipe.setConversionTemperatureMeasurement("fahrenheit");
+        recipeWithIngredients.recipe.setConversionType("One Ingredient"); // Example by one ingredient conversion
+        //recipeWithIngredients.recipe.setConversionAmount((float) 2.5); // Not needed for this example
+        recipeWithIngredients.recipe.setNotes("This is my favorite scrambled egg recipe!");
+        recipeWithIngredients.recipe.setFromSystem("Metric");
+        recipeWithIngredients.recipe.setToSystem("Imperial");
 
         recipeWithIngredients.ingredients = new ArrayList<>();
         Ingredient ingredient = new Ingredient();
-        ingredient.name = "eggs";
-        ingredient.measurement = "units";
-        ingredient.conversionMeasurement = "units";
-        ingredient.quantity = (float) 2;
-        ingredient.conversionIngredient = false;
+        ingredient.setName("eggs");
+        ingredient.setMeasurement("units");
+        ingredient.setConversionMeasurement("units");
+        ingredient.setQuantity((float) 5);
+        ingredient.setIsConversionIngredient(true); // This is the conversion ingredient.
+        ingredient.setConversionIngredientQuantity(4); // Recipe calls for 5 eggs but we only have 4.
         recipeWithIngredients.ingredients.add(ingredient);
 
         ingredient = new Ingredient();
-        ingredient.name = "milk";
-        ingredient.measurement = "milliliters";
-        ingredient.conversionMeasurement = "cups";
-        ingredient.quantity = (float) 60;
-        ingredient.conversionIngredient = false;
+        ingredient.setName("milk");
+        ingredient.setMeasurement("milliliters");
+        ingredient.setConversionMeasurement("cups");
+        ingredient.setQuantity((float) 60);
+        ingredient.setIsConversionIngredient(false);
         recipeWithIngredients.ingredients.add(ingredient);
 
         ingredient = new Ingredient();
-        ingredient.name = "salt";
-        ingredient.measurement = "grams";
-        ingredient.conversionMeasurement = "teaspoons";
-        ingredient.quantity = (float) 5;
-        ingredient.conversionIngredient = false;
+        ingredient.setName("salt");
+        ingredient.setMeasurement("grams");
+        ingredient.setConversionMeasurement("teaspoons");
+        ingredient.setQuantity((float) 5);
+        ingredient.setIsConversionIngredient(false);
         recipeWithIngredients.ingredients.add(ingredient);
 
-        System.out.println("The recipe name: " + recipeWithIngredients.recipe.name);
+        System.out.println("The recipe name: " + recipeWithIngredients.recipe.getName());
+        System.out.println("Serving size: " + recipeWithIngredients.recipe.getServingSize());
+        System.out.println("Conversion type: " + recipeWithIngredients.recipe.getConversionType());
+        System.out.println("Conversion amount: " + recipeWithIngredients.recipe.getConversionAmount());
 
         System.out.println("List of ingredients");
+        System.out.println("-------------------");
         for (Ingredient ingredient2 : recipeWithIngredients.ingredients) {
-            System.out.println("ingredient name: " + ingredient2.name);
-            System.out.println("quantity: " + ingredient2.quantity);
-            System.out.println("conversionAmount: " + recipeWithIngredients.recipe.conversionAmount);
-
-            // This should probably be put in a getter.
-            // conversion type needs to be looked at to know if it is Multiply by or something else.
-            float convertedQuantity = ingredient2.quantity * recipeWithIngredients.recipe.conversionAmount;
-            System.out.println("converted quantity: " + convertedQuantity);
+            System.out.println("ingredient name: " + ingredient2.getName());
+            System.out.println("is conversion ingredient: " + ingredient2.getIsConversionIngredient());
+            System.out.println("conversion ingredient quantity: " + ingredient2.getConversionIngredientQuantity());
+            System.out.println("quantity: " + ingredient2.getQuantity());
+            System.out.println("quantity converted: " + ingredient2.getQuantityConverted(recipeWithIngredients));
         }
 
         // A list of ingredients to use for auto complete
