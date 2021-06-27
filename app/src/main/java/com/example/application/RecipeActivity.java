@@ -7,16 +7,22 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    private RecipeWithIngredients recipeWithIngredients;
+    private DataDao dataDao;
+    public RecipeWithIngredients recipeWithIngredients;
     private List<String> ingredientNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
+        dataDao = DataInitializeDatabase.getInstance(getApplicationContext());
 
         // Temporarily setting data for testing.
         recipeWithIngredients = new RecipeWithIngredients();
@@ -75,12 +81,28 @@ public class RecipeActivity extends AppCompatActivity {
             System.out.println("quantity converted: " + ingredient2.getQuantityConverted(recipeWithIngredients));
         }
 
-        // A list of ingredients to use for auto complete
-        ingredientNames = Arrays.asList("cinnamon", "eggs", "flour", "water");
+        // Get ingredients from the database
+        getIngredientNames();
+
+        if (ingredientNames == null) {
+            ingredientNames = Arrays.asList("cinnamon","flour", "oil", "water");
+        }
 
         System.out.println("Here is the list of ingredient names for autofill");
         for (String ingredientName : ingredientNames) {
             System.out.println(ingredientName);
+        }
+    }
+
+    public void getIngredientNames() {
+        DataGetIngredientNames dataGetIngredientNames = new DataGetIngredientNames(dataDao);
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        try {
+            ingredientNames = executorService.submit(dataGetIngredientNames).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
