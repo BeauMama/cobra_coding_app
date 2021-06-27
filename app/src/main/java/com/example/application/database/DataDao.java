@@ -1,9 +1,13 @@
-package com.example.application;
+package com.example.application.database;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
+
+import com.example.application.Ingredient;
+import com.example.application.Recipe;
+import com.example.application.RecipeWithIngredients;
 
 import java.util.List;
 

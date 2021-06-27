@@ -1,11 +1,8 @@
 package com.example.application;
 
-import android.os.Bundle;
-import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
 
 import com.example.application.database.DataDao;
 import com.example.application.database.DataGetIngredientNames;
@@ -18,20 +15,18 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class RecipeActivity extends AppCompatActivity implements ViewIngredientsAdapter.DeleteButtonListener {
+public class RecipeActivityOld extends AppCompatActivity {
 
     private DataDao dataDao;
     public RecipeWithIngredients recipeWithIngredients;
     private List<String> ingredientNames;
-    private RecyclerView recyclerView;
-    private ViewIngredientsAdapter viewIngredientsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe);
+        setContentView(R.layout.activity_recipe_old);
 
-        initializeDatabase();
+        dataDao = DataInitializeDatabase.getInstance(getApplicationContext());
 
         // Temporarily setting data for testing.
         recipeWithIngredients = new RecipeWithIngredients();
@@ -75,7 +70,20 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         ingredient.setIsConversionIngredient(false);
         recipeWithIngredients.ingredients.add(ingredient);
 
-        initializeRecycleView();
+        System.out.println("The recipe name: " + recipeWithIngredients.recipe.getName());
+        System.out.println("Serving size: " + recipeWithIngredients.recipe.getServingSize());
+        System.out.println("Conversion type: " + recipeWithIngredients.recipe.getConversionType());
+        System.out.println("Conversion amount: " + recipeWithIngredients.recipe.getConversionAmount());
+
+        System.out.println("List of ingredients");
+        System.out.println("-------------------");
+        for (Ingredient ingredient2 : recipeWithIngredients.ingredients) {
+            System.out.println("ingredient name: " + ingredient2.getName());
+            System.out.println("is conversion ingredient: " + ingredient2.getIsConversionIngredient());
+            System.out.println("conversion ingredient quantity: " + ingredient2.getConversionIngredientQuantity());
+            System.out.println("quantity: " + ingredient2.getQuantity());
+            System.out.println("quantity converted: " + ingredient2.getQuantityConverted(recipeWithIngredients));
+        }
 
         // Get ingredients from the database
         getIngredientNames();
@@ -87,31 +95,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         System.out.println("Here is the list of ingredient names for autofill");
         for (String ingredientName : ingredientNames) {
             System.out.println(ingredientName);
-        }
-    }
-
-    private void initializeDatabase() {
-        dataDao = DataInitializeDatabase.getInstance(getApplicationContext());
-    }
-
-    private void initializeRecycleView() {
-        recyclerView = findViewById(R.id.ingredientList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        viewIngredientsAdapter = new ViewIngredientsAdapter(recipeWithIngredients, this);
-        recyclerView.setAdapter(viewIngredientsAdapter);
-    }
-
-    public void addIngredient(View view) {
-        Ingredient ingredient = new Ingredient();
-        recipeWithIngredients.ingredients.add(ingredient);
-        viewIngredientsAdapter.notifyItemInserted(recipeWithIngredients.ingredients.size() - 1);
-    }
-
-    @Override
-    public void deleteButtonClick(int position) {
-        if (recipeWithIngredients.ingredients.size() > 1) {
-            recipeWithIngredients.ingredients.remove(position);
-            viewIngredientsAdapter.notifyItemRemoved(position);
         }
     }
 
@@ -409,6 +392,4 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         return quantity;
     }
-
-
 }

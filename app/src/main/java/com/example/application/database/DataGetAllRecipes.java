@@ -1,8 +1,13 @@
-package com.example.application;
+package com.example.application.database;
 
 import android.app.Activity;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.application.R;
+import com.example.application.Recipe;
+import com.example.application.ViewRecipeListAdapter;
+import com.example.application.database.DataDao;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
