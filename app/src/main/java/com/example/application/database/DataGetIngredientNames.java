@@ -1,4 +1,6 @@
-package com.example.application;
+package com.example.application.database;
+
+import com.example.application.database.DataDao;
 
 import java.security.InvalidParameterException;
 import java.util.List;

@@ -1,9 +1,12 @@
-package com.example.application;
+package com.example.application.database;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
-import java.lang.reflect.Array;
+import com.example.application.Ingredient;
+import com.example.application.Recipe;
+import com.example.application.RecipeWithIngredients;
+import com.example.application.database.DataDao;
+
 import java.util.ArrayList;
 import java.util.List;
 

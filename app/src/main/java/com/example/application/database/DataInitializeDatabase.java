@@ -1,9 +1,11 @@
-package com.example.application;
+package com.example.application.database;
 
-import android.app.Activity;
 import android.content.Context;
 
 import androidx.room.Room;
+
+import com.example.application.database.DataAppDatabase;
+import com.example.application.database.DataDao;
 
 public class DataInitializeDatabase {
 
