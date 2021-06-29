@@ -35,8 +35,9 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         initializeDatabase();
 
-        if (loadRecipeWithIngredients() == false) {
+        loadRecipeWithIngredients();
 
+        if (recipeWithIngredients == null) {
             // Temporarily setting data for testing.
             recipeWithIngredients = new RecipeWithIngredients();
             recipeWithIngredients.recipe = new Recipe();
@@ -99,11 +100,11 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         dataDao = DataInitializeDatabase.getInstance(getApplicationContext());
     }
 
-    private boolean loadRecipeWithIngredients() {
+    private void loadRecipeWithIngredients() {
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
         if (intent != null) {
-            DataGetRecipeWithIngredientsById  dataGetRecipeWithIngredientsById = new DataGetRecipeWithIngredientsById(dataDao, id);
+            DataGetRecipeWithIngredientsById dataGetRecipeWithIngredientsById = new DataGetRecipeWithIngredientsById(dataDao, id);
             ExecutorService executorService = Executors.newFixedThreadPool(3);
             try {
                 recipeWithIngredients = executorService.submit(dataGetRecipeWithIngredientsById).get();
@@ -112,9 +113,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            return true;
-        } else {
-            return false;
         }
     }
 
