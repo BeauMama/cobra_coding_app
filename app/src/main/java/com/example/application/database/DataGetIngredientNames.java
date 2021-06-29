@@ -12,11 +12,9 @@ public class DataGetIngredientNames implements Callable<List<String>> {
 
     public DataGetIngredientNames(DataDao dataDao) {
         this.dataDao = dataDao;
-
     }
 
     public List<String> call() throws InvalidParameterException {
         return dataDao.getIngredientNames();
     }
 }
-

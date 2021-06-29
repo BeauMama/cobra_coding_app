@@ -20,6 +20,10 @@ public interface DataDao {
     @Query("SELECT * FROM Recipe ORDER BY id DESC")
     List<Recipe> getAllRecipes();
 
+    @Transaction
+    @Query("SELECT * FROM Recipe WHERE id = :id")
+    RecipeWithIngredients getRecipesWithIngredientsById(int id);
+
     @Query("SELECT DISTINCT name FROM Ingredient ORDER BY name")
     List<String> getIngredientNames();
 

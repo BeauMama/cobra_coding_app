@@ -1,45 +1,19 @@
 package com.example.application.database;
 
-import android.app.Activity;
-
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.application.R;
 import com.example.application.Recipe;
-import com.example.application.ViewRecipeListAdapter;
-import com.example.application.database.DataDao;
-
-import java.lang.ref.WeakReference;
+import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.concurrent.Callable;
 
-public class DataGetAllRecipes implements Runnable {
+public class DataGetAllRecipes implements Callable<List<Recipe>> {
 
     private DataDao dataDao;
-    private List<Recipe> recipes;
-    private WeakReference<Activity> activity;
 
-    public DataGetAllRecipes(Activity activity, DataDao dataDao, List<Recipe> recipes) {
-        this.activity = new WeakReference<>(activity);
+    public DataGetAllRecipes(DataDao dataDao) {
         this.dataDao = dataDao;
-        this.recipes = recipes;
     }
 
-    @Override
-    public void run() {
-        recipes = dataDao.getAllRecipes();
-
-        if (recipes.size() > 0) {
-            Activity mainActivity = this.activity.get();
-            if (mainActivity != null) {
-                mainActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        RecyclerView recyclerView = mainActivity.findViewById(R.id.recipeList);
-                        ViewRecipeListAdapter viewRecipeListAdapter = new ViewRecipeListAdapter(recipes);
-                        recyclerView.setAdapter(viewRecipeListAdapter);
-                    }
-                });
-            }
-        }
+    public List<Recipe> call() throws InvalidParameterException {
+        return dataDao.getAllRecipes();
     }
 }

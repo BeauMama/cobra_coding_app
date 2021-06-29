@@ -46,7 +46,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView testView;
         private Button button;
-        DeleteButtonListener deleteButtonListener;
+        private DeleteButtonListener deleteButtonListener;
 
         public ViewHolder(@NonNull @NotNull View itemView, DeleteButtonListener deleteButtonListener) {
             super(itemView);

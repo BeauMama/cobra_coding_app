@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -13,30 +14,61 @@ import com.example.application.database.DataInitializeDatabase;
 import com.example.application.database.DataSaveRecipe;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class LoadRecipeActivity extends AppCompatActivity {
+public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeListAdapter.SelectItemListener {
 
     private DataDao dataDao;
-    List<Recipe> recipes;
+    private List<Recipe> recipes;
+    private RecyclerView recyclerView;
+    private ViewRecipeListAdapter viewRecipeListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_recipe);
 
-        dataDao = DataInitializeDatabase.getInstance(getApplicationContext());
+        initializeDatabase();
+        loadAllRecipes();
 
-        RecyclerView recyclerView = findViewById(R.id.recipeList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        System.out.println("recipes: " + recipes.size());
 
-        getAllRecipes(null);
+        initializeRecycleView();
 
     }
 
-    public void getAllRecipes(View view) {
-        DataGetAllRecipes recipes = new DataGetAllRecipes(this, this.dataDao, this.recipes);
-        Thread thread = new Thread(recipes, "Get all recipes");
-        thread.start();
+    private void initializeDatabase() {
+        dataDao = DataInitializeDatabase.getInstance(getApplicationContext());
+    }
+
+    public void loadAllRecipes() {
+        DataGetAllRecipes dataGetAllRecipes = new DataGetAllRecipes(dataDao);
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        try {
+            recipes = executorService.submit(dataGetAllRecipes).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initializeRecycleView() {
+        recyclerView = findViewById(R.id.recipeList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        viewRecipeListAdapter = new ViewRecipeListAdapter(recipes, this);
+        recyclerView.setAdapter(viewRecipeListAdapter);
+    }
+
+    @Override
+    public void selectItemClick(int position) {
+        int recipeIdSelected = recipes.get(position).getId();
+
+        Intent intent = new Intent(this, RecipeActivity.class);
+        intent.putExtra("id", recipeIdSelected);
+        startActivity(intent);
     }
 
     public void addDataTest(View view) {
@@ -44,6 +76,4 @@ public class LoadRecipeActivity extends AppCompatActivity {
         Thread thread = new Thread(recipeData, "Save recipe data");
         thread.start();
     }
-
-
 }
