@@ -26,7 +26,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     private DataDao dataDao;
     public RecipeWithIngredients recipeWithIngredients;
     private List<String> ingredientNames;
-    private RecyclerView recyclerView;
     private ViewIngredientsAdapter viewIngredientsAdapter;
 
     @Override
@@ -94,9 +93,9 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     private void initializeRecycleView() {
-        recyclerView = findViewById(R.id.ingredientList);
+        RecyclerView recyclerView = findViewById(R.id.ingredientList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        viewIngredientsAdapter = new ViewIngredientsAdapter(recipeWithIngredients, ingredientNames,this);
+        viewIngredientsAdapter = new ViewIngredientsAdapter(recipeWithIngredients, this, this);
         recyclerView.setAdapter(viewIngredientsAdapter);
     }
 
