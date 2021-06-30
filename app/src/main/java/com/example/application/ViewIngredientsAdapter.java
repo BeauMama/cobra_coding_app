@@ -3,6 +3,7 @@ package com.example.application;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,10 +18,12 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
     private RecipeWithIngredients recipeWithIngredients;
     private DeleteButtonListener deleteButtonListener;
+    private List<String> ingredientNames;
 
-    public ViewIngredientsAdapter(RecipeWithIngredients recipeWithIngredients, DeleteButtonListener deleteButtonListener) {
+    public ViewIngredientsAdapter(RecipeWithIngredients recipeWithIngredients, List<String> ingredientNames, DeleteButtonListener deleteButtonListener) {
         this.recipeWithIngredients = recipeWithIngredients;
         this.deleteButtonListener = deleteButtonListener;
+        this.ingredientNames = ingredientNames;
     }
 
     @NonNull
@@ -50,6 +53,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
         public ViewHolder(@NonNull @NotNull View itemView, DeleteButtonListener deleteButtonListener) {
             super(itemView);
+
             testView = itemView.findViewById(R.id.ingredentName2);
             button = itemView.findViewById(R.id.delete2);
 
