@@ -12,6 +12,7 @@ import com.example.application.database.DataDao;
 import com.example.application.database.DataGetAllRecipes;
 import com.example.application.database.DataInitializeDatabase;
 import com.example.application.database.DataSaveRecipe;
+import com.example.application.database.DataSaveRecipeWithIngredients;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -32,11 +33,7 @@ public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeL
 
         initializeDatabase();
         loadAllRecipes();
-
-        System.out.println("recipes: " + recipes.size());
-
         initializeRecycleView();
-
     }
 
     private void initializeDatabase() {
@@ -65,15 +62,9 @@ public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeL
     @Override
     public void selectItemClick(int position) {
         int recipeIdSelected = recipes.get(position).getId();
-
         Intent intent = new Intent(this, RecipeActivity.class);
         intent.putExtra("id", recipeIdSelected);
         startActivity(intent);
     }
 
-    public void addDataTest(View view) {
-        DataSaveRecipe recipeData = new DataSaveRecipe(this.dataDao);
-        Thread thread = new Thread(recipeData, "Save recipe data");
-        thread.start();
-    }
 }

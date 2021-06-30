@@ -12,6 +12,7 @@ import com.example.application.database.DataDao;
 import com.example.application.database.DataGetIngredientNames;
 import com.example.application.database.DataGetRecipeWithIngredientsById;
 import com.example.application.database.DataInitializeDatabase;
+import com.example.application.database.DataSaveRecipeWithIngredients;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,72 +36,22 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         initializeDatabase();
 
-        loadRecipeWithIngredients();
-
-        if (recipeWithIngredients == null) {
-            // Temporarily setting data for testing.
-            recipeWithIngredients = new RecipeWithIngredients();
-            recipeWithIngredients.recipe = new Recipe();
-
-            recipeWithIngredients.recipe.setName("Scrambled eggs");
-            //recipeWithIngredients.recipe.setServingSize(2); // Not needed for this example.
-            recipeWithIngredients.recipe.setCookTimeMinutes(4);
-            recipeWithIngredients.recipe.setTemperature(180);
-            recipeWithIngredients.recipe.setTemperatureMeasurement("celsius");
-            recipeWithIngredients.recipe.setConversionTemperatureMeasurement("fahrenheit");
-            recipeWithIngredients.recipe.setConversionType("One Ingredient"); // Example by one ingredient conversion
-            //recipeWithIngredients.recipe.setConversionAmount((float) 2.5); // Not needed for this example
-            recipeWithIngredients.recipe.setNotes("This is my favorite scrambled egg recipe!");
-            recipeWithIngredients.recipe.setFromSystem("Metric");
-            recipeWithIngredients.recipe.setToSystem("Imperial");
-
-            recipeWithIngredients.ingredients = new ArrayList<>();
-            Ingredient ingredient = new Ingredient();
-            ingredient.setName("eggs");
-            ingredient.setMeasurement("units");
-            ingredient.setConversionMeasurement("units");
-            ingredient.setQuantity((float) 5);
-            ingredient.setIsConversionIngredient(true); // This is the conversion ingredient.
-            ingredient.setConversionIngredientQuantity(4); // Recipe calls for 5 eggs but we only have 4.
-            recipeWithIngredients.ingredients.add(ingredient);
-
-            ingredient = new Ingredient();
-            ingredient.setName("milk");
-            ingredient.setMeasurement("milliliters");
-            ingredient.setConversionMeasurement("cups");
-            ingredient.setQuantity((float) 60);
-            ingredient.setIsConversionIngredient(false);
-            recipeWithIngredients.ingredients.add(ingredient);
-
-            ingredient = new Ingredient();
-            ingredient.setName("salt");
-            ingredient.setMeasurement("grams");
-            ingredient.setConversionMeasurement("teaspoons");
-            ingredient.setQuantity((float) 5);
-            ingredient.setIsConversionIngredient(false);
-            recipeWithIngredients.ingredients.add(ingredient);
+        if (loadRecipeWithIngredients() == false) {
+            setupRecipeWithDummyData();
         }
 
-        initializeRecycleView();
-
-        // Get ingredients from the database
-        getIngredientNames();
-
-        if (ingredientNames == null) {
+        if (getIngredientNames() == false) {
             ingredientNames = Arrays.asList("cinnamon","flour", "oil", "water");
         }
 
-        System.out.println("Here is the list of ingredient names for autofill");
-        for (String ingredientName : ingredientNames) {
-            System.out.println(ingredientName);
-        }
+        initializeRecycleView();
     }
 
     private void initializeDatabase() {
         dataDao = DataInitializeDatabase.getInstance(getApplicationContext());
     }
 
-    private void loadRecipeWithIngredients() {
+    private boolean loadRecipeWithIngredients() {
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
         if (intent != null) {
@@ -114,6 +65,27 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
                 e.printStackTrace();
             }
         }
+
+        if (recipeWithIngredients == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private long saveRecipe() {
+        DataSaveRecipeWithIngredients dataSaveRecipeWithIngredients = new DataSaveRecipeWithIngredients(dataDao, recipeWithIngredients);
+        long id = -1;
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        try {
+            id = executorService.submit(dataSaveRecipeWithIngredients).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return id;
     }
 
     private void initializeRecycleView() {
@@ -137,7 +109,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
-    public void getIngredientNames() {
+    private boolean getIngredientNames() {
         DataGetIngredientNames dataGetIngredientNames = new DataGetIngredientNames(dataDao);
         ExecutorService executorService = Executors.newFixedThreadPool(3);
         try {
@@ -147,6 +119,56 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        if (ingredientNames == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void setupRecipeWithDummyData() {
+        // Temporarily setting data for testing.
+        recipeWithIngredients = new RecipeWithIngredients();
+        recipeWithIngredients.recipe = new Recipe();
+
+        recipeWithIngredients.recipe.setName("Scrambled eggs");
+        //recipeWithIngredients.recipe.setServingSize(2); // Not needed for this example.
+        recipeWithIngredients.recipe.setCookTimeMinutes(4);
+        recipeWithIngredients.recipe.setTemperature(180);
+        recipeWithIngredients.recipe.setTemperatureMeasurement("celsius");
+        recipeWithIngredients.recipe.setConversionTemperatureMeasurement("fahrenheit");
+        recipeWithIngredients.recipe.setConversionType("One Ingredient"); // Example by one ingredient conversion
+        //recipeWithIngredients.recipe.setConversionAmount((float) 2.5); // Not needed for this example
+        recipeWithIngredients.recipe.setNotes("This is my favorite scrambled egg recipe!");
+        recipeWithIngredients.recipe.setFromSystem("Metric");
+        recipeWithIngredients.recipe.setToSystem("Imperial");
+
+        recipeWithIngredients.ingredients = new ArrayList<>();
+        Ingredient ingredient = new Ingredient();
+        ingredient.setName("eggs");
+        ingredient.setMeasurement("units");
+        ingredient.setConversionMeasurement("units");
+        ingredient.setQuantity((float) 5);
+        ingredient.setIsConversionIngredient(true); // This is the conversion ingredient.
+        ingredient.setConversionIngredientQuantity(4); // Recipe calls for 5 eggs but we only have 4.
+        recipeWithIngredients.ingredients.add(ingredient);
+
+        ingredient = new Ingredient();
+        ingredient.setName("milk");
+        ingredient.setMeasurement("milliliters");
+        ingredient.setConversionMeasurement("cups");
+        ingredient.setQuantity((float) 60);
+        ingredient.setIsConversionIngredient(false);
+        recipeWithIngredients.ingredients.add(ingredient);
+
+        ingredient = new Ingredient();
+        ingredient.setName("salt");
+        ingredient.setMeasurement("grams");
+        ingredient.setConversionMeasurement("teaspoons");
+        ingredient.setQuantity((float) 5);
+        ingredient.setIsConversionIngredient(false);
+        recipeWithIngredients.ingredients.add(ingredient);
     }
 
     public static Double convertMeasurement(Double quantity, String startingUnit, String endingUnit) {

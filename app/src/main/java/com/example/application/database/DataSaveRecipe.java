@@ -9,7 +9,7 @@ import com.example.application.database.DataDao;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// This class is only here for reference and will be deleted.
 public class DataSaveRecipe implements Runnable {
 
     private DataDao dataDao;
@@ -23,6 +23,7 @@ public class DataSaveRecipe implements Runnable {
     @Override
     public void run() {
         Recipe recipe = new Recipe();
+        /*
         recipe.setName("My first recipe 2");
         recipe.setConversionType("Multiply By");
         int recipeId = (int) dataDao.insertRecipe(recipe);
@@ -53,5 +54,7 @@ public class DataSaveRecipe implements Runnable {
         ingredient.setIsConversionIngredient(true);
         dataDao.insertIngredient(ingredient);
         Log.d("SaveRecipeData.run()", "Ingredient 3 saved");
+
+         */
     }
 }

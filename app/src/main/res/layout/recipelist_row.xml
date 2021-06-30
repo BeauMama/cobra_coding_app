@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout2"
+    android:id="@+id/linearLayoutRecipeList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/recipeTextView"
+        android:id="@+id/textViewRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp" />

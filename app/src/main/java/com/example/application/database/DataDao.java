@@ -27,9 +27,6 @@ public interface DataDao {
     @Query("SELECT DISTINCT name FROM Ingredient ORDER BY name")
     List<String> getIngredientNames();
 
-    @Insert(entity = Recipe.class)
-    public long insertRecipe(Recipe recipe);
-
-    @Insert(entity = Ingredient.class)
-    public long insertIngredient(Ingredient ingredient);
+    @Insert(entity = RecipeWithIngredients.class)
+    public long insertRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients);
 }
