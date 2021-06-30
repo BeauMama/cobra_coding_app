@@ -6,13 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.application.database.DataDao;
 import com.example.application.database.DataGetAllRecipes;
 import com.example.application.database.DataInitializeDatabase;
-import com.example.application.database.DataSaveRecipe;
-import com.example.application.database.DataSaveRecipeWithIngredients;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

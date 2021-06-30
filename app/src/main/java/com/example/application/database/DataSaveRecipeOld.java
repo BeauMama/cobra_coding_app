@@ -10,12 +10,12 @@ import com.example.application.database.DataDao;
 import java.util.ArrayList;
 import java.util.List;
 // This class is only here for reference and will be deleted.
-public class DataSaveRecipe implements Runnable {
+public class DataSaveRecipeOld implements Runnable {
 
     private DataDao dataDao;
     private List<RecipeWithIngredients> recipes = new ArrayList<>();
 
-    public DataSaveRecipe(DataDao dataDao) {
+    public DataSaveRecipeOld(DataDao dataDao) {
         this.dataDao = dataDao;
         //this.recipes = recipes;
     }

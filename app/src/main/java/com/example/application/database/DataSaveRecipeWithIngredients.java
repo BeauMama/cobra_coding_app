@@ -1,5 +1,6 @@
 package com.example.application.database;
 
+import com.example.application.Ingredient;
 import com.example.application.RecipeWithIngredients;
 
 import java.security.InvalidParameterException;
@@ -18,6 +19,11 @@ public class DataSaveRecipeWithIngredients implements Callable<Long> {
     }
 
     public Long call() throws InvalidParameterException {
-        return dataDao.insertRecipeWithIngredients(recipeWithIngredients);
+        long id = dataDao.insertRecipe(recipeWithIngredients.recipe);
+        for (Ingredient ingredient : recipeWithIngredients.ingredients) {
+            ingredient.setRecipeId((int) id);
+            dataDao.insertIngredient(ingredient);
+        }
+        return id;
     }
 }
