@@ -96,7 +96,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     private void initializeRecycleView() {
         recyclerView = findViewById(R.id.ingredientList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        viewIngredientsAdapter = new ViewIngredientsAdapter(recipeWithIngredients, ingredientNames,this);
+        viewIngredientsAdapter = new ViewIngredientsAdapter(recipeWithIngredients, ingredientNames,this, this);
         recyclerView.setAdapter(viewIngredientsAdapter);
     }
 
