@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -47,21 +48,23 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView testView;
+        private AutoCompleteTextView textView;
         private Button button;
         private DeleteButtonListener deleteButtonListener;
 
         public ViewHolder(@NonNull @NotNull View itemView, DeleteButtonListener deleteButtonListener) {
             super(itemView);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(android.R.layout.simple_dropdown_item_1line, ingredientNames);
 
-            testView = itemView.findViewById(R.id.ingredentName2);
+            textView = itemView.findViewById(R.id.ingredentName2);
+            textView.setAdapter(adapter);
             button = itemView.findViewById(R.id.delete2);
 
             this.deleteButtonListener = deleteButtonListener;
             button.setOnClickListener(this);
         }
         public TextView getTestView() {
-            return testView;
+            return textView;
         }
 
         @Override
