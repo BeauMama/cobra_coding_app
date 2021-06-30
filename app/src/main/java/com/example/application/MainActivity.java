@@ -23,11 +23,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RecipeActivity.class);
         startActivity(intent);
     }
-
-    public void onClickNewRecipeOld(View view) {
-        Intent intent = new Intent(this, RecipeActivityOld.class);
-        startActivity(intent);
-    }
-
-
 }

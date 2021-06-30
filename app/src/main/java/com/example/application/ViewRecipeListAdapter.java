@@ -50,8 +50,8 @@ public class ViewRecipeListAdapter extends RecyclerView.Adapter<ViewRecipeListAd
 
         public ViewHolder(@NonNull @NotNull View itemView, SelectItemListener selectItemListener) {
             super(itemView);
-            recipeNameTextView = itemView.findViewById(R.id.recipeTextView);
-            linearLayout = itemView.findViewById(R.id.linearLayout2);
+            recipeNameTextView = itemView.findViewById(R.id.textViewRecipe);
+            linearLayout = itemView.findViewById(R.id.linearLayoutRecipeList);
 
             this.selectItemListener = selectItemListener;
             linearLayout.setOnClickListener(this);

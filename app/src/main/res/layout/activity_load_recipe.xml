@@ -35,29 +35,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/my_recipes" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginTop="52dp"
-        android:onClick="addDataTest"
-        android:text="Save Test Recipe"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeList" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Load Recipes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeList" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recipeList"
         android:layout_width="392dp"

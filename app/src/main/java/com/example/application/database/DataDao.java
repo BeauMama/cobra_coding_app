@@ -13,23 +13,22 @@ import java.util.List;
 
 @Dao
 public interface DataDao {
-    @Transaction
-    @Query("SELECT * FROM Recipe")
-    List<RecipeWithIngredients> getAllRecipesWithIngredients();
-
     @Query("SELECT * FROM Recipe ORDER BY id DESC")
     List<Recipe> getAllRecipes();
 
     @Transaction
     @Query("SELECT * FROM Recipe WHERE id = :id")
-    RecipeWithIngredients getRecipesWithIngredientsById(int id);
+    RecipeWithIngredients getRecipeWithIngredientsById(int id);
 
     @Query("SELECT DISTINCT name FROM Ingredient ORDER BY name")
     List<String> getIngredientNames();
 
     @Insert(entity = Recipe.class)
-    public long insertRecipe(Recipe recipe);
+    long insertRecipe(Recipe recipe);
 
     @Insert(entity = Ingredient.class)
-    public long insertIngredient(Ingredient ingredient);
+    long insertIngredient(Ingredient ingredient);
+
+    @Query("UPDATE Recipe SET name = :name WHERE id = :id")
+    int updateRecipe(int id, String name);
 }

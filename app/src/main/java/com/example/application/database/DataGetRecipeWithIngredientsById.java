@@ -1,10 +1,8 @@
 package com.example.application.database;
 
-import com.example.application.Recipe;
 import com.example.application.RecipeWithIngredients;
 
 import java.security.InvalidParameterException;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 public class DataGetRecipeWithIngredientsById implements Callable<RecipeWithIngredients> {
@@ -18,6 +16,6 @@ public class DataGetRecipeWithIngredientsById implements Callable<RecipeWithIngr
     }
 
     public RecipeWithIngredients call() throws InvalidParameterException {
-        return dataDao.getRecipesWithIngredientsById(id);
+        return dataDao.getRecipeWithIngredientsById(id);
     }
 }
