@@ -20,13 +20,13 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
     private RecipeWithIngredients recipeWithIngredients;
     private DeleteButtonListener deleteButtonListener;
-    private List<String> ingredientNames;
+
     private Activity activity;
 
-    public ViewIngredientsAdapter(RecipeWithIngredients recipeWithIngredients, List<String> ingredientNames, DeleteButtonListener deleteButtonListener, Activity activity) {
+    public ViewIngredientsAdapter(RecipeWithIngredients recipeWithIngredients, DeleteButtonListener deleteButtonListener, Activity activity) {
         this.recipeWithIngredients = recipeWithIngredients;
         this.deleteButtonListener = deleteButtonListener;
-        this.ingredientNames = ingredientNames;
+
         this.activity = activity;
     }
 
@@ -42,7 +42,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewIngredientsAdapter.ViewHolder viewHolder, int position) {
         Ingredient ingredient = this.recipeWithIngredients.ingredients.get(position);
-        viewHolder.getTestView().setText(ingredient.getName());
+        viewHolder.getTextView().setText(ingredient.getName());
     }
 
     @Override
@@ -57,16 +57,18 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
         public ViewHolder(@NonNull @NotNull View itemView, DeleteButtonListener deleteButtonListener) {
             super(itemView);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_dropdown_item_1line, ingredientNames);
 
-            textView = itemView.findViewById(R.id.ingredentName2);
+            textView = (AutoCompleteTextView) itemView.findViewById(R.id.ingredentName2);
+            ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, recipeWithIngredients.ingredients);
+            textView.setThreshold(1);
             textView.setAdapter(adapter);
+
             button = itemView.findViewById(R.id.delete2);
 
             this.deleteButtonListener = deleteButtonListener;
             button.setOnClickListener(this);
         }
-        public TextView getTestView() {
+        public TextView getTextView() {
             return textView;
         }
 
