@@ -240,6 +240,7 @@
      android:layout_marginLeft="32dp"
      android:layout_marginTop="8dp"
      android:background="@android:drawable/editbox_background_normal"
+     android:onClick="saveRecipe"
      android:text="@string/save_recipe_button"
      android:textSize="12sp"
      app:backgroundTint="@color/design_default_color_secondary_variant"

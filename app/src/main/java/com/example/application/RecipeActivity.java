@@ -12,7 +12,7 @@ import com.example.application.database.DataDao;
 import com.example.application.database.DataGetIngredientNames;
 import com.example.application.database.DataGetRecipeWithIngredientsById;
 import com.example.application.database.DataInitializeDatabase;
-import com.example.application.database.DataSaveRecipeWithIngredients;
+import com.example.application.database.DataInsertRecipeWithIngredients;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,19 +73,24 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
-    private long saveRecipe() {
-        DataSaveRecipeWithIngredients dataSaveRecipeWithIngredients = new DataSaveRecipeWithIngredients(dataDao, recipeWithIngredients);
+    public void saveRecipe(View view) {
+        DataInsertRecipeWithIngredients dataInsertRecipeWithIngredients = new DataInsertRecipeWithIngredients(dataDao, recipeWithIngredients);
         long id = -1;
         ExecutorService executorService = Executors.newFixedThreadPool(3);
         try {
-            id = executorService.submit(dataSaveRecipeWithIngredients).get();
+            id = executorService.submit(dataInsertRecipeWithIngredients).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("saved id: " + id);
+        //return id;
 
-        return id;
+        System.out.println("recipe id: " + recipeWithIngredients.recipe.getId());
+        for (Ingredient ingredient : recipeWithIngredients.ingredients) {
+            System.out.println("ingredient id: " + ingredient.getId());
+        }
     }
 
     private void initializeRecycleView() {
@@ -131,7 +136,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         // Temporarily setting data for testing.
         recipeWithIngredients = new RecipeWithIngredients();
         recipeWithIngredients.recipe = new Recipe();
-
         recipeWithIngredients.recipe.setName("Scrambled eggs");
         //recipeWithIngredients.recipe.setServingSize(2); // Not needed for this example.
         recipeWithIngredients.recipe.setCookTimeMinutes(4);
@@ -146,6 +150,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         recipeWithIngredients.ingredients = new ArrayList<>();
         Ingredient ingredient = new Ingredient();
+        ingredient.setRecipeId(200);
         ingredient.setName("eggs");
         ingredient.setMeasurement("units");
         ingredient.setConversionMeasurement("units");
@@ -155,6 +160,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         recipeWithIngredients.ingredients.add(ingredient);
 
         ingredient = new Ingredient();
+        ingredient.setRecipeId(201);
         ingredient.setName("milk");
         ingredient.setMeasurement("milliliters");
         ingredient.setConversionMeasurement("cups");
@@ -163,6 +169,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         recipeWithIngredients.ingredients.add(ingredient);
 
         ingredient = new Ingredient();
+        ingredient.setRecipeId(202);
         ingredient.setName("salt");
         ingredient.setMeasurement("grams");
         ingredient.setConversionMeasurement("teaspoons");
