@@ -28,4 +28,7 @@ public interface DataDao {
 
     @Insert(entity = Ingredient.class)
     long insertIngredient(Ingredient ingredient);
+
+    @Query("UPDATE Recipe SET name = :name WHERE id = :id")
+    int updateRecipe(int id, String name);
 }

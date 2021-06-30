@@ -59,6 +59,7 @@ public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeL
     @Override
     public void selectItemClick(int position) {
         int recipeIdSelected = recipes.get(position).getId();
+        recipeIdSelected = 138;
         Intent intent = new Intent(this, RecipeActivity.class);
         intent.putExtra("id", recipeIdSelected);
         startActivity(intent);
