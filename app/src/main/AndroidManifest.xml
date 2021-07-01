@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Application">
         <activity android:name=".RecipeActivity"
-            android:windowSoftInputMode="adjustResize|adjustPan" />
+            android:windowSoftInputMode="adjustUnspecified|adjustPan" />
         <activity android:name=".LoadRecipeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
