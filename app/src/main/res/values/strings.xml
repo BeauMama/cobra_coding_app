@@ -22,7 +22,7 @@
     <string name="conv_ing">Conv by Ing</string>
     <string name="conv_quanity"></string>
     <string name="conv_measurement"></string>
-    <string name="conv_tempature">Conv Temp</string>
+    <string name="conv_temperature">Conv Temp</string>
 
     <string name="quantity">Quantity</string>
     <string name="picture">Picture</string>
