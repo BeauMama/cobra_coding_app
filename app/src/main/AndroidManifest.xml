@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Application">
-        <activity android:name=".RecipeActivityOld"></activity>
         <activity android:name=".RecipeActivity" />
         <activity android:name=".LoadRecipeActivity" />
         <activity android:name=".MainActivity">
