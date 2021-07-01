@@ -9,7 +9,7 @@ public class Recipe {
     @PrimaryKey(autoGenerate = true)
     private int id;
     @NonNull
-    private String name;
+    public String name;
     private int servingSize;
     private int cookTimeMinutes;
     private int temperature;

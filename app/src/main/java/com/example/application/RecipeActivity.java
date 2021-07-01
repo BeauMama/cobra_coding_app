@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,7 @@ import com.example.application.database.DataGetIngredientNames;
 import com.example.application.database.DataGetRecipeWithIngredientsById;
 import com.example.application.database.DataInitializeDatabase;
 import com.example.application.database.DataSaveRecipeWithIngredients;
+import com.example.application.databinding.ActivityRecipeBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +33,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe);
+        ActivityRecipeBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
+        //setContentView(R.layout.activity_recipe);
 
         initializeDatabase();
 
@@ -44,6 +47,13 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
 
         initializeRecycleView();
+
+        binding.setRecipeWithIngredients(recipeWithIngredients);
+
+    }
+
+    public void buttonShowData(View view) {
+        System.out.println("The name is: " + recipeWithIngredients.recipe.getName());
     }
 
     private void initializeDatabase() {
