@@ -1,5 +1,6 @@
 package com.example.application.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -23,12 +24,47 @@ public interface DataDao {
     @Query("SELECT DISTINCT name FROM Ingredient ORDER BY name")
     List<String> getIngredientNames();
 
+    /*
+    @Query("DELETE FROM Recipe")
+    void deleteRecipeTable();
+
+    @Query("DELETE FROM Ingredient")
+    void deleteIngredientTable();
+     */
+
     @Insert(entity = Recipe.class)
     long insertRecipe(Recipe recipe);
 
     @Insert(entity = Ingredient.class)
     long insertIngredient(Ingredient ingredient);
 
-    @Query("UPDATE Recipe SET name = :name WHERE id = :id")
-    int updateRecipe(int id, String name);
+    @Query("UPDATE Recipe " +
+           "SET name = :name, " +
+           "servingSize = :servingSize, " +
+           "cookTimeMinutes = :cookTimeMinutes, " +
+           "temperature = :temperature , " +
+           "temperatureMeasurement =:temperatureMeasurement, " +
+           "conversionTemperatureMeasurement =:conversionTemperatureMeasurement, " +
+           "conversionType = :conversionType, " +
+           "conversionAmount = :conversionAmount, " +
+           "notes = :notes, " +
+           "fromSystem = :fromSystem, " +
+           "toSystem = :toSystem " +
+           "WHERE id = :id")
+    int updateRecipe(int id, String name, int servingSize, int cookTimeMinutes, int temperature,
+        String temperatureMeasurement, String conversionTemperatureMeasurement, String conversionType,
+        float conversionAmount, String notes, String fromSystem, String toSystem);
+
+    @Query("UPDATE Ingredient " +
+           "SET recipeId = :recipeId, " +
+           "name = :name, " +
+           "quantity = :quantity, " +
+           "measurement = :measurement, " +
+           "conversionMeasurement = :conversionMeasurement, " +
+           "isConversionIngredient = :isConversionIngredient, " +
+           "conversionIngredientQuantity = :conversionIngredientQuantity " +
+           "WHERE id = :id")
+    int updateIngredient(int id, int recipeId, String name, float quantity, String measurement,
+        String conversionMeasurement, Boolean isConversionIngredient, float conversionIngredientQuantity);
+
 }

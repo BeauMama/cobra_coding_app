@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase;
 import com.example.application.Ingredient;
 import com.example.application.Recipe;
 
-@Database(entities = {Recipe.class, Ingredient.class}, version = 17)
+@Database(entities = {Recipe.class, Ingredient.class}, version = 18)
 public abstract class DataAppDatabase extends RoomDatabase {
     public abstract DataDao dataDao();
 }

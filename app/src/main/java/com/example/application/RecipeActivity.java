@@ -12,7 +12,7 @@ import com.example.application.database.DataDao;
 import com.example.application.database.DataGetIngredientNames;
 import com.example.application.database.DataGetRecipeWithIngredientsById;
 import com.example.application.database.DataInitializeDatabase;
-import com.example.application.database.DataInsertRecipeWithIngredients;
+import com.example.application.database.DataSaveRecipeWithIngredients;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +53,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     private boolean loadRecipeWithIngredients() {
         Intent intent = getIntent();
         int id = intent.getIntExtra("id", 0);
-        if (intent != null) {
+        if (id != 0) {
             DataGetRecipeWithIngredientsById dataGetRecipeWithIngredientsById = new DataGetRecipeWithIngredientsById(dataDao, id);
             ExecutorService executorService = Executors.newFixedThreadPool(3);
             try {
@@ -73,33 +73,23 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     public void saveRecipe(View view) {
-        DataInsertRecipeWithIngredients dataInsertRecipeWithIngredients = new DataInsertRecipeWithIngredients(dataDao, recipeWithIngredients);
-        long id = -1;
+        DataSaveRecipeWithIngredients dataSaveRecipeWithIngredients = new DataSaveRecipeWithIngredients(dataDao, recipeWithIngredients);
+
         ExecutorService executorService = Executors.newFixedThreadPool(3);
         try {
-            id = executorService.submit(dataInsertRecipeWithIngredients).get();
+            recipeWithIngredients = executorService.submit(dataSaveRecipeWithIngredients).get();
+
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        System.out.println("saved id: " + id);
-        //return id;
-
-        System.out.println("recipe id: " + recipeWithIngredients.recipe.getId());
-        for (Ingredient ingredient : recipeWithIngredients.ingredients) {
-            System.out.println("ingredient id: " + ingredient.getId());
         }
     }
 
     private void initializeRecycleView() {
         RecyclerView recyclerView = findViewById(R.id.ingredientList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
         viewIngredientsAdapter = new ViewIngredientsAdapter(recipeWithIngredients,  ingredientNames, this);
-
         recyclerView.setAdapter(viewIngredientsAdapter);
     }
 
@@ -135,6 +125,11 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
+    public void onClickMyRecipe(View view) {
+        Intent intent = new Intent(this, LoadRecipeActivity.class);
+        startActivity(intent);
+    }
+
     private void setupRecipeWithDummyData() {
         // Temporarily setting data for testing.
         recipeWithIngredients = new RecipeWithIngredients();
@@ -153,7 +148,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         recipeWithIngredients.ingredients = new ArrayList<>();
         Ingredient ingredient = new Ingredient();
-        ingredient.setRecipeId(200);
         ingredient.setName("eggs");
         ingredient.setMeasurement("units");
         ingredient.setConversionMeasurement("units");
@@ -163,7 +157,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         recipeWithIngredients.ingredients.add(ingredient);
 
         ingredient = new Ingredient();
-        ingredient.setRecipeId(201);
         ingredient.setName("milk");
         ingredient.setMeasurement("milliliters");
         ingredient.setConversionMeasurement("cups");
@@ -172,7 +165,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         recipeWithIngredients.ingredients.add(ingredient);
 
         ingredient = new Ingredient();
-        ingredient.setRecipeId(202);
         ingredient.setName("salt");
         ingredient.setMeasurement("grams");
         ingredient.setConversionMeasurement("teaspoons");
@@ -463,6 +455,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         return quantity;
     }
+
+
 
 
 }
