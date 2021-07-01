@@ -98,7 +98,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
 
 
-        viewIngredientsAdapter = new ViewIngredientsAdapter(recipeWithIngredients, this, this);
+        viewIngredientsAdapter = new ViewIngredientsAdapter(recipeWithIngredients,  ingredientNames, this);
 
         recyclerView.setAdapter(viewIngredientsAdapter);
     }

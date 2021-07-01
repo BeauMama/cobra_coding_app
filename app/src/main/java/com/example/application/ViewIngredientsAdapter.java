@@ -19,15 +19,19 @@ import java.util.List;
 public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredientsAdapter.ViewHolder> {
 
     private RecipeWithIngredients recipeWithIngredients;
+    private List<String> ingredientNames;
     private DeleteButtonListener deleteButtonListener;
-
     private Activity activity;
 
-    public ViewIngredientsAdapter(RecipeWithIngredients recipeWithIngredients, DeleteButtonListener deleteButtonListener, Activity activity) {
+    public ViewIngredientsAdapter(RecipeWithIngredients recipeWithIngredients, List<String> ingredientNames, Activity activity) {
         this.recipeWithIngredients = recipeWithIngredients;
-        this.deleteButtonListener = deleteButtonListener;
-
+        this.ingredientNames = ingredientNames;
+        this.deleteButtonListener = (DeleteButtonListener) activity;
         this.activity = activity;
+
+        for (String ingredient : ingredientNames) {
+            System.out.println("name: " + ingredient);
+        }
     }
 
     @NonNull
@@ -58,8 +62,8 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         public ViewHolder(@NonNull @NotNull View itemView, DeleteButtonListener deleteButtonListener) {
             super(itemView);
 
-            textView = (AutoCompleteTextView) itemView.findViewById(R.id.ingredentName2);
-            ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, recipeWithIngredients.ingredients);
+            textView = itemView.findViewById(R.id.ingredentName2);
+            ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, ingredientNames);
             textView.setThreshold(1);
             textView.setAdapter(adapter);
 
