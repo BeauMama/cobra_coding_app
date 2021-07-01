@@ -34,12 +34,12 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityRecipeBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
-        //setContentView(R.layout.activity_recipe);
 
         initializeDatabase();
 
         if (loadRecipeWithIngredients() == false) {
             setupRecipeWithDummyData();
+            binding.setRecipeWithIngredients(recipeWithIngredients);
         }
 
         if (getIngredientNames() == false) {
@@ -47,13 +47,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
 
         initializeRecycleView();
-
-        binding.setRecipeWithIngredients(recipeWithIngredients);
-
-    }
-
-    public void buttonShowData(View view) {
-        System.out.println("The name is: " + recipeWithIngredients.recipe.getName());
     }
 
     private void initializeDatabase() {
@@ -465,8 +458,5 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         return quantity;
     }
-
-
-
 
 }

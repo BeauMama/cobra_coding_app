@@ -5,6 +5,7 @@
 
  <data>
      <variable name="recipeWithIngredients" type="com.example.application.RecipeWithIngredients"/>
+     <variable name="empty" type="String"/>
  </data>
 
  <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +35,7 @@
 
   <EditText
       android:id="@+id/servings"
+      android:text="@={recipeWithIngredients.recipe.servingSizeString}"
       android:layout_width="96dp"
       android:layout_height="25dp"
       android:layout_marginTop="16dp"
@@ -48,6 +50,7 @@
 
   <EditText
       android:id="@+id/cookTime"
+      android:text="@={`` + recipeWithIngredients.recipe.cookTimeMinutes}"
       android:layout_width="94dp"
       android:layout_height="28dp"
       android:layout_marginStart="8dp"
@@ -62,6 +65,7 @@
 
   <EditText
       android:id="@+id/temp"
+      android:text="@={`` + recipeWithIngredients.recipe.temperature}"
       android:layout_width="66dp"
       android:layout_height="28dp"
       android:layout_marginStart="8dp"
@@ -90,7 +94,7 @@
       android:layout_width="44dp"
       android:layout_height="34dp"
       android:layout_marginTop="16dp"
-      android:text="@string/conv_tempature"
+      android:text="@string/conv_temperature"
       app:layout_constraintEnd_toStartOf="@+id/convTemp"
       app:layout_constraintHorizontal_bias="0.315"
       app:layout_constraintStart_toEndOf="@+id/tempMeasurement"
@@ -132,6 +136,7 @@
 
   <EditText
       android:id="@+id/convAmount"
+      android:text="@={`` + recipeWithIngredients.recipe.conversionAmount}"
       android:layout_width="53dp"
       android:layout_height="26dp"
       android:layout_marginTop="12dp"
@@ -147,6 +152,7 @@
 
   <EditText
       android:id="@+id/notes"
+      android:text="@={recipeWithIngredients.recipe.notes}"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
@@ -284,18 +290,6 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/to" />
-
-  <Button
-      android:id="@+id/button5"
-      android:layout_width="71dp"
-      android:layout_height="26dp"
-      android:layout_marginTop="12dp"
-      android:layout_marginEnd="60dp"
-      android:layout_marginRight="60dp"
-      android:onClick="buttonShowData"
-      android:text="Button"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/notes" />
 
 
  </androidx.constraintlayout.widget.ConstraintLayout>

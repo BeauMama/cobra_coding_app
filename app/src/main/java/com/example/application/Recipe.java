@@ -1,6 +1,9 @@
 package com.example.application;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
+import androidx.databinding.Bindable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,17 +13,17 @@ public class Recipe {
     private int id;
     @NonNull
     public String name;
-    private int servingSize;
-    private int cookTimeMinutes;
-    private int temperature;
-    private String temperatureMeasurement;
-    private String conversionTemperatureMeasurement;
+    public int servingSize;
+    public int cookTimeMinutes;
+    public int temperature;
+    public String temperatureMeasurement;
+    public String conversionTemperatureMeasurement;
     @NonNull
-    private String conversionType;
-    private float conversionAmount;
-    private String notes;
-    private String fromSystem;
-    private String toSystem;
+    public String conversionType;
+    public float conversionAmount;
+    public String notes;
+    public String fromSystem;
+    public String toSystem;
 
     public int getId() {
         return id;
@@ -32,6 +35,23 @@ public class Recipe {
 
     public int getServingSize() {
         return servingSize;
+    }
+
+    public String getServingSizeString() {
+        if (getServingSize() == 0) {
+            return null;
+        } else {
+            return Integer.toString(getServingSize());
+        }
+    }
+
+    public void setServingSizeString(String servingSize) {
+        try {
+            int val = Integer.parseInt(servingSize);
+            this.setServingSize(val);
+        } catch(NumberFormatException ex) {
+            this.setServingSize(0); //default value
+        }
     }
 
     public int getCookTimeMinutes() {
