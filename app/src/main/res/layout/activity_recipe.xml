@@ -35,7 +35,7 @@
       android:id="@+id/servingSize"
       android:text="@={recipeWithIngredients.recipe.servingSizeString}"
       android:layout_width="96dp"
-      android:layout_height="25dp"
+      android:layout_height="wrap_content"
       android:layout_marginTop="16dp"
       android:layout_marginEnd="8dp"
       android:layout_marginRight="8dp"
@@ -50,7 +50,7 @@
       android:id="@+id/cookTimeMinutes"
       android:text="@={recipeWithIngredients.recipe.cookTimeMinutesString}"
       android:layout_width="94dp"
-      android:layout_height="28dp"
+      android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
@@ -65,7 +65,7 @@
       android:id="@+id/temp"
       android:text="@={recipeWithIngredients.recipe.temperatureString}"
       android:layout_width="66dp"
-      android:layout_height="28dp"
+      android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
@@ -78,8 +78,8 @@
 
   <Spinner
       android:id="@+id/tempMeasurement"
-      android:layout_width="79dp"
-      android:layout_height="31dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
@@ -89,8 +89,8 @@
 
   <TextView
       android:id="@+id/convTemp"
-      android:layout_width="44dp"
-      android:layout_height="34dp"
+      android:layout_width="68dp"
+      android:layout_height="38dp"
       android:layout_marginTop="16dp"
       android:text="@string/conv_temperature"
       app:layout_constraintEnd_toStartOf="@+id/convTempMeasurement"
@@ -100,8 +100,8 @@
 
   <Spinner
       android:id="@+id/convTempMeasurement"
-      android:layout_width="77dp"
-      android:layout_height="32dp"
+      android:layout_width="65dp"
+      android:layout_height="26dp"
       android:layout_marginTop="16dp"
       android:layout_marginEnd="8dp"
       android:layout_marginRight="8dp"
@@ -111,8 +111,8 @@
 
   <TextView
       android:id="@+id/conversion"
-      android:layout_width="141dp"
-      android:layout_height="26dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
@@ -122,8 +122,8 @@
 
   <Spinner
       android:id="@+id/convType"
-      android:layout_width="202dp"
-      android:layout_height="24dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
@@ -136,7 +136,7 @@
       android:id="@+id/convAmount"
       android:text="@={recipeWithIngredients.recipe.conversionAmountString}"
       android:layout_width="53dp"
-      android:layout_height="26dp"
+      android:layout_height="wrap_content"
       android:layout_marginTop="12dp"
       android:layout_marginEnd="8dp"
       android:layout_marginRight="8dp"
@@ -169,8 +169,8 @@
 
   <TextView
       android:id="@+id/ingredients"
-      android:layout_width="83dp"
-      android:layout_height="23dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
@@ -183,8 +183,8 @@
 
   <TextView
       android:id="@+id/from"
-      android:layout_width="47dp"
-      android:layout_height="22dp"
+      android:layout_width="30dp"
+      android:layout_height="24dp"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
@@ -194,8 +194,8 @@
 
   <Spinner
       android:id="@+id/fromMeasSystem"
-      android:layout_width="135dp"
-      android:layout_height="22dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
@@ -205,8 +205,8 @@
 
   <TextView
       android:id="@+id/to"
-      android:layout_width="34dp"
-      android:layout_height="20dp"
+      android:layout_width="35dp"
+      android:layout_height="24dp"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
@@ -216,8 +216,8 @@
 
   <Spinner
       android:id="@+id/toMeasSystem"
-      android:layout_width="151dp"
-      android:layout_height="22dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
