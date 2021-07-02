@@ -51,6 +51,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     public void onBindViewHolder(@NonNull @NotNull ViewIngredientsAdapter.ViewHolder viewHolder, int position) {
         Ingredient ingredient = this.recipeWithIngredients.ingredients.get(position);
         viewHolder.bind(ingredient);
+        //viewHolder.getCalcConvQty().setText(Float.toString(ingredient.getQuantity() * 2));
     }
 
     @Override
@@ -63,22 +64,28 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         private Button button;
         private DeleteButtonListener deleteButtonListener;
         public IngredientlistRowBinding ingredientlistRowBinding;
+        private TextView calcConvQty;
 
         public ViewHolder(@NonNull @NotNull IngredientlistRowBinding ingredientlistRowBinding, DeleteButtonListener deleteButtonListener) {
             super(ingredientlistRowBinding.getRoot());
             this.ingredientlistRowBinding = ingredientlistRowBinding;
 
-            textView = itemView.findViewById(R.id.ingredentName2);
+            calcConvQty = itemView.findViewById(R.id.calcConvQuantity);
+
+            textView = itemView.findViewById(R.id.ingredentName);
             ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, ingredientNames);
             textView.setThreshold(1);
             textView.setAdapter(adapter);
 
-            button = itemView.findViewById(R.id.delete2);
+            button = itemView.findViewById(R.id.buttonDeleteIngredient);
             this.deleteButtonListener = deleteButtonListener;
             button.setOnClickListener(this);
         }
         public TextView getTextView() {
             return textView;
+        }
+        public TextView getCalcConvQty() {
+            return calcConvQty;
         }
 
         @Override

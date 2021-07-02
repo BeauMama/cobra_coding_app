@@ -14,6 +14,7 @@ public class Ingredient {
     @NonNull
     private String name;
     private float quantity;
+    private float calculatedConvertedQuantity;
     @NonNull
     private String measurement;
     @NonNull
@@ -25,17 +26,71 @@ public class Ingredient {
     public int getId() {
         return id;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getRecipeId() {
         return recipeId;
+    }
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
     }
 
     public String getName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public float getQuantity() {
         return quantity;
+    }
+    public void setQuantity(float quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getQuantityString() {
+        if (getQuantity() == 0) {
+            return null;
+        } else {
+            return Float.toString(getQuantity());
+        }
+    }
+    public void setQuantityString(String setQuantity) {
+        try {
+            float val = Float.parseFloat(setQuantity);
+            this.setQuantity(val);
+        } catch(NumberFormatException ex) {
+            this.setQuantity(0);
+        }
+    }
+
+    public float getCalculatedConvertedQuantity() {
+        return getQuantity() * 2;
+        //return calculatedConvertedQuantity;
+    }
+
+    public void setCalculatedConvertedQuantity(float calculatedConvertedQuantity) {
+        this.calculatedConvertedQuantity = getQuantity() * 2;
+        //this.calculatedConvertedQuantity = calculatedConvertedQuantity;
+    }
+
+    public String getCalculatedConvertedQuantityString() {
+        if (getCalculatedConvertedQuantity() == 0) {
+            return null;
+        } else {
+            return Float.toString(getCalculatedConvertedQuantity());
+        }
+    }
+    public void setCalculatedConvertedQuantityString(String setCalculatedConvertedQuantity) {
+        try {
+            float val = Float.parseFloat(setCalculatedConvertedQuantity);
+            this.setCalculatedConvertedQuantity(val);
+        } catch(NumberFormatException ex) {
+            this.setCalculatedConvertedQuantity(0);
+        }
     }
 
     public float getQuantityConverted(RecipeWithIngredients recipeWithIngredients) {
@@ -78,48 +133,44 @@ public class Ingredient {
     public String getMeasurement() {
         return measurement;
     }
+    public void setMeasurement(String measurement) {
+        this.measurement = measurement;
+    }
 
     public String getConversionMeasurement() {
         return conversionMeasurement;
+    }
+    public void setConversionMeasurement(String conversionMeasurement) {
+        this.conversionMeasurement = conversionMeasurement;
     }
 
     public Boolean getIsConversionIngredient() {
         return isConversionIngredient;
     }
-
-    public float getConversionIngredientQuantity() {
-        return conversionIngredientQuantity;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setRecipeId(int recipeId) {
-        this.recipeId = recipeId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setQuantity(float quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setMeasurement(String measurement) {
-        this.measurement = measurement;
-    }
-
-    public void setConversionMeasurement(String conversionMeasurement) {
-        this.conversionMeasurement = conversionMeasurement;
-    }
-
     public void setIsConversionIngredient(Boolean isConversionIngredient) {
         this.isConversionIngredient = isConversionIngredient;
     }
 
+    public float getConversionIngredientQuantity() {
+        return conversionIngredientQuantity;
+    }
     public void setConversionIngredientQuantity(float conversionIngredientQuantity) {
         this.conversionIngredientQuantity = conversionIngredientQuantity;
+    }
+
+    public String getConversionIngredientQuantityString() {
+        if (getConversionIngredientQuantity() == 0) {
+            return null;
+        } else {
+            return Float.toString(getConversionIngredientQuantity());
+        }
+    }
+    public void setConversionIngredientQuantityString(String setConversionIngredientQuantity) {
+        try {
+            float val = Float.parseFloat(setConversionIngredientQuantity);
+            this.setConversionIngredientQuantity(val);
+        } catch(NumberFormatException ex) {
+            this.setConversionIngredientQuantity(0);
+        }
     }
 }

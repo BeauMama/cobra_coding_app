@@ -46,10 +46,10 @@
     </string-array>
 
     <string-array name="conversion">
-        <item> Multiply by </item>
-        <item> Divide by </item>
-        <item> Servings </item>
-        <item> One Ingredient </item>
+        <item>Multiply by</item>
+        <item>Divide by</item>
+        <item>Servings</item>
+        <item>One Ingredient</item>
     </string-array>
 
 </resources>
