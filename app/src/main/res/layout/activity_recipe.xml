@@ -26,13 +26,13 @@
       android:background="@android:drawable/editbox_dropdown_light_frame"
       android:hint="@string/recipe_name"
       android:inputType="textMultiLine"
-      app:layout_constraintEnd_toStartOf="@+id/servings"
+      app:layout_constraintEnd_toStartOf="@+id/servingSize"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       tools:ignore="MissingConstraints" />
 
   <EditText
-      android:id="@+id/servings"
+      android:id="@+id/servingSize"
       android:text="@={recipeWithIngredients.recipe.servingSizeString}"
       android:layout_width="96dp"
       android:layout_height="25dp"
@@ -47,8 +47,8 @@
       app:layout_constraintTop_toTopOf="parent" />
 
   <EditText
-      android:id="@+id/cookTime"
-      android:text="@={`` + recipeWithIngredients.recipe.cookTimeMinutes}"
+      android:id="@+id/cookTimeMinutes"
+      android:text="@={recipeWithIngredients.recipe.cookTimeMinutesString}"
       android:layout_width="94dp"
       android:layout_height="28dp"
       android:layout_marginStart="8dp"
@@ -63,7 +63,7 @@
 
   <EditText
       android:id="@+id/temp"
-      android:text="@={`` + recipeWithIngredients.recipe.temperature}"
+      android:text="@={recipeWithIngredients.recipe.temperatureString}"
       android:layout_width="66dp"
       android:layout_height="28dp"
       android:layout_marginStart="8dp"
@@ -73,7 +73,7 @@
       android:background="@android:drawable/editbox_dropdown_light_frame"
       android:hint="@string/tempature_to_cook"
       android:inputType="number"
-      app:layout_constraintStart_toEndOf="@+id/cookTime"
+      app:layout_constraintStart_toEndOf="@+id/cookTimeMinutes"
       app:layout_constraintTop_toBottomOf="@+id/recipeName" />
 
   <Spinner
@@ -88,18 +88,18 @@
       app:layout_constraintTop_toBottomOf="@+id/recipeName" />
 
   <TextView
-      android:id="@+id/textView3"
+      android:id="@+id/convTemp"
       android:layout_width="44dp"
       android:layout_height="34dp"
       android:layout_marginTop="16dp"
       android:text="@string/conv_temperature"
-      app:layout_constraintEnd_toStartOf="@+id/convTemp"
+      app:layout_constraintEnd_toStartOf="@+id/convTempMeasurement"
       app:layout_constraintHorizontal_bias="0.315"
       app:layout_constraintStart_toEndOf="@+id/tempMeasurement"
-      app:layout_constraintTop_toBottomOf="@+id/servings" />
+      app:layout_constraintTop_toBottomOf="@+id/servingSize" />
 
   <Spinner
-      android:id="@+id/convTemp"
+      android:id="@+id/convTempMeasurement"
       android:layout_width="77dp"
       android:layout_height="32dp"
       android:layout_marginTop="16dp"
@@ -107,7 +107,7 @@
       android:layout_marginRight="8dp"
       android:entries="@array/temp_measurement"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/servings" />
+      app:layout_constraintTop_toBottomOf="@+id/servingSize" />
 
   <TextView
       android:id="@+id/conversion"
@@ -118,10 +118,10 @@
       android:layout_marginTop="16dp"
       android:text="@string/conversionBaseOn"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/cookTime" />
+      app:layout_constraintTop_toBottomOf="@+id/cookTimeMinutes" />
 
   <Spinner
-      android:id="@+id/convBaseOn"
+      android:id="@+id/convType"
       android:layout_width="202dp"
       android:layout_height="24dp"
       android:layout_marginStart="8dp"
@@ -134,7 +134,7 @@
 
   <EditText
       android:id="@+id/convAmount"
-      android:text="@={`` + recipeWithIngredients.recipe.conversionAmount}"
+      android:text="@={recipeWithIngredients.recipe.conversionAmountString}"
       android:layout_width="53dp"
       android:layout_height="26dp"
       android:layout_marginTop="12dp"
@@ -146,7 +146,7 @@
       android:hint="@string/conversion_amount"
       android:inputType="numberDecimal"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/convTemp" />
+      app:layout_constraintTop_toBottomOf="@+id/convTempMeasurement" />
 
   <EditText
       android:id="@+id/notes"
@@ -193,7 +193,7 @@
       app:layout_constraintTop_toBottomOf="@+id/ingredients" />
 
   <Spinner
-      android:id="@+id/measurementSystem"
+      android:id="@+id/fromMeasSystem"
       android:layout_width="135dp"
       android:layout_height="22dp"
       android:layout_marginStart="8dp"
@@ -211,11 +211,11 @@
       android:layout_marginLeft="8dp"
       android:layout_marginTop="16dp"
       android:text="@string/toSystem"
-      app:layout_constraintStart_toEndOf="@+id/measurementSystem"
+      app:layout_constraintStart_toEndOf="@+id/fromMeasSystem"
       app:layout_constraintTop_toBottomOf="@+id/ingredients" />
 
   <Spinner
-      android:id="@+id/measurementSystem2"
+      android:id="@+id/toMeasSystem"
       android:layout_width="151dp"
       android:layout_height="22dp"
       android:layout_marginStart="8dp"
@@ -227,51 +227,6 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toEndOf="@+id/to"
       app:layout_constraintTop_toBottomOf="@+id/ingredients" />
-
-
-  <Button
-      android:id="@+id/button7"
-      android:layout_width="60dp"
-      android:layout_height="30dp"
-      android:layout_marginStart="16dp"
-      android:layout_marginLeft="16dp"
-      android:layout_marginBottom="78dp"
-      android:onClick="addIngredient"
-      android:text="@string/add_button"
-      app:backgroundTint="@android:color/holo_green_light"
-      app:icon="@android:drawable/ic_input_add"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
-
-  <Button
-      android:id="@+id/button3"
-      android:layout_width="140dp"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="16dp"
-      android:layout_marginLeft="16dp"
-      android:layout_marginBottom="8dp"
-      android:background="@android:drawable/editbox_background_normal"
-      android:onClick="saveRecipe"
-      android:text="@string/save_recipe_button"
-      android:textSize="12sp"
-      app:backgroundTint="@color/design_default_color_secondary_variant"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
-
-  <Button
-      android:id="@+id/button8"
-      android:layout_width="140dp"
-      android:layout_height="40dp"
-      android:layout_marginEnd="16dp"
-      android:layout_marginRight="16dp"
-      android:layout_marginBottom="8dp"
-      android:background="@android:drawable/editbox_background_normal"
-      android:onClick="onClickMyRecipe"
-      android:text="@string/my_recipe_button"
-      android:textSize="12sp"
-      app:backgroundTint="@color/design_default_color_secondary_variant"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent" />
 
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/ingredientList"
@@ -290,16 +245,50 @@
       app:layout_constraintTop_toBottomOf="@+id/to" />
 
   <Button
-      android:id="@+id/button4"
-      android:layout_width="79dp"
-      android:layout_height="33dp"
-      android:layout_marginTop="20dp"
-      android:layout_marginEnd="56dp"
-      android:layout_marginRight="56dp"
-      android:onClick="buttonCheckData"
-      android:text="Button"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/notes" />
+      android:id="@+id/buttonAdd"
+      android:layout_width="60dp"
+      android:layout_height="30dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginLeft="16dp"
+      android:layout_marginBottom="78dp"
+      android:onClick="addIngredient"
+      android:text="@string/add_button"
+      app:backgroundTint="@android:color/holo_green_light"
+      app:icon="@android:drawable/ic_input_add"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  <Button
+      android:id="@+id/buttonSave"
+      android:layout_width="140dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginLeft="16dp"
+      android:layout_marginBottom="8dp"
+      android:background="@android:drawable/editbox_background_normal"
+      android:onClick="saveRecipe"
+      android:text="@string/save_recipe_button"
+      android:textSize="12sp"
+      app:backgroundTint="@color/design_default_color_secondary_variant"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  <Button
+      android:id="@+id/buttonMyRecipes"
+      android:layout_width="140dp"
+      android:layout_height="40dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginRight="16dp"
+      android:layout_marginBottom="8dp"
+      android:background="@android:drawable/editbox_background_normal"
+      android:onClick="onClickMyRecipe"
+      android:text="@string/my_recipe_button"
+      android:textSize="12sp"
+      app:backgroundTint="@color/design_default_color_secondary_variant"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+
 
 
  </androidx.constraintlayout.widget.ConstraintLayout>
