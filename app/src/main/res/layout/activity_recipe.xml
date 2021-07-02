@@ -288,7 +288,17 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
 
-
+  <Button
+      android:id="@+id/button3"
+      android:layout_width="86dp"
+      android:layout_height="32dp"
+      android:layout_marginTop="16dp"
+      android:layout_marginEnd="68dp"
+      android:layout_marginRight="68dp"
+      android:onClick="buttonUpdateData"
+      android:text="Button"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/notes" />
 
 
  </androidx.constraintlayout.widget.ConstraintLayout>
