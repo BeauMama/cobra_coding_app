@@ -39,7 +39,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         if (loadRecipeWithIngredients() == false) {
             setupRecipeWithDummyData();
-            binding.setRecipeWithIngredients(recipeWithIngredients);
+
         }
 
         if (getIngredientNames() == false) {
@@ -47,6 +47,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
 
         initializeRecycleView();
+        binding.setRecipeWithIngredients(recipeWithIngredients);
     }
 
     private void initializeDatabase() {
@@ -73,6 +74,10 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         } else {
             return true;
         }
+    }
+
+    public void buttonCheckData(View view) {
+        System.out.println(recipeWithIngredients.recipe.getName());
     }
 
     public void saveRecipe(View view) {
