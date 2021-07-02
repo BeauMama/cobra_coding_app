@@ -5,14 +5,12 @@
 
  <data>
      <variable name="recipeWithIngredients" type="com.example.application.RecipeWithIngredients"/>
-     <variable name="empty" type="String"/>
  </data>
 
  <androidx.constraintlayout.widget.ConstraintLayout
      android:layout_width="match_parent"
      android:layout_height="match_parent"
      tools:context=".RecipeActivity">
-
 
   <EditText
       android:id="@+id/recipeName"
@@ -290,6 +288,18 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/to" />
+
+  <Button
+      android:id="@+id/button4"
+      android:layout_width="79dp"
+      android:layout_height="33dp"
+      android:layout_marginTop="20dp"
+      android:layout_marginEnd="56dp"
+      android:layout_marginRight="56dp"
+      android:onClick="buttonCheckData"
+      android:text="Button"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/notes" />
 
 
  </androidx.constraintlayout.widget.ConstraintLayout>

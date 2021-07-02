@@ -12,18 +12,18 @@ public class Recipe {
     @PrimaryKey(autoGenerate = true)
     private int id;
     @NonNull
-    public String name;
-    public int servingSize;
-    public int cookTimeMinutes;
-    public int temperature;
-    public String temperatureMeasurement;
-    public String conversionTemperatureMeasurement;
+    private String name;
+    private int servingSize;
+    private int cookTimeMinutes;
+    private int temperature;
+    private String temperatureMeasurement;
+    private String conversionTemperatureMeasurement;
     @NonNull
-    public String conversionType;
-    public float conversionAmount;
-    public String notes;
-    public String fromSystem;
-    public String toSystem;
+    private String conversionType;
+    private float conversionAmount;
+    private String notes;
+    private String fromSystem;
+    private String toSystem;
 
     public int getId() {
         return id;

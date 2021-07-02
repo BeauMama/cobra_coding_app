@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.application.databinding.IngredientlistRowBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,15 +41,16 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(
+        IngredientlistRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                 R.layout.ingredientlist_row, parent, false);
-        return new ViewHolder(view, deleteButtonListener);
+
+        return new ViewHolder(binding, deleteButtonListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewIngredientsAdapter.ViewHolder viewHolder, int position) {
         Ingredient ingredient = this.recipeWithIngredients.ingredients.get(position);
-        viewHolder.getTextView().setText(ingredient.getName());
+        viewHolder.bind(ingredient);
     }
 
     @Override
@@ -58,9 +62,11 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         private AutoCompleteTextView textView;
         private Button button;
         private DeleteButtonListener deleteButtonListener;
+        public IngredientlistRowBinding ingredientlistRowBinding;
 
-        public ViewHolder(@NonNull @NotNull View itemView, DeleteButtonListener deleteButtonListener) {
-            super(itemView);
+        public ViewHolder(@NonNull @NotNull IngredientlistRowBinding ingredientlistRowBinding, DeleteButtonListener deleteButtonListener) {
+            super(ingredientlistRowBinding.getRoot());
+            this.ingredientlistRowBinding = ingredientlistRowBinding;
 
             textView = itemView.findViewById(R.id.ingredentName2);
             ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, ingredientNames);
@@ -68,7 +74,6 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             textView.setAdapter(adapter);
 
             button = itemView.findViewById(R.id.delete2);
-
             this.deleteButtonListener = deleteButtonListener;
             button.setOnClickListener(this);
         }
@@ -79,6 +84,12 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         @Override
         public void onClick(View view) {
             deleteButtonListener.deleteButtonClick(getAdapterPosition());
+        }
+
+        public void bind(Ingredient ingredient) {
+            ingredientlistRowBinding.setVariable(BR.ingredient, ingredient);
+            ingredientlistRowBinding.executePendingBindings();
+
         }
     }
 

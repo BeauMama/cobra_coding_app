@@ -1,95 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Spinner
-        android:id="@+id/measurements3"
-        android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:entries="@array/measurement"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/convQty2"
-        app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toEndOf="@+id/ingredentQuantity2"
-        app:layout_constraintTop_toBottomOf="@+id/ingredentName2"
-        app:layout_constraintVertical_bias="0.0" />
+    <data>
+        <variable name="ingredient" type="com.example.application.Ingredient" />
+    </data>
 
-    <Spinner
-        android:id="@+id/measurements4"
-        android:layout_width="54dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:entries="@array/measurement"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="37dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/ingredentName2"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Spinner
+            android:id="@+id/measurements3"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:entries="@array/measurement"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/convQty2"
+            app:layout_constraintHorizontal_bias="0.521"
+            app:layout_constraintStart_toEndOf="@+id/ingredentQuantity2"
+            app:layout_constraintTop_toBottomOf="@+id/ingredentName2"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/delete2"
-        android:layout_width="62dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="@string/delete_button"
-        app:backgroundTint="@color/design_default_color_error"
-        app:icon="@android:drawable/ic_delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/checkBox2"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Spinner
+            android:id="@+id/measurements4"
+            android:layout_width="54dp"
+            android:layout_height="29dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:entries="@array/measurement"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
 
-    <TextView
-        android:id="@+id/convQty2"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@android:drawable/editbox_dropdown_light_frame"
-        app:layout_constraintEnd_toStartOf="@+id/measurements4"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="37dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toEndOf="@+id/ingredentName2"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/ingredentQuantity2"
-        android:layout_width="66dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:autofillHints="Servings"
-        android:background="@android:drawable/editbox_dropdown_light_frame"
-        android:hint="@string/quantity"
-        android:inputType="numberDecimal"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredentName2" />
+        <Button
+            android:id="@+id/delete2"
+            android:layout_width="62dp"
+            android:layout_height="29dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/delete_button"
+            app:backgroundTint="@color/design_default_color_error"
+            app:icon="@android:drawable/ic_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/checkBox2"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <AutoCompleteTextView
-        android:id="@+id/ingredentName2"
-        android:layout_width="269dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:autofillHints="Ingredent Name"
-        android:background="@android:drawable/editbox_dropdown_light_frame"
-        android:hint="@string/ingredent_name"
-        android:inputType="textAutoComplete"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/convQty2"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@android:drawable/editbox_dropdown_light_frame"
+            app:layout_constraintEnd_toStartOf="@+id/measurements4"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
+
+        <EditText
+            android:id="@+id/ingredentQuantity2"
+            android:layout_width="66dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:autofillHints="Servings"
+            android:background="@android:drawable/editbox_dropdown_light_frame"
+            android:hint="@string/quantity"
+            android:inputType="numberDecimal"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ingredentName2" />
+
+        <AutoCompleteTextView
+            android:id="@+id/ingredentName2"
+            android:text="@={ingredient.name}"
+            android:layout_width="269dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:autofillHints="Ingredent Name"
+            android:background="@android:drawable/editbox_dropdown_light_frame"
+            android:hint="@string/ingredent_name"
+            android:inputType="textAutoComplete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
