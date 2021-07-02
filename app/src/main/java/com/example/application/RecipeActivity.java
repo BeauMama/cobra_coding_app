@@ -76,8 +76,15 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
-    public void buttonCheckData(View view) {
-        System.out.println(recipeWithIngredients.recipe.getName());
+    public void buttonUpdateData(View view) {
+        System.out.println("cook time before change: " + recipeWithIngredients.recipe.getCookTimeMinutes());
+        System.out.println("ing 0 qty before change: " + recipeWithIngredients.ingredients.get(0).getQuantity());
+
+        recipeWithIngredients.recipe.setCookTimeMinutes(recipeWithIngredients.recipe.getCookTimeMinutes() + 1);
+        recipeWithIngredients.ingredients.get(0).setQuantity(recipeWithIngredients.ingredients.get(0).getQuantity() + 1);
+
+        System.out.println("cook time after change: " + recipeWithIngredients.recipe.getCookTimeMinutes());
+        System.out.println("ing 0 qty after change: " + recipeWithIngredients.ingredients.get(0).getQuantity());
     }
 
     public void saveRecipe(View view) {
