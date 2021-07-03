@@ -1,8 +1,7 @@
-package com.example.application;
+package com.example.application.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.application.viewmodel.LoadRecipeViewModel;
+import com.example.application.R;
+import com.example.application.adapter.ViewRecipeListAdapter;
 import com.example.application.database.DataDao;
 import com.example.application.database.DataGetAllRecipes;
 import com.example.application.database.DataInitializeDatabase;
 import com.example.application.databinding.ActivityLoadRecipeBinding;
-import com.example.application.databinding.ActivityRecipeBinding;
-import com.example.application.databinding.RecipelistRowBinding;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,7 +44,7 @@ public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeL
         ActivityLoadRecipeBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_load_recipe);
         initializeRecycleView();
 
-        binding.setModel(viewModel);
+        binding.setViewModel(viewModel);
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.application.model;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;

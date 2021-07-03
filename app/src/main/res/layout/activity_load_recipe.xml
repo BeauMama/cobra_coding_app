@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="model" type="com.example.application.LoadRecipeViewModel" />
+        <variable name="viewModel" type="com.example.application.viewmodel.LoadRecipeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoadRecipeActivity">
+        tools:context=".activity.LoadRecipeActivity">
 
         <TextView
             android:id="@+id/textView"

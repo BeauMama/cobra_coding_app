@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
  <data>
-     <variable name="recipeWithIngredients" type="com.example.application.RecipeWithIngredients"/>
+     <variable name="viewModel" type="com.example.application.viewmodel.RecipeViewModel" />
  </data>
 
  <androidx.constraintlayout.widget.ConstraintLayout
      android:layout_width="match_parent"
      android:layout_height="match_parent"
-     tools:context=".RecipeActivity">
+     tools:context=".activity.RecipeActivity">
 
   <EditText
       android:id="@+id/recipeName"
-      android:text="@={recipeWithIngredients.recipe.name}"
+
+      android:text="@={viewModel.getRecipeWithIngredients().recipe.name}"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
@@ -33,7 +34,7 @@
 
   <EditText
       android:id="@+id/servingSize"
-      android:text="@={recipeWithIngredients.recipe.servingSizeString}"
+      android:text="@={viewModel.getRecipeWithIngredients().recipe.servingSizeString}"
       android:layout_width="96dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="16dp"
@@ -48,7 +49,7 @@
 
   <EditText
       android:id="@+id/cookTimeMinutes"
-      android:text="@={recipeWithIngredients.recipe.cookTimeMinutesString}"
+      android:text="@={viewModel.getRecipeWithIngredients().recipe.cookTimeMinutesString}"
       android:layout_width="94dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
@@ -63,7 +64,7 @@
 
   <EditText
       android:id="@+id/temp"
-      android:text="@={recipeWithIngredients.recipe.temperatureString}"
+      android:text="@={viewModel.getRecipeWithIngredients().recipe.temperatureString}"
       android:layout_width="66dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
@@ -134,7 +135,7 @@
 
   <EditText
       android:id="@+id/convAmount"
-      android:text="@={recipeWithIngredients.recipe.conversionAmountString}"
+      android:text="@={viewModel.getRecipeWithIngredients().recipe.conversionAmountString}"
       android:layout_width="53dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="12dp"
@@ -150,7 +151,7 @@
 
   <EditText
       android:id="@+id/notes"
-      android:text="@={recipeWithIngredients.recipe.notes}"
+      android:text="@={viewModel.getRecipeWithIngredients().recipe.notes}"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"

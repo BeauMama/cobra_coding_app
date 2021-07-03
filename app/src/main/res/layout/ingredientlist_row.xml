@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="ingredient" type="com.example.application.Ingredient" />
+        <variable name="ingredient" type="com.example.application.model.Ingredient" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

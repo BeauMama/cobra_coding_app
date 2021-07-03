@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Application">
-        <activity android:name=".RecipeActivity"
+        <activity android:name=".activity.RecipeActivity"
             android:windowSoftInputMode="adjustUnspecified|adjustPan" />
-        <activity android:name=".LoadRecipeActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.LoadRecipeActivity" />
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

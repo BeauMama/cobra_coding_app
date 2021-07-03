@@ -1,6 +1,6 @@
 package com.example.application.database;
 
-import com.example.application.RecipeWithIngredients;
+import com.example.application.model.RecipeWithIngredients;
 
 import java.security.InvalidParameterException;
 import java.util.concurrent.Callable;
