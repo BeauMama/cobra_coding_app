@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.application.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.application.databinding.IngredientlistRowBinding;
+import com.example.application.BR;
+import com.example.application.viewmodel.LoadRecipeViewModel;
+import com.example.application.R;
 import com.example.application.databinding.RecipelistRowBinding;
+import com.example.application.model.Recipe;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class ViewRecipeListAdapter extends RecyclerView.Adapter<ViewRecipeListAdapter.ViewHolder> {
 

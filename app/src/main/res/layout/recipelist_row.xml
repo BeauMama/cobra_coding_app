@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="recipe" type="com.example.application.Recipe" />
+        <variable name="recipe" type="com.example.application.model.Recipe" />
     </data>
 
     <LinearLayout

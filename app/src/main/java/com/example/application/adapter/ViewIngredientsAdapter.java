@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.application.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -9,11 +9,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.application.BR;
+import com.example.application.R;
 import com.example.application.databinding.IngredientlistRowBinding;
+import com.example.application.model.Ingredient;
+import com.example.application.model.RecipeWithIngredients;
+import com.example.application.viewmodel.LoadRecipeViewModel;
+import com.example.application.viewmodel.RecipeViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -21,20 +28,16 @@ import java.util.List;
 
 public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredientsAdapter.ViewHolder> {
 
-    private RecipeWithIngredients recipeWithIngredients;
-    private List<String> ingredientNames;
+    private int layoutId;
+    private RecipeViewModel viewModel;
     private DeleteButtonListener deleteButtonListener;
     private Activity activity;
 
-    public ViewIngredientsAdapter(RecipeWithIngredients recipeWithIngredients, List<String> ingredientNames, Activity activity) {
-        this.recipeWithIngredients = recipeWithIngredients;
-        this.ingredientNames = ingredientNames;
+    public ViewIngredientsAdapter(@LayoutRes int layoutId, RecipeViewModel viewModel, Activity activity) {
+        this.layoutId = layoutId;
+        this.viewModel = viewModel;
         this.deleteButtonListener = (DeleteButtonListener) activity;
         this.activity = activity;
-
-        for (String ingredient : ingredientNames) {
-            System.out.println("name: " + ingredient);
-        }
     }
 
     @NonNull
@@ -49,14 +52,14 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewIngredientsAdapter.ViewHolder viewHolder, int position) {
-        Ingredient ingredient = this.recipeWithIngredients.ingredients.get(position);
+        Ingredient ingredient = viewModel.getRecipeWithIngredients().ingredients.get(position);
         viewHolder.bind(ingredient);
         //viewHolder.getCalcConvQty().setText(Float.toString(ingredient.getQuantity() * 2));
     }
 
     @Override
     public int getItemCount() {
-        return recipeWithIngredients.ingredients.size();
+        return viewModel.getRecipeWithIngredients().ingredients.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -73,7 +76,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             calcConvQty = itemView.findViewById(R.id.calcConvQuantity);
 
             textView = itemView.findViewById(R.id.ingredentName);
-            ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, ingredientNames);
+            ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, viewModel.getIngredientNames());
             textView.setThreshold(1);
             textView.setAdapter(adapter);
 

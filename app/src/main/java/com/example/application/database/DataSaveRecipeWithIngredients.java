@@ -1,12 +1,11 @@
 package com.example.application.database;
 
-import com.example.application.Ingredient;
-import com.example.application.Recipe;
-import com.example.application.RecipeWithIngredients;
+import com.example.application.model.Ingredient;
+import com.example.application.model.Recipe;
+import com.example.application.model.RecipeWithIngredients;
 
 import java.security.InvalidParameterException;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 public class DataSaveRecipeWithIngredients implements Callable<RecipeWithIngredients> {
