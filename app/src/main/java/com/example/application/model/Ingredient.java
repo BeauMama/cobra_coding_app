@@ -1,13 +1,18 @@
 package com.example.application.model;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+import androidx.databinding.ObservableInt;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.example.application.BR;
 
 import java.util.List;
 
 @Entity
-public class Ingredient {
+public class Ingredient  extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int recipeId;
@@ -49,8 +54,10 @@ public class Ingredient {
     }
     public void setQuantity(float quantity) {
         this.quantity = quantity;
+        notifyPropertyChanged(BR.quantityString);
     }
 
+    @Bindable
     public String getQuantityString() {
         if (getQuantity() == 0) {
             return null;

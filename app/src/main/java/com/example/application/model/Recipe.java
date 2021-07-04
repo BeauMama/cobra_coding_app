@@ -3,12 +3,16 @@ package com.example.application.model;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
+import androidx.databinding.ObservableInt;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.application.BR;
+
 @Entity
-public class Recipe {
+public class Recipe extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     @NonNull
@@ -42,8 +46,10 @@ public class Recipe {
     public int getServingSize() {
         return servingSize;
     }
+
     public void setServingSize(int servingSize) {
         this.servingSize = servingSize;
+
     }
 
     public String getServingSizeString() {
@@ -53,6 +59,7 @@ public class Recipe {
             return Integer.toString(getServingSize());
         }
     }
+
     public void setServingSizeString(String servingSize) {
         try {
             int val = Integer.parseInt(servingSize);
@@ -65,10 +72,13 @@ public class Recipe {
     public int getCookTimeMinutes() {
         return cookTimeMinutes;
     }
+
     public void setCookTimeMinutes(int cookTimeMinutes) {
         this.cookTimeMinutes = cookTimeMinutes;
+        notifyPropertyChanged(BR.cookTimeMinutesString);
     }
 
+    @Bindable
     public String getCookTimeMinutesString() {
         if (getCookTimeMinutes() == 0) {
             return null;
@@ -76,6 +86,7 @@ public class Recipe {
             return Integer.toString(getCookTimeMinutes());
         }
     }
+
     public void setCookTimeMinutesString(String cookTimeMinutes) {
         try {
             int val = Integer.parseInt(cookTimeMinutes);
