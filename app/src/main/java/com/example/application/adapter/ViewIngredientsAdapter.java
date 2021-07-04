@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.application.BR;
 import com.example.application.R;
 import com.example.application.databinding.IngredientlistRowBinding;
-import com.example.application.model.Ingredient;
 import com.example.application.viewmodel.RecipeViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -53,8 +52,8 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewIngredientsAdapter.ViewHolder viewHolder, int position) {
-        Ingredient ingredient = viewModel.getRecipeWithIngredients().ingredients.get(position);
-        viewHolder.bind(ingredient);
+        viewHolder.bind(viewModel, position);
+
         //viewHolder.getCalcConvQty().setText(Float.toString(ingredient.getQuantity() * 2));
         viewHolder.checkBox.setClickable(true);
         viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +102,6 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             button.setOnClickListener(this);
 
             checkBox = itemView.findViewById(R.id.checkBoxIsConvIngredient);
-
         }
         public TextView getTextView() {
             return textView;
@@ -117,10 +115,10 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             deleteButtonListener.deleteButtonClick(getAdapterPosition());
         }
 
-        public void bind(Ingredient ingredient) {
-            ingredientlistRowBinding.setVariable(BR.ingredient, ingredient);
+        public void bind(RecipeViewModel viewModel, int position) {
+            ingredientlistRowBinding.setVariable(BR.viewModel, viewModel);
+            ingredientlistRowBinding.setVariable(BR.position, position);
             ingredientlistRowBinding.executePendingBindings();
-
         }
     }
 

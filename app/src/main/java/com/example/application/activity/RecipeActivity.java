@@ -170,14 +170,15 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().recipe.setTemperature(180);
         viewModel.getRecipeWithIngredients().recipe.setTemperatureMeasurement("celsius");
         viewModel.getRecipeWithIngredients().recipe.setConversionTemperatureMeasurement("fahrenheit");
-        viewModel.getRecipeWithIngredients().recipe.setConversionType("One Ingredient"); // Example by one ingredient conversion
-        //recipeWithIngredients.recipe.setConversionAmount((float) 2.5); // Not needed for this example
+        viewModel.getRecipeWithIngredients().recipe.setConversionType("Multiply by"); // Example by one ingredient conversion
+        viewModel.getRecipeWithIngredients().recipe.setConversionAmount((float) 2.5); // Not needed for this example
         viewModel.getRecipeWithIngredients().recipe.setNotes("This is my favorite scrambled egg recipe!");
         viewModel.getRecipeWithIngredients().recipe.setFromSystem("Metric");
         viewModel.getRecipeWithIngredients().recipe.setToSystem("Imperial");
 
         viewModel.getRecipeWithIngredients().ingredients = new ArrayList<>();
         Ingredient ingredient = new Ingredient();
+        ingredient.setRecipe(viewModel.getRecipeWithIngredients().recipe);
         ingredient.setName("eggs");
         ingredient.setMeasurement("units");
         ingredient.setConversionMeasurement("units");
@@ -187,6 +188,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 
         ingredient = new Ingredient();
+        ingredient.setRecipe(viewModel.getRecipeWithIngredients().recipe);
         ingredient.setName("milk");
         ingredient.setMeasurement("milliliters");
         ingredient.setConversionMeasurement("cups");
@@ -195,6 +197,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 
         ingredient = new Ingredient();
+        ingredient.setRecipe(viewModel.getRecipeWithIngredients().recipe);
         ingredient.setName("salt");
         ingredient.setMeasurement("grams");
         ingredient.setConversionMeasurement("teaspoons");

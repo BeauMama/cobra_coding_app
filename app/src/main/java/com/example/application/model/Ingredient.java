@@ -5,6 +5,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.ObservableInt;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.application.BR;
@@ -12,14 +13,13 @@ import com.example.application.BR;
 import java.util.List;
 
 @Entity
-public class Ingredient  extends BaseObservable {
+public class Ingredient extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int recipeId;
     @NonNull
     private String name;
     private float quantity;
-    private float calculatedConvertedQuantity;
     @NonNull
     private String measurement;
     @NonNull
@@ -27,6 +27,18 @@ public class Ingredient  extends BaseObservable {
     @NonNull
     private Boolean isConversionIngredient;
     private float conversionIngredientQuantity;
+
+    public transient Recipe recipe;
+
+    @Ignore
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    @Ignore
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
 
     public int getId() {
         return id;
@@ -52,9 +64,12 @@ public class Ingredient  extends BaseObservable {
     public float getQuantity() {
         return quantity;
     }
+
+    @Bindable
     public void setQuantity(float quantity) {
         this.quantity = quantity;
         notifyPropertyChanged(BR.quantityString);
+        notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
     }
 
     @Bindable
@@ -74,35 +89,9 @@ public class Ingredient  extends BaseObservable {
         }
     }
 
-    public float getCalculatedConvertedQuantity() {
-        return getQuantity() * 2;
-        //return calculatedConvertedQuantity;
-    }
-
-    public void setCalculatedConvertedQuantity(float calculatedConvertedQuantity) {
-        this.calculatedConvertedQuantity = getQuantity() * 2;
-        //this.calculatedConvertedQuantity = calculatedConvertedQuantity;
-    }
-
-    public String getCalculatedConvertedQuantityString() {
-        if (getCalculatedConvertedQuantity() == 0) {
-            return null;
-        } else {
-            return Float.toString(getCalculatedConvertedQuantity());
-        }
-    }
-    public void setCalculatedConvertedQuantityString(String setCalculatedConvertedQuantity) {
-        try {
-            float val = Float.parseFloat(setCalculatedConvertedQuantity);
-            this.setCalculatedConvertedQuantity(val);
-        } catch(NumberFormatException ex) {
-            this.setCalculatedConvertedQuantity(0);
-        }
-    }
-
-    public float getQuantityConverted(RecipeWithIngredients recipeWithIngredients) {
+    @Bindable
+    public String getQuantityIncreaseDecreaseString() {
         float quantityConverted = getQuantity();
-        Recipe recipe = recipeWithIngredients.recipe;
 
         switch (recipe.getConversionType().toLowerCase()) {
             case "multiply by":
@@ -123,6 +112,8 @@ public class Ingredient  extends BaseObservable {
                     // Don't convert the quantity if this ingredient is the conversion ingredient.
                     quantityConverted = getConversionIngredientQuantity();
                 } else {
+
+                    /* This is not implemented yet.
                     List<Ingredient> ingredients = recipeWithIngredients.ingredients;
                     for (Ingredient ingredient : ingredients) {
                         if (ingredient.getIsConversionIngredient() && ingredient.getQuantity() != 0) {
@@ -130,11 +121,21 @@ public class Ingredient  extends BaseObservable {
                             break;
                         }
                     }
+                    */
                 }
                 break;
         }
 
-        return quantityConverted;
+        if (quantityConverted == 0) {
+            return null;
+        } else {
+            return Float.toString(quantityConverted);
+        }
+    }
+
+
+    public void setQuantityIncreaseDecreaseString(String string) {
+
     }
 
     public String getMeasurement() {
