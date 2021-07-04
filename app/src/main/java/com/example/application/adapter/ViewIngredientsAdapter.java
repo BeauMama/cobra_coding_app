@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ import com.example.application.viewmodel.RecipeViewModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredientsAdapter.ViewHolder> {
 
@@ -55,6 +58,21 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         Ingredient ingredient = viewModel.getRecipeWithIngredients().ingredients.get(position);
         viewHolder.bind(ingredient);
         //viewHolder.getCalcConvQty().setText(Float.toString(ingredient.getQuantity() * 2));
+        viewHolder.checkBox.setClickable(true);
+        viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectedPosition = viewHolder.getAdapterPosition();
+                notifyItemChanged(position);
+
+                if (selectedPosition == position){
+                    viewHolder.checkBox.setClickable(false);
+
+                }else{
+                   viewHolder.checkBox.setClickable(true);
+                }
+            }
+        });
     }
 
     @Override
@@ -68,6 +86,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         private DeleteButtonListener deleteButtonListener;
         public IngredientlistRowBinding ingredientlistRowBinding;
         private TextView calcConvQty;
+        private CheckBox checkBox;
 
         public ViewHolder(@NonNull @NotNull IngredientlistRowBinding ingredientlistRowBinding, DeleteButtonListener deleteButtonListener) {
             super(ingredientlistRowBinding.getRoot());
@@ -83,6 +102,9 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             button = itemView.findViewById(R.id.buttonDeleteIngredient);
             this.deleteButtonListener = deleteButtonListener;
             button.setOnClickListener(this);
+
+            checkBox = itemView.findViewById(R.id.checkBoxIsConvIngredient);
+
         }
         public TextView getTextView() {
             return textView;
