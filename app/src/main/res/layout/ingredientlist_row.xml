@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="ingredient" type="com.example.application.model.Ingredient" />
+        <variable name="position" type="int" />
+        <variable name="viewModel" type="com.example.application.viewmodel.RecipeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,13 +14,13 @@
 
         <AutoCompleteTextView
             android:id="@+id/ingredentName"
-            android:text="@={ingredient.name}"
+            android:text="@={viewModel.getRecipeWithIngredients().ingredients.get(position).name}"
             android:layout_width="269dp"
             android:layout_height="27dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
-            android:autofillHints="Ingredent Name"
+            android:autofillHints="Ingredient Name"
             android:background="@android:drawable/editbox_dropdown_light_frame"
             android:hint="@string/ingredent_name"
             android:inputType="textAutoComplete"
@@ -53,6 +54,7 @@
 
         <EditText
             android:id="@+id/ingredientQuantity"
+            android:text="@={viewModel.getRecipeWithIngredients().ingredients.get(position).quantityString}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -62,7 +64,6 @@
             android:background="@android:drawable/editbox_dropdown_light_frame"
             android:hint="@string/quantity"
             android:inputType="numberDecimal"
-            android:text="@={ingredient.quantityString}"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ingredentName" />
@@ -97,13 +98,13 @@
 
         <TextView
             android:id="@+id/calcConvQuantity"
+            android:text="@={viewModel.getRecipeWithIngredients().ingredients.get(position).calculatedConvertedQuantityString}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
             android:background="@android:drawable/editbox_dropdown_light_frame"
-            android:text="@={ingredient.calculatedConvertedQuantityString}"
             app:layout_constraintEnd_toStartOf="@+id/convMeasurement"
             app:layout_constraintTop_toBottomOf="@+id/checkBoxIsConvIngredient" />
 

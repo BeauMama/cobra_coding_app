@@ -12,7 +12,7 @@ import com.example.application.BR;
 import java.util.List;
 
 @Entity
-public class Ingredient  extends BaseObservable {
+public class Ingredient extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int recipeId;
