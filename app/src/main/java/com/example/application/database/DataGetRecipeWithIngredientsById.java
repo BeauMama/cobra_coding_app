@@ -24,7 +24,7 @@ public class DataGetRecipeWithIngredientsById implements Callable<RecipeWithIngr
             // This is needed so the recipe information can be accessed by the ingredient
             // so the ingredient.getQuantityIncreaseDecreaseString method can calculate what
             // it needs to
-            ingredient.setRecipe(recipeWithIngredients.recipe);
+            ingredient.setRecipeWithIngredients(recipeWithIngredients);
         }
 
         return recipeWithIngredients;
