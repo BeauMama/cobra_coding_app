@@ -68,6 +68,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
                 }else{
                     viewHolder.checkBox.setClickable(true);
+
                 }
             }
         });
