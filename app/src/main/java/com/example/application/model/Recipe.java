@@ -46,10 +46,10 @@ public class Recipe extends BaseObservable {
     public int getServingSize() {
         return servingSize;
     }
-
+    @Bindable
     public void setServingSize(int servingSize) {
         this.servingSize = servingSize;
-
+        notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
     }
 
     public String getServingSizeString() {
@@ -75,10 +75,8 @@ public class Recipe extends BaseObservable {
 
     public void setCookTimeMinutes(int cookTimeMinutes) {
         this.cookTimeMinutes = cookTimeMinutes;
-        notifyPropertyChanged(BR.cookTimeMinutesString);
     }
 
-    @Bindable
     public String getCookTimeMinutesString() {
         if (getCookTimeMinutes() == 0) {
             return null;
@@ -140,13 +138,18 @@ public class Recipe extends BaseObservable {
         this.conversionType = conversionType;
     }
 
+    @Bindable
     public float getConversionAmount() {
         return conversionAmount;
     }
+
+    @Bindable
     public void setConversionAmount(float conversionAmount) {
         this.conversionAmount = conversionAmount;
+        notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
     }
 
+    @Bindable
     public String getConversionAmountString() {
         if (getConversionAmount() == 0) {
             return null;
@@ -154,6 +157,8 @@ public class Recipe extends BaseObservable {
             return Float.toString(getConversionAmount());
         }
     }
+
+    @Bindable
     public void setConversionAmountString(String setConversionAmount) {
         try {
             float val = Float.parseFloat(setConversionAmount);

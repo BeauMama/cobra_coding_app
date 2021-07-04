@@ -1,5 +1,7 @@
 package com.example.application.database;
 
+import com.example.application.model.Ingredient;
+import com.example.application.model.Recipe;
 import com.example.application.model.RecipeWithIngredients;
 
 import java.security.InvalidParameterException;
@@ -16,6 +18,15 @@ public class DataGetRecipeWithIngredientsById implements Callable<RecipeWithIngr
     }
 
     public RecipeWithIngredients call() throws InvalidParameterException {
-        return dataDao.getRecipeWithIngredientsById(id);
+        RecipeWithIngredients recipeWithIngredients = dataDao.getRecipeWithIngredientsById(id);
+
+        for (Ingredient ingredient : recipeWithIngredients.ingredients) {
+            // This is needed so the recipe information can be accessed by the ingredient
+            // so the ingredient.getQuantityIncreaseDecreaseString method can calculate what
+            // it needs to
+            ingredient.setRecipe(recipeWithIngredients.recipe);
+        }
+
+        return recipeWithIngredients;
     }
 }

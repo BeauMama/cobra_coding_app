@@ -28,8 +28,17 @@ public class Ingredient extends BaseObservable {
     private Boolean isConversionIngredient;
     private float conversionIngredientQuantity;
 
-    //private transient Recipe recipe;
+    public transient Recipe recipe;
 
+    @Ignore
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    @Ignore
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
 
     public int getId() {
         return id;
@@ -82,12 +91,7 @@ public class Ingredient extends BaseObservable {
 
     @Bindable
     public String getQuantityIncreaseDecreaseString() {
-    //public String getQuantityIncreaseDecreaseString(RecipeWithIngredients recipeWithIngredients) {
-        return Float.toString(getQuantity() * 2);
-
-        /*
         float quantityConverted = getQuantity();
-        Recipe recipe = recipeWithIngredients.recipe;
 
         switch (recipe.getConversionType().toLowerCase()) {
             case "multiply by":
@@ -108,6 +112,8 @@ public class Ingredient extends BaseObservable {
                     // Don't convert the quantity if this ingredient is the conversion ingredient.
                     quantityConverted = getConversionIngredientQuantity();
                 } else {
+
+                    /* This is not implemented yet.
                     List<Ingredient> ingredients = recipeWithIngredients.ingredients;
                     for (Ingredient ingredient : ingredients) {
                         if (ingredient.getIsConversionIngredient() && ingredient.getQuantity() != 0) {
@@ -115,6 +121,7 @@ public class Ingredient extends BaseObservable {
                             break;
                         }
                     }
+                    */
                 }
                 break;
         }
@@ -124,12 +131,10 @@ public class Ingredient extends BaseObservable {
         } else {
             return Float.toString(quantityConverted);
         }
-
-         */
     }
 
 
-    public void setQuantityIncreaseDecreaseString(String stringa) {
+    public void setQuantityIncreaseDecreaseString(String string) {
 
     }
 

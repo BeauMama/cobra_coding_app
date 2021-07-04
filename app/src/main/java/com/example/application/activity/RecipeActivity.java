@@ -178,6 +178,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         viewModel.getRecipeWithIngredients().ingredients = new ArrayList<>();
         Ingredient ingredient = new Ingredient();
+        ingredient.setRecipe(viewModel.getRecipeWithIngredients().recipe);
         ingredient.setName("eggs");
         ingredient.setMeasurement("units");
         ingredient.setConversionMeasurement("units");
@@ -187,6 +188,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 
         ingredient = new Ingredient();
+        ingredient.setRecipe(viewModel.getRecipeWithIngredients().recipe);
         ingredient.setName("milk");
         ingredient.setMeasurement("milliliters");
         ingredient.setConversionMeasurement("cups");
@@ -195,6 +197,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 
         ingredient = new Ingredient();
+        ingredient.setRecipe(viewModel.getRecipeWithIngredients().recipe);
         ingredient.setName("salt");
         ingredient.setMeasurement("grams");
         ingredient.setConversionMeasurement("teaspoons");
