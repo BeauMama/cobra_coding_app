@@ -5,6 +5,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.ObservableInt;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.application.BR;
@@ -19,7 +20,6 @@ public class Ingredient extends BaseObservable {
     @NonNull
     private String name;
     private float quantity;
-    private float calculatedConvertedQuantity;
     @NonNull
     private String measurement;
     @NonNull
@@ -27,6 +27,9 @@ public class Ingredient extends BaseObservable {
     @NonNull
     private Boolean isConversionIngredient;
     private float conversionIngredientQuantity;
+
+    //private transient Recipe recipe;
+
 
     public int getId() {
         return id;
@@ -52,9 +55,12 @@ public class Ingredient extends BaseObservable {
     public float getQuantity() {
         return quantity;
     }
+
+    @Bindable
     public void setQuantity(float quantity) {
         this.quantity = quantity;
         notifyPropertyChanged(BR.quantityString);
+        notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
     }
 
     @Bindable
@@ -74,33 +80,12 @@ public class Ingredient extends BaseObservable {
         }
     }
 
-    public float getCalculatedConvertedQuantity() {
-        return getQuantity() * 2;
-        //return calculatedConvertedQuantity;
-    }
+    @Bindable
+    public String getQuantityIncreaseDecreaseString() {
+    //public String getQuantityIncreaseDecreaseString(RecipeWithIngredients recipeWithIngredients) {
+        return Float.toString(getQuantity() * 2);
 
-    public void setCalculatedConvertedQuantity(float calculatedConvertedQuantity) {
-        this.calculatedConvertedQuantity = getQuantity() * 2;
-        //this.calculatedConvertedQuantity = calculatedConvertedQuantity;
-    }
-
-    public String getCalculatedConvertedQuantityString() {
-        if (getCalculatedConvertedQuantity() == 0) {
-            return null;
-        } else {
-            return Float.toString(getCalculatedConvertedQuantity());
-        }
-    }
-    public void setCalculatedConvertedQuantityString(String setCalculatedConvertedQuantity) {
-        try {
-            float val = Float.parseFloat(setCalculatedConvertedQuantity);
-            this.setCalculatedConvertedQuantity(val);
-        } catch(NumberFormatException ex) {
-            this.setCalculatedConvertedQuantity(0);
-        }
-    }
-
-    public float getQuantityConverted(RecipeWithIngredients recipeWithIngredients) {
+        /*
         float quantityConverted = getQuantity();
         Recipe recipe = recipeWithIngredients.recipe;
 
@@ -134,7 +119,18 @@ public class Ingredient extends BaseObservable {
                 break;
         }
 
-        return quantityConverted;
+        if (quantityConverted == 0) {
+            return null;
+        } else {
+            return Float.toString(quantityConverted);
+        }
+
+         */
+    }
+
+
+    public void setQuantityIncreaseDecreaseString(String stringa) {
+
     }
 
     public String getMeasurement() {
