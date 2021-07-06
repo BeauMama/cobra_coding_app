@@ -124,6 +124,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     public void addIngredient(View view) {
         Ingredient ingredient = new Ingredient();
+        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
         viewIngredientsAdapter.notifyItemInserted(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
     }
@@ -163,9 +164,9 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         // Temporarily setting data for testing.
         viewModel.setRecipeWithIngredients(new RecipeWithIngredients());
         viewModel.getRecipeWithIngredients().recipe = new Recipe();
-        viewModel.getRecipeWithIngredients().recipe = new Recipe();
+        viewModel.getRecipeWithIngredients().recipe.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         viewModel.getRecipeWithIngredients().recipe.setName("Scrambled eggs");
-        //recipeWithIngredients.recipe.setServingSize(2); // Not needed for this example.
+        viewModel.getRecipeWithIngredients().recipe.setServingSize(2); // Not needed for this example.
         viewModel.getRecipeWithIngredients().recipe.setCookTimeMinutes(4);
         viewModel.getRecipeWithIngredients().recipe.setTemperature(180);
         viewModel.getRecipeWithIngredients().recipe.setTemperatureMeasurement("celsius");
@@ -205,14 +206,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         ingredient.setIsConversionIngredient(false);
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 
-        ingredient = new Ingredient();
-        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
-        ingredient.setName("salt");
-        ingredient.setMeasurement("grams");
-        ingredient.setConversionMeasurement("teaspoons");
-        ingredient.setQuantity((float) 5);
-        ingredient.setIsConversionIngredient(false);
-        viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
     }
 
     public static Double convertMeasurement(Double quantity, String startingUnit, String endingUnit) {

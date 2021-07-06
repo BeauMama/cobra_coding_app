@@ -7,6 +7,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.ObservableInt;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.application.BR;
@@ -29,6 +30,18 @@ public class Recipe extends BaseObservable {
     private String fromSystem;
     private String toSystem;
 
+    public transient RecipeWithIngredients recipeWithIngredients;
+
+    @Ignore
+    public RecipeWithIngredients getRecipeWithIngredients() {
+        return recipeWithIngredients;
+    }
+
+    @Ignore
+    public void setRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients) {
+        this.recipeWithIngredients = recipeWithIngredients;
+    }
+
     public int getId() {
         return id;
     }
@@ -46,10 +59,18 @@ public class Recipe extends BaseObservable {
     public int getServingSize() {
         return servingSize;
     }
-    @Bindable
+
     public void setServingSize(int servingSize) {
         this.servingSize = servingSize;
-        notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
+
+        try {
+            for (Ingredient ingredient : getRecipeWithIngredients().ingredients) {
+                ingredient.notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
+            }
+        }
+        catch (Exception e) {
+
+        }
     }
 
     public String getServingSizeString() {
@@ -138,18 +159,24 @@ public class Recipe extends BaseObservable {
         this.conversionType = conversionType;
     }
 
-    @Bindable
+
     public float getConversionAmount() {
         return conversionAmount;
     }
 
-    @Bindable
+
     public void setConversionAmount(float conversionAmount) {
         this.conversionAmount = conversionAmount;
-        notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
+
+        try {
+            for (Ingredient ingredient : getRecipeWithIngredients().ingredients) {
+                ingredient.notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
+            }
+        }
+        catch (Exception e) {
+        }
     }
 
-    @Bindable
     public String getConversionAmountString() {
         if (getConversionAmount() == 0) {
             return null;
@@ -158,7 +185,7 @@ public class Recipe extends BaseObservable {
         }
     }
 
-    @Bindable
+
     public void setConversionAmountString(String setConversionAmount) {
         try {
             float val = Float.parseFloat(setConversionAmount);

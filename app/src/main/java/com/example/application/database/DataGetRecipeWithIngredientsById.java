@@ -20,6 +20,9 @@ public class DataGetRecipeWithIngredientsById implements Callable<RecipeWithIngr
     public RecipeWithIngredients call() throws InvalidParameterException {
         RecipeWithIngredients recipeWithIngredients = dataDao.getRecipeWithIngredientsById(id);
 
+        // This is needed so the ingredient information can be accessed by the recipe
+        recipeWithIngredients.recipe.setRecipeWithIngredients(recipeWithIngredients);
+
         for (Ingredient ingredient : recipeWithIngredients.ingredients) {
             // This is needed so the recipe information can be accessed by the ingredient
             // so the ingredient.getQuantityIncreaseDecreaseString method can calculate what
