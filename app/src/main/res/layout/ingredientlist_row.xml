@@ -119,5 +119,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBoxIsConvIngredient" />
 
+        <EditText
+            android:id="@+id/editOneIngredient"
+            android:layout_width="38dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@android:drawable/editbox_dropdown_light_frame"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toStartOf="@+id/convMeasurement"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxIsConvIngredient" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,9 +64,15 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
         if (selectPosition == position){
             viewHolder.checkBox.setChecked(true);
+            viewHolder.byIngredient.setVisibility(View.VISIBLE);
+            viewHolder.calcConvQty.setVisibility(View.INVISIBLE);
+
         }
         else{
             viewHolder.checkBox.setChecked(false);
+            viewHolder.byIngredient.setVisibility(View.INVISIBLE);
+            viewHolder.calcConvQty.setVisibility(View.VISIBLE);
+
         }
 
     }
@@ -82,6 +89,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         public IngredientlistRowBinding ingredientlistRowBinding;
         private TextView calcConvQty;
         private CheckBox checkBox;
+        private EditText byIngredient;
 
         public ViewHolder(@NonNull @NotNull IngredientlistRowBinding ingredientlistRowBinding, DeleteButtonListener deleteButtonListener) {
             super(ingredientlistRowBinding.getRoot());
@@ -99,6 +107,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             button.setOnClickListener(this);
 
             checkBox = itemView.findViewById(R.id.checkBoxIsConvIngredient);
+            byIngredient = itemView.findViewById(R.id.editOneIngredient);
         }
         public TextView getTextView() {
             return textView;
