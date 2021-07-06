@@ -32,6 +32,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     private RecipeViewModel viewModel;
     private DeleteButtonListener deleteButtonListener;
     private Activity activity;
+    private int selectPosition = -1;
 
     public ViewIngredientsAdapter(@LayoutRes int layoutId, RecipeViewModel viewModel, Activity activity) {
         this.layoutId = layoutId;
@@ -55,22 +56,18 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         viewHolder.bind(viewModel, position);
 
         //viewHolder.getCalcConvQty().setText(Float.toString(ingredient.getQuantity() * 2));
-        viewHolder.checkBox.setClickable(true);
-        viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int selectedPosition = viewHolder.getAdapterPosition();
-                notifyItemChanged(position);
-
-                if (selectedPosition == position){
-                    viewHolder.checkBox.setClickable(false);
-
-                }else{
-                    viewHolder.checkBox.setClickable(true);
-
-                }
-            }
+        viewHolder.checkBox.setOnClickListener(view -> {
+            selectPosition = viewHolder.getAdapterPosition();
+            notifyDataSetChanged();
         });
+
+        if (selectPosition == position){
+            viewHolder.checkBox.setChecked(true);
+        }
+        else{
+            viewHolder.checkBox.setChecked(false);
+        }
+
     }
 
     @Override
