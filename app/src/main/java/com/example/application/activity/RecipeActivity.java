@@ -90,17 +90,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
-    public void buttonUpdateData(View view) {
-        System.out.println("cook time before change: " + viewModel.getRecipeWithIngredients().recipe.getCookTimeMinutes());
-        System.out.println("ing 0 qty before change: " + viewModel.getRecipeWithIngredients().ingredients.get(0).getQuantity());
-
-        viewModel.getRecipeWithIngredients().recipe.setCookTimeMinutes(viewModel.getRecipeWithIngredients().recipe.getCookTimeMinutes() + 1);
-        viewModel.getRecipeWithIngredients().ingredients.get(0).setQuantity(viewModel.getRecipeWithIngredients().ingredients.get(0).getQuantity() + 1);
-
-        System.out.println("cook time after change: " + viewModel.getRecipeWithIngredients().recipe.getCookTimeMinutes());
-        System.out.println("ing 0 qty after change: " + viewModel.getRecipeWithIngredients().ingredients.get(0).getQuantity());
-    }
-
     public void saveRecipe(View view) {
         DataSaveRecipeWithIngredients dataSaveRecipeWithIngredients = new DataSaveRecipeWithIngredients(dataDao, viewModel.getRecipeWithIngredients());
 
@@ -172,37 +161,41 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().recipe.setTemperatureMeasurement("celsius");
         viewModel.getRecipeWithIngredients().recipe.setConversionTemperatureMeasurement("fahrenheit");
         viewModel.getRecipeWithIngredients().recipe.setConversionType("Multiply by"); // Example by one ingredient conversion
-        viewModel.getRecipeWithIngredients().recipe.setConversionAmount((float) 2.5); // Not needed for this example
+        viewModel.getRecipeWithIngredients().recipe.setConversionAmount((double) 2.5); // Not needed for this example
         viewModel.getRecipeWithIngredients().recipe.setNotes("This is my favorite scrambled egg recipe!");
         viewModel.getRecipeWithIngredients().recipe.setFromSystem("Metric");
         viewModel.getRecipeWithIngredients().recipe.setToSystem("Imperial");
 
         viewModel.getRecipeWithIngredients().ingredients = new ArrayList<>();
-        Ingredient ingredient = new Ingredient();
-        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
-        ingredient.setName("eggs");
-        ingredient.setMeasurement("units");
-        ingredient.setConversionMeasurement("units");
-        ingredient.setQuantity((float) 5);
-        ingredient.setIsConversionIngredient(true); // This is the conversion ingredient.
-        ingredient.setConversionIngredientQuantity(4); // Recipe calls for 5 eggs but we only have 4.
-        viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 
-        ingredient = new Ingredient();
+        Ingredient ingredient = new Ingredient();
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         ingredient.setName("milk");
         ingredient.setMeasurement("milliliters");
         ingredient.setConversionMeasurement("cups");
-        ingredient.setQuantity((float) 60);
+        ingredient.setQuantity((double) 60);
         ingredient.setIsConversionIngredient(false);
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
+
+
+
+        ingredient = new Ingredient();
+        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
+        ingredient.setName("eggs");
+        ingredient.setMeasurement("units");
+        ingredient.setConversionMeasurement("units");
+        ingredient.setQuantity((double) 5);
+        ingredient.setIsConversionIngredient(true); // This is the conversion ingredient.
+        ingredient.setConversionIngredientQuantity(4); // Recipe calls for 5 eggs but we only have 4.
+        viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
+
 
         ingredient = new Ingredient();
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         ingredient.setName("salt");
         ingredient.setMeasurement("grams");
         ingredient.setConversionMeasurement("teaspoons");
-        ingredient.setQuantity((float) 5);
+        ingredient.setQuantity((double) 5);
         ingredient.setIsConversionIngredient(false);
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 

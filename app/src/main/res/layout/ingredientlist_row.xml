@@ -34,6 +34,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="16dp"
+            android:checked="@={viewModel.getRecipeWithIngredients().ingredients.get(position).isConversionIngredient}"
             app:layout_constraintStart_toEndOf="@+id/ingredentName"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,7 +99,7 @@
 
         <TextView
             android:id="@+id/calcConvQuantity"
-            android:text="@={viewModel.getRecipeWithIngredients().ingredients.get(position).quantityIncreaseDecreaseString}"
+            android:text="@={viewModel.getRecipeWithIngredients().ingredients.get(position).quantityConvertedString}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

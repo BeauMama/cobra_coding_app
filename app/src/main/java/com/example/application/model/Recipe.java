@@ -11,6 +11,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.application.BR;
+import com.example.application.activity.RecipeActivity;
 
 @Entity
 public class Recipe extends BaseObservable {
@@ -25,7 +26,7 @@ public class Recipe extends BaseObservable {
     private String conversionTemperatureMeasurement;
     @NonNull
     private String conversionType;
-    private float conversionAmount;
+    private double conversionAmount;
     private String notes;
     private String fromSystem;
     private String toSystem;
@@ -65,11 +66,10 @@ public class Recipe extends BaseObservable {
 
         try {
             for (Ingredient ingredient : getRecipeWithIngredients().ingredients) {
-                ingredient.notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
+                ingredient.notifyPropertyChanged(BR.quantityConvertedString);
             }
         }
         catch (Exception e) {
-
         }
     }
 
@@ -120,6 +120,7 @@ public class Recipe extends BaseObservable {
     }
     public void setTemperature(int temperature) {
         this.temperature = temperature;
+        notifyPropertyChanged(BR.temperatureConvertedString);
     }
 
     public String getTemperatureString() {
@@ -143,6 +144,7 @@ public class Recipe extends BaseObservable {
     }
     public void setTemperatureMeasurement(String temperatureMeasurement) {
         this.temperatureMeasurement = temperatureMeasurement;
+        notifyPropertyChanged(BR.temperatureConvertedString);
     }
 
     public String getConversionTemperatureMeasurement() {
@@ -150,7 +152,14 @@ public class Recipe extends BaseObservable {
     }
     public void setConversionTemperatureMeasurement(String conversionTemperatureMeasurement) {
         this.conversionTemperatureMeasurement = conversionTemperatureMeasurement;
+        notifyPropertyChanged(BR.temperatureConvertedString);
     }
+
+    @Bindable
+    public String getTemperatureConvertedString() {
+        return Double.toString(RecipeActivity.convertMeasurement((double) getTemperature(), getTemperatureMeasurement(), getConversionTemperatureMeasurement()));
+    }
+    public void setTemperatureConvertedString(String string) { }
 
     public String getConversionType() {
         return conversionType;
@@ -160,17 +169,16 @@ public class Recipe extends BaseObservable {
     }
 
 
-    public float getConversionAmount() {
+    public double getConversionAmount() {
         return conversionAmount;
     }
 
-
-    public void setConversionAmount(float conversionAmount) {
+    public void setConversionAmount(double conversionAmount) {
         this.conversionAmount = conversionAmount;
 
         try {
             for (Ingredient ingredient : getRecipeWithIngredients().ingredients) {
-                ingredient.notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
+                ingredient.notifyPropertyChanged(BR.quantityConvertedString);
             }
         }
         catch (Exception e) {
@@ -181,14 +189,13 @@ public class Recipe extends BaseObservable {
         if (getConversionAmount() == 0) {
             return null;
         } else {
-            return Float.toString(getConversionAmount());
+            return Double.toString(getConversionAmount());
         }
     }
 
-
     public void setConversionAmountString(String setConversionAmount) {
         try {
-            float val = Float.parseFloat(setConversionAmount);
+            double val = Double.parseDouble(setConversionAmount);
             this.setConversionAmount(val);
         } catch(NumberFormatException ex) {
             this.setConversionAmount(0);

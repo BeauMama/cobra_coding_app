@@ -72,8 +72,9 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             viewHolder.checkBox.setChecked(false);
             viewHolder.byIngredient.setVisibility(View.INVISIBLE);
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
-
         }
+
+
 
     }
 

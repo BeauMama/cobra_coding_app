@@ -9,6 +9,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.application.BR;
+import com.example.application.activity.RecipeActivity;
 
 import java.util.List;
 
@@ -19,14 +20,14 @@ public class Ingredient extends BaseObservable {
     private int recipeId;
     @NonNull
     private String name;
-    private float quantity;
+    private double quantity;
     @NonNull
     private String measurement;
     @NonNull
     private String conversionMeasurement;
     @NonNull
     private Boolean isConversionIngredient;
-    private float conversionIngredientQuantity;
+    private double conversionIngredientQuantity;
 
     public transient RecipeWithIngredients recipeWithIngredients;
 
@@ -61,38 +62,35 @@ public class Ingredient extends BaseObservable {
         this.name = name;
     }
 
-    public float getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    @Bindable
-    public void setQuantity(float quantity) {
+
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
-        notifyPropertyChanged(BR.quantityString);
-        notifyPropertyChanged(BR.quantityIncreaseDecreaseString);
+        notifyPropertyChanged(BR.quantityConvertedString);
     }
 
-    @Bindable
     public String getQuantityString() {
         if (getQuantity() == 0) {
             return null;
         } else {
-            return Float.toString(getQuantity());
+            return Double.toString(getQuantity());
         }
     }
     public void setQuantityString(String setQuantity) {
         try {
-            float val = Float.parseFloat(setQuantity);
+            double val = Double.parseDouble(setQuantity);
             this.setQuantity(val);
         } catch(NumberFormatException ex) {
             this.setQuantity(0);
         }
     }
 
-    @Bindable
-    public String getQuantityIncreaseDecreaseString() {
+    public double getQuantityIncreaseDecrease() {
 
-        float quantityConverted = getQuantity();
+        double quantityConverted = getQuantity();
 
         switch (recipeWithIngredients.recipe.getConversionType().toLowerCase()) {
             case "multiply by":
@@ -123,24 +121,22 @@ public class Ingredient extends BaseObservable {
                 }
                 break;
         }
-
-        if (quantityConverted == 0) {
-            return null;
-        } else {
-            return Float.toString(quantityConverted);
-        }
-
+        return quantityConverted;
     }
 
-    public void setQuantityIncreaseDecreaseString(String string) {
-
+    @Bindable
+    public String getQuantityConvertedString() {
+       return Double.toString(RecipeActivity.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement()));
     }
+
+    public void setQuantityConvertedString(String string) { }
 
     public String getMeasurement() {
         return measurement;
     }
     public void setMeasurement(String measurement) {
         this.measurement = measurement;
+        notifyPropertyChanged(BR.quantityConvertedString);
     }
 
     public String getConversionMeasurement() {
@@ -148,6 +144,7 @@ public class Ingredient extends BaseObservable {
     }
     public void setConversionMeasurement(String conversionMeasurement) {
         this.conversionMeasurement = conversionMeasurement;
+        notifyPropertyChanged(BR.quantityConvertedString);
     }
 
     public Boolean getIsConversionIngredient() {
@@ -155,25 +152,27 @@ public class Ingredient extends BaseObservable {
     }
     public void setIsConversionIngredient(Boolean isConversionIngredient) {
         this.isConversionIngredient = isConversionIngredient;
+        notifyPropertyChanged(BR.quantityConvertedString);
     }
 
-    public float getConversionIngredientQuantity() {
+    public double getConversionIngredientQuantity() {
         return conversionIngredientQuantity;
     }
-    public void setConversionIngredientQuantity(float conversionIngredientQuantity) {
+    public void setConversionIngredientQuantity(double conversionIngredientQuantity) {
         this.conversionIngredientQuantity = conversionIngredientQuantity;
+        notifyPropertyChanged(BR.quantityConvertedString);
     }
 
     public String getConversionIngredientQuantityString() {
         if (getConversionIngredientQuantity() == 0) {
             return null;
         } else {
-            return Float.toString(getConversionIngredientQuantity());
+            return Double.toString(getConversionIngredientQuantity());
         }
     }
     public void setConversionIngredientQuantityString(String setConversionIngredientQuantity) {
         try {
-            float val = Float.parseFloat(setConversionIngredientQuantity);
+            double val = Double.parseDouble(setConversionIngredientQuantity);
             this.setConversionIngredientQuantity(val);
         } catch(NumberFormatException ex) {
             this.setConversionIngredientQuantity(0);

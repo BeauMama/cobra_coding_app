@@ -52,7 +52,7 @@ public interface DataDao {
            "WHERE id = :id")
     int updateRecipe(int id, String name, int servingSize, int cookTimeMinutes, int temperature,
         String temperatureMeasurement, String conversionTemperatureMeasurement, String conversionType,
-        float conversionAmount, String notes, String fromSystem, String toSystem);
+        double conversionAmount, String notes, String fromSystem, String toSystem);
 
     @Query("UPDATE Ingredient " +
            "SET recipeId = :recipeId, " +
@@ -63,7 +63,7 @@ public interface DataDao {
            "isConversionIngredient = :isConversionIngredient, " +
            "conversionIngredientQuantity = :conversionIngredientQuantity " +
            "WHERE id = :id")
-    int updateIngredient(int id, int recipeId, String name, float quantity, String measurement,
-        String conversionMeasurement, Boolean isConversionIngredient, float conversionIngredientQuantity);
+    int updateIngredient(int id, int recipeId, String name, double quantity, String measurement,
+        String conversionMeasurement, Boolean isConversionIngredient, double conversionIngredientQuantity);
 
 }
