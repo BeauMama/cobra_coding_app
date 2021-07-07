@@ -53,7 +53,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         viewHolder.bind(viewModel, position);
 
         /*
-        //viewHolder.getCalcConvQty().setText(Float.toString(ingredient.getQuantity() * 2));
+
         viewHolder.checkBox.setOnClickListener(view -> {
             selectPosition = viewHolder.getAdapterPosition();
             notifyDataSetChanged();
