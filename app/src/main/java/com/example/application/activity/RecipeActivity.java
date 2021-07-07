@@ -154,7 +154,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @Override
     public void ingredientCheckboxClick(int position) {
-        EditText byIngredient = findViewById(R.id.editOneIngredient);
+        /*EditText byIngredient = findViewById(R.id.editOneIngredient);
         TextView calcConQty = findViewById(R.id.calcConvQuantity);
 
         for (int i = 0; i < viewModel.getRecipeWithIngredients().ingredients.size(); i ++) {
