@@ -2,6 +2,7 @@ package com.example.application.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.service.controls.actions.BooleanAction;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -95,17 +96,38 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     public void saveRecipe(View view) {
 
-        DataSaveRecipeWithIngredients dataSaveRecipeWithIngredients = new DataSaveRecipeWithIngredients(dataDao, viewModel.getRecipeWithIngredients());
+        if (validRecipe()) {
+            // The recipe is valid. Save it to the database.
+            DataSaveRecipeWithIngredients dataSaveRecipeWithIngredients = new DataSaveRecipeWithIngredients(dataDao, viewModel.getRecipeWithIngredients());
 
-        ExecutorService executorService = Executors.newFixedThreadPool(3);
-        try {
-            viewModel.setRecipeWithIngredients(executorService.submit(dataSaveRecipeWithIngredients).get());
+            ExecutorService executorService = Executors.newFixedThreadPool(3);
+            try {
+                viewModel.setRecipeWithIngredients(executorService.submit(dataSaveRecipeWithIngredients).get());
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private Boolean validRecipe() {
+        Boolean recipeValid = true;
+
+        if (viewModel.getRecipeWithIngredients().recipe.getName().equals("")) {
+            // The name should not be blank. Let the user know with a toast or some other method.
+            recipeValid = false;
+        }
+
+        for (Ingredient ingredient: viewModel.getRecipeWithIngredients().ingredients) {
+            if (ingredient.getName().equals("")) {
+                // One of the recipe names are blank. Let the user know.
+                recipeValid = false;
+            }
+        }
+
+        return recipeValid;
     }
 
     private void initializeRecycleView() {
