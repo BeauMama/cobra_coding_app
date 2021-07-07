@@ -3,6 +3,8 @@ package com.example.application.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -92,6 +94,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     public void saveRecipe(View view) {
+
         DataSaveRecipeWithIngredients dataSaveRecipeWithIngredients = new DataSaveRecipeWithIngredients(dataDao, viewModel.getRecipeWithIngredients());
 
         ExecutorService executorService = Executors.newFixedThreadPool(3);
@@ -129,15 +132,39 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @Override
     public void ingredientCheckboxClick(int position) {
+        EditText byIngredient = findViewById(R.id.editOneIngredient);
+        TextView calcConQty = findViewById(R.id.calcConvQuantity);
+
         for (int i = 0; i < viewModel.getRecipeWithIngredients().ingredients.size(); i ++) {
-            if (i != position) {
+            if(i == position) {
+
+                //Long id = viewModel.getAdapter().getItemId(i);
+                //EditText byIngredient2 = findViewById(id);
+                byIngredient.setVisibility(View.VISIBLE);
+                calcConQty.setVisibility(View.INVISIBLE);
+            } else {
                 viewModel.getRecipeWithIngredients().ingredients.get(i).setIsConversionIngredient(false);
+                byIngredient.setVisibility(View.INVISIBLE);
+                calcConQty.setVisibility(View.VISIBLE);
             }
         }
 
-        for (int i = 0; i < viewModel.getRecipeWithIngredients().ingredients.size(); i ++) {
-        System.out.println("Check box " + i + " value: " + viewModel.getRecipeWithIngredients().ingredients.get(i).getIsConversionIngredient());
+        viewModel.getAdapter().notifyDataSetChanged();
+
+/*
+        if (selectPosition == position){
+            viewHolder.checkBox.setChecked(true);
+            viewHolder.byIngredient.setVisibility(View.VISIBLE);
+            viewHolder.calcConvQty.setVisibility(View.INVISIBLE);
+
         }
+        else{
+            viewHolder.checkBox.setChecked(false);
+            viewHolder.byIngredient.setVisibility(View.INVISIBLE);
+            viewHolder.calcConvQty.setVisibility(View.VISIBLE);
+        }
+
+ */
     }
 
     private boolean getIngredientNames() {
