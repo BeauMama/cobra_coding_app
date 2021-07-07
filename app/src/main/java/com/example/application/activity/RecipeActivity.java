@@ -21,22 +21,23 @@ import com.example.application.databinding.ActivityRecipeBinding;
 import com.example.application.model.Ingredient;
 import com.example.application.model.Recipe;
 import com.example.application.model.RecipeWithIngredients;
-import com.example.application.viewmodel.LoadRecipeViewModel;
 import com.example.application.viewmodel.RecipeViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class RecipeActivity extends AppCompatActivity implements ViewIngredientsAdapter.DeleteButtonListener {
+public class RecipeActivity extends AppCompatActivity implements ViewIngredientsAdapter.OnClickListener {
 
     private DataDao dataDao;
     private RecyclerView recyclerView;
     private ViewIngredientsAdapter viewIngredientsAdapter;
     private RecipeViewModel viewModel;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +127,19 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
+    @Override
+    public void ingredientCheckboxClick(int position) {
+        for (int i = 0; i < viewModel.getRecipeWithIngredients().ingredients.size(); i ++) {
+            if (i != position) {
+                viewModel.getRecipeWithIngredients().ingredients.get(i).setIsConversionIngredient(false);
+            }
+        }
+
+        for (int i = 0; i < viewModel.getRecipeWithIngredients().ingredients.size(); i ++) {
+        System.out.println("Check box " + i + " value: " + viewModel.getRecipeWithIngredients().ingredients.get(i).getIsConversionIngredient());
+        }
+    }
+
     private boolean getIngredientNames() {
         DataGetIngredientNames dataGetIngredientNames = new DataGetIngredientNames(dataDao);
         ExecutorService executorService = Executors.newFixedThreadPool(3);
@@ -177,8 +191,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         ingredient.setIsConversionIngredient(false);
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 
-
-
         ingredient = new Ingredient();
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         ingredient.setName("eggs");
@@ -189,7 +201,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         ingredient.setConversionIngredientQuantity(4); // Recipe calls for 5 eggs but we only have 4.
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 
-
         ingredient = new Ingredient();
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         ingredient.setName("salt");
@@ -198,7 +209,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         ingredient.setQuantity((double) 5);
         ingredient.setIsConversionIngredient(false);
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
-
     }
 
     public static Double convertMeasurement(Double quantity, String startingUnit, String endingUnit) {
