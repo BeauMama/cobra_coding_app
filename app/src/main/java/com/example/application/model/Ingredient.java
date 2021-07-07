@@ -126,7 +126,12 @@ public class Ingredient extends BaseObservable {
 
     @Bindable
     public String getQuantityConvertedString() {
-       return Double.toString(RecipeActivity.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement()));
+        try {
+            return Double.toString(RecipeActivity.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement()));
+        }
+        catch (Exception e) {
+            return "";
+        }
     }
 
     public void setQuantityConvertedString(String string) { }
@@ -142,17 +147,21 @@ public class Ingredient extends BaseObservable {
     public String getConversionMeasurement() {
         return conversionMeasurement;
     }
+
     public void setConversionMeasurement(String conversionMeasurement) {
         this.conversionMeasurement = conversionMeasurement;
         notifyPropertyChanged(BR.quantityConvertedString);
+
     }
 
+    @Bindable
     public Boolean getIsConversionIngredient() {
         return isConversionIngredient;
     }
     public void setIsConversionIngredient(Boolean isConversionIngredient) {
         this.isConversionIngredient = isConversionIngredient;
         notifyPropertyChanged(BR.quantityConvertedString);
+        notifyPropertyChanged(BR.isConversionIngredient);
     }
 
     public double getConversionIngredientQuantity() {
