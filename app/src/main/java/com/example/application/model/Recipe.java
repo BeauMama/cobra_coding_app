@@ -139,10 +139,6 @@ public class Recipe extends BaseObservable {
         }
     }
 
-    //test
-    public int getTemperaturePosition() { return 1;}
-    public void setTemperaturePosition(int position) { }
-
     public String getTemperatureMeasurement() {
         return temperatureMeasurement;
     }
@@ -170,6 +166,14 @@ public class Recipe extends BaseObservable {
     }
     public void setConversionType(String conversionType) {
         this.conversionType = conversionType;
+
+        try {
+            for (Ingredient ingredient : getRecipeWithIngredients().ingredients) {
+                ingredient.notifyPropertyChanged(BR.quantityConvertedString);
+            }
+        }
+        catch (Exception e) {
+        }
     }
 
 
