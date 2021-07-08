@@ -93,21 +93,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
-    public void checkSpinner(View view) {
-/*
-        Spinner mySpinner = findViewById(R.id.tempMeasurement);
-        int position = mySpinner.getSelectedItemPosition();
-        String item = (String) mySpinner.getItemAtPosition(position);
-        System.out.println("spinner position: " + position);
-        System.out.println("spinner value: " + item);
-
- */
-        System.out.println("data value: " + viewModel.getRecipeWithIngredients().ingredients.get(0).getMeasurement());
-
-
-
-    }
-
     public void saveRecipe(View view) {
 
         if (validRecipe()) {
