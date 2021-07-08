@@ -59,7 +59,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         });
 
         if (selectPosition == position) {
-            if (viewHolder.checkBox.isChecked() == true) {
+            if (viewHolder.checkBox.isChecked()) {
                 viewHolder.byIngredient.setVisibility(View.VISIBLE);
                 viewHolder.calcConvQty.setVisibility(View.INVISIBLE);
             } else {

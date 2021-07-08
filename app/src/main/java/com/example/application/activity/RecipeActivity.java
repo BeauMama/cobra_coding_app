@@ -3,8 +3,10 @@ package com.example.application.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.service.controls.actions.BooleanAction;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -89,6 +91,16 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         } else {
             return true;
         }
+    }
+
+    public void checkSpinner(View view) {
+
+        Spinner mySpinner = findViewById(R.id.tempMeasurement);
+        int position = mySpinner.getSelectedItemPosition();
+        String item = (String) mySpinner.getItemAtPosition(position);
+        System.out.println("spinner position: " + position);
+        System.out.println("spinner value: " + item);
+        System.out.println("data value: " + viewModel.getRecipeWithIngredients().recipe.getTemperatureMeasurement());
     }
 
     public void saveRecipe(View view) {
@@ -181,8 +193,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().recipe.setServingSize(2); // Not needed for this example.
         viewModel.getRecipeWithIngredients().recipe.setCookTimeMinutes(4);
         viewModel.getRecipeWithIngredients().recipe.setTemperature(180);
-        viewModel.getRecipeWithIngredients().recipe.setTemperatureMeasurement("celsius");
-        viewModel.getRecipeWithIngredients().recipe.setConversionTemperatureMeasurement("fahrenheit");
+        viewModel.getRecipeWithIngredients().recipe.setTemperatureMeasurement("C");
+        viewModel.getRecipeWithIngredients().recipe.setConversionTemperatureMeasurement("F");
         viewModel.getRecipeWithIngredients().recipe.setConversionType("One Ingredient"); // Example by one ingredient conversion
         viewModel.getRecipeWithIngredients().recipe.setConversionAmount((double) 2.5); // Not needed for this example
         viewModel.getRecipeWithIngredients().recipe.setNotes("This is my favorite scrambled egg recipe!");

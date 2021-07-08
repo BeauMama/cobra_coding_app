@@ -139,6 +139,10 @@ public class Recipe extends BaseObservable {
         }
     }
 
+    //test
+    public int getTemperaturePosition() { return 1;}
+    public void setTemperaturePosition(int position) { }
+
     public String getTemperatureMeasurement() {
         return temperatureMeasurement;
     }
