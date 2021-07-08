@@ -58,17 +58,19 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             notifyDataSetChanged();
         });
 
-        if (selectPosition == position){
-            viewHolder.byIngredient.setVisibility(View.VISIBLE);
-            viewHolder.calcConvQty.setVisibility(View.INVISIBLE);
-
-        }
-        else{
+        if (selectPosition == position) {
+            if (viewHolder.checkBox.isChecked() == true) {
+                viewHolder.byIngredient.setVisibility(View.VISIBLE);
+                viewHolder.calcConvQty.setVisibility(View.INVISIBLE);
+            } else {
+                viewHolder.byIngredient.setVisibility(View.INVISIBLE);
+                viewHolder.calcConvQty.setVisibility(View.VISIBLE);
+            }
+        } else {
             viewHolder.checkBox.setChecked(false);
             viewHolder.byIngredient.setVisibility(View.INVISIBLE);
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
@@ -132,6 +134,6 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
     public interface OnClickListener {
         void deleteButtonClick(int position);
-        void ingredientCheckboxClick(int position);
+        //void ingredientCheckboxClick(int position);
     }
 }

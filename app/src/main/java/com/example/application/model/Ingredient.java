@@ -169,7 +169,14 @@ public class Ingredient extends BaseObservable {
     }
     public void setConversionIngredientQuantity(double conversionIngredientQuantity) {
         this.conversionIngredientQuantity = conversionIngredientQuantity;
-        notifyPropertyChanged(BR.quantityConvertedString);
+
+        try {
+            for (Ingredient ingredient : recipeWithIngredients.ingredients) {
+                ingredient.notifyPropertyChanged(BR.quantityConvertedString);
+            }
+        }
+        catch (Exception e) {
+        }
     }
 
     public String getConversionIngredientQuantityString() {

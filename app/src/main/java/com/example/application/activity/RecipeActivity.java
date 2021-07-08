@@ -39,9 +39,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     private ViewIngredientsAdapter viewIngredientsAdapter;
     private RecipeViewModel viewModel;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,43 +149,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
-    @Override
-    public void ingredientCheckboxClick(int position) {
-        /*EditText byIngredient = findViewById(R.id.editOneIngredient);
-        TextView calcConQty = findViewById(R.id.calcConvQuantity);
-
-        for (int i = 0; i < viewModel.getRecipeWithIngredients().ingredients.size(); i ++) {
-            if(i == position) {
-
-                //Long id = viewModel.getAdapter().getItemId(i);
-                //EditText byIngredient2 = findViewById(id);
-                byIngredient.setVisibility(View.VISIBLE);
-                calcConQty.setVisibility(View.INVISIBLE);
-            } else {
-                viewModel.getRecipeWithIngredients().ingredients.get(i).setIsConversionIngredient(false);
-                byIngredient.setVisibility(View.INVISIBLE);
-                calcConQty.setVisibility(View.VISIBLE);
-            }
-        }
-
-        viewModel.getAdapter().notifyDataSetChanged();
-
-/*
-        if (selectPosition == position){
-            viewHolder.checkBox.setChecked(true);
-            viewHolder.byIngredient.setVisibility(View.VISIBLE);
-            viewHolder.calcConvQty.setVisibility(View.INVISIBLE);
-
-        }
-        else{
-            viewHolder.checkBox.setChecked(false);
-            viewHolder.byIngredient.setVisibility(View.INVISIBLE);
-            viewHolder.calcConvQty.setVisibility(View.VISIBLE);
-        }
-
- */
-    }
-
     private boolean getIngredientNames() {
         DataGetIngredientNames dataGetIngredientNames = new DataGetIngredientNames(dataDao);
         ExecutorService executorService = Executors.newFixedThreadPool(3);
@@ -223,7 +183,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().recipe.setTemperature(180);
         viewModel.getRecipeWithIngredients().recipe.setTemperatureMeasurement("celsius");
         viewModel.getRecipeWithIngredients().recipe.setConversionTemperatureMeasurement("fahrenheit");
-        viewModel.getRecipeWithIngredients().recipe.setConversionType("Multiply by"); // Example by one ingredient conversion
+        viewModel.getRecipeWithIngredients().recipe.setConversionType("One Ingredient"); // Example by one ingredient conversion
         viewModel.getRecipeWithIngredients().recipe.setConversionAmount((double) 2.5); // Not needed for this example
         viewModel.getRecipeWithIngredients().recipe.setNotes("This is my favorite scrambled egg recipe!");
         viewModel.getRecipeWithIngredients().recipe.setFromSystem("Metric");
