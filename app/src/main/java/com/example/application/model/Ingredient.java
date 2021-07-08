@@ -92,18 +92,18 @@ public class Ingredient extends BaseObservable {
 
         double quantityConverted = getQuantity();
 
-        switch (recipeWithIngredients.recipe.getConversionType().toLowerCase()) {
+        switch (getRecipeWithIngredients().recipe.getConversionType().toLowerCase()) {
             case "multiply by":
-                quantityConverted = getQuantity() * recipeWithIngredients.recipe.getConversionAmount();
+                quantityConverted = getQuantity() * getRecipeWithIngredients().recipe.getConversionAmount();
                 break;
             case "divide by":
-                if (recipeWithIngredients.recipe.getConversionAmount() != 0) {
-                    quantityConverted = getQuantity() / recipeWithIngredients.recipe.getConversionAmount();
+                if (getRecipeWithIngredients().recipe.getConversionAmount() != 0) {
+                    quantityConverted = getQuantity() / getRecipeWithIngredients().recipe.getConversionAmount();
                 }
                 break;
             case "servings":
-                if (recipeWithIngredients.recipe.getServingSize() != 0) {
-                    quantityConverted = getQuantity() * recipeWithIngredients.recipe.getConversionAmount() / recipeWithIngredients.recipe.getServingSize();
+                if (getRecipeWithIngredients().recipe.getServingSize() != 0) {
+                    quantityConverted = getQuantity() * getRecipeWithIngredients().recipe.getConversionAmount() / getRecipeWithIngredients().recipe.getServingSize();
                 }
                 break;
             case "one ingredient":
@@ -111,10 +111,12 @@ public class Ingredient extends BaseObservable {
                     // Don't convert the quantity if this ingredient is the conversion ingredient.
                     quantityConverted = getConversionIngredientQuantity();
                 } else {
-                    List<Ingredient> ingredients = recipeWithIngredients.ingredients;
-                    for (Ingredient ingredient : ingredients) {
+                    for (Ingredient ingredient : getRecipeWithIngredients().ingredients) {
                         if (ingredient.getIsConversionIngredient() && ingredient.getQuantity() != 0) {
-                            quantityConverted = getQuantity() * ingredient.getConversionIngredientQuantity() / ingredient.getQuantity();
+                            quantityConverted = getQuantity() *
+                                    RecipeActivity.convertMeasurement(ingredient.getConversionIngredientQuantity(),
+                                            ingredient.getConversionMeasurement(), ingredient.getMeasurement()) /
+                                    ingredient.getQuantity();
                             break;
                         }
                     }
@@ -141,7 +143,13 @@ public class Ingredient extends BaseObservable {
     }
     public void setMeasurement(String measurement) {
         this.measurement = measurement;
-        notifyPropertyChanged(BR.quantityConvertedString);
+        try {
+            for (Ingredient ingredient : recipeWithIngredients.ingredients) {
+                ingredient.notifyPropertyChanged(BR.quantityConvertedString);
+            }
+        }
+        catch (Exception e) {
+        }
     }
 
     public String getConversionMeasurement() {
@@ -150,8 +158,13 @@ public class Ingredient extends BaseObservable {
 
     public void setConversionMeasurement(String conversionMeasurement) {
         this.conversionMeasurement = conversionMeasurement;
-        notifyPropertyChanged(BR.quantityConvertedString);
-
+        try {
+            for (Ingredient ingredient : recipeWithIngredients.ingredients) {
+                ingredient.notifyPropertyChanged(BR.quantityConvertedString);
+            }
+        }
+        catch (Exception e) {
+        }
     }
 
     @Bindable

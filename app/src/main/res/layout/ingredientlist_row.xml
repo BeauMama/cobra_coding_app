@@ -71,6 +71,7 @@
 
         <Spinner
             android:id="@+id/measurement"
+            spinnerBinder="@={viewModel.getRecipeWithIngredients().ingredients.get(position).measurement}"
             android:layout_width="0dp"
             android:layout_height="26dp"
             android:layout_marginStart="4dp"
@@ -126,6 +127,7 @@
 
         <Spinner
             android:id="@+id/convMeasurement"
+            spinnerBinder="@={viewModel.getRecipeWithIngredients().ingredients.get(position).conversionMeasurement}"
             android:layout_width="112dp"
             android:layout_height="24dp"
             android:layout_marginTop="16dp"
@@ -134,7 +136,6 @@
             android:entries="@array/measurement"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBoxIsConvIngredient" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

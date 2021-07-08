@@ -94,13 +94,18 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     public void checkSpinner(View view) {
-
+/*
         Spinner mySpinner = findViewById(R.id.tempMeasurement);
         int position = mySpinner.getSelectedItemPosition();
         String item = (String) mySpinner.getItemAtPosition(position);
         System.out.println("spinner position: " + position);
         System.out.println("spinner value: " + item);
-        System.out.println("data value: " + viewModel.getRecipeWithIngredients().recipe.getTemperatureMeasurement());
+
+ */
+        System.out.println("data value: " + viewModel.getRecipeWithIngredients().ingredients.get(0).getMeasurement());
+
+
+
     }
 
     public void saveRecipe(View view) {
@@ -206,7 +211,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         Ingredient ingredient = new Ingredient();
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         ingredient.setName("milk");
-        ingredient.setMeasurement("milliliters");
+        ingredient.setMeasurement("cups");
         ingredient.setConversionMeasurement("cups");
         ingredient.setQuantity((double) 60);
         ingredient.setIsConversionIngredient(false);
@@ -215,8 +220,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         ingredient = new Ingredient();
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         ingredient.setName("eggs");
-        ingredient.setMeasurement("units");
-        ingredient.setConversionMeasurement("units");
+        ingredient.setMeasurement("cups");
+        ingredient.setConversionMeasurement("tablespoons");
         ingredient.setQuantity((double) 5);
         ingredient.setIsConversionIngredient(true); // This is the conversion ingredient.
         ingredient.setConversionIngredientQuantity(4); // Recipe calls for 5 eggs but we only have 4.
@@ -225,7 +230,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         ingredient = new Ingredient();
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         ingredient.setName("salt");
-        ingredient.setMeasurement("grams");
+        ingredient.setMeasurement("tablespoons");
         ingredient.setConversionMeasurement("teaspoons");
         ingredient.setQuantity((double) 5);
         ingredient.setIsConversionIngredient(false);
