@@ -74,8 +74,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
                 viewHolder.byIngredient.setVisibility(View.INVISIBLE);
                 viewHolder.calcConvQty.setVisibility(View.VISIBLE);
             }
-        }
-        if (selectPosition == position) {
+        } else if (selectPosition == position) {
             // Check boxed checked/unchecked. Hide/show the items for the related ingredient.
             if (viewHolder.checkBox.isChecked()) {
                 viewHolder.byIngredient.setVisibility(View.VISIBLE);
