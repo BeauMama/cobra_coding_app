@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.service.controls.actions.BooleanAction;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -157,6 +158,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @Override
     public void deleteButtonClick(int position) {
+
         if (viewModel.getRecipeWithIngredients().ingredients.size() > 1) {
             viewModel.getRecipeWithIngredients().ingredients.remove(position);
             viewIngredientsAdapter.notifyItemRemoved(position);
@@ -492,9 +494,9 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
                 break;
 
-            case "fahrenheit": //Temperature
+            case "F": //Temperature
                 //Temperature
-                if ("celsius".equals(endingUnit)) {
+                if ("C".equals(endingUnit)) {
                     quantity = (quantity - 32) * 5 / 9;
                 } else {
                     System.out.println("Invalid Entry");
@@ -502,8 +504,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
                 break;
 
-            case "celsius": //Temperature
-                if ("fahrenheit".equals(endingUnit)) {
+            case "C": //Temperature
+                if ("F".equals(endingUnit)) {
                     quantity = (quantity * 9 / 5) + 32;
                 } else {
                     System.out.println("Invalid Entry");

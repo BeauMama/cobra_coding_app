@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
@@ -18,11 +20,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.BR;
+import com.example.application.MeasurementDetails;
 import com.example.application.R;
+import com.example.application.activity.RecipeActivity;
 import com.example.application.databinding.IngredientlistRowBinding;
 import com.example.application.viewmodel.RecipeViewModel;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredientsAdapter.ViewHolder> {
 
@@ -71,6 +78,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             viewHolder.byIngredient.setVisibility(View.INVISIBLE);
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
+
     }
 
     @Override
@@ -86,6 +94,8 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         private TextView calcConvQty;
         private CheckBox checkBox;
         private EditText byIngredient;
+        private Spinner spinnerMeasurement;
+
 
         public ViewHolder(@NonNull @NotNull IngredientlistRowBinding ingredientlistRowBinding, OnClickListener onClickListener) {
             super(ingredientlistRowBinding.getRoot());
@@ -106,6 +116,9 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
             checkBox = itemView.findViewById(R.id.checkBoxIsConvIngredient);
             checkBox.setOnClickListener(this);
+
+            spinnerMeasurement = itemView.findViewById(R.id.measurement);
+
         }
         public TextView getTextView() {
             return textView;

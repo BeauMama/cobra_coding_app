@@ -13,6 +13,11 @@ import androidx.room.PrimaryKey;
 import com.example.application.BR;
 import com.example.application.activity.RecipeActivity;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 @Entity
 public class Recipe extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
@@ -157,7 +162,9 @@ public class Recipe extends BaseObservable {
 
     @Bindable
     public String getTemperatureConvertedString() {
-        return Double.toString(RecipeActivity.convertMeasurement((double) getTemperature(), getTemperatureMeasurement(), getConversionTemperatureMeasurement()));
+        double value = RecipeActivity.convertMeasurement((double) getTemperature(), getTemperatureMeasurement(), getConversionTemperatureMeasurement());
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        return decimalFormat.format(value);
     }
     public void setTemperatureConvertedString(String string) { }
 

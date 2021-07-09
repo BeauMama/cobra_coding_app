@@ -23,10 +23,10 @@ public enum MeasurementDetails {
     GRAMS("grams", "Metric","weight"),
     KILOGRAMS("kilograms", "Metric", "weight"),
 
-    FAHRENHEIT("fahrenheit", "Imperial","temperature"),
-    CELSIUS("celsius", "Metric","temperature"),
+    FAHRENHEIT("F", "Imperial","temperature"),
+    CELSIUS("C", "Metric","temperature"),
 
-    UNITS("units","Both","quantity");
+    UNITS("units","Units","quantity");
 
     private final String measurement;
     private final String measurementSystem;
@@ -43,8 +43,8 @@ public enum MeasurementDetails {
         List<String> measurements = new ArrayList<>();
         for (MeasurementDetails measurement : MeasurementDetails.values()) {
 
-            if (measurement.measurementSystem.toLowerCase().equals(measurementSystem.toLowerCase()) || measurementSystem.toLowerCase().equals("both")) {
-                if (measurement.measurementType.toLowerCase().equals(measurementType.toLowerCase())) {
+            if (measurement.measurementSystem.toLowerCase().equals(measurementSystem.toLowerCase()) || measurementSystem.toLowerCase().equals("all")) {
+                if (measurement.measurementType.toLowerCase().equals(measurementType.toLowerCase()) || measurementType.toLowerCase().equals("all")) {
                     measurements.add(measurement.measurement);
                 }
             }
