@@ -90,6 +90,39 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             viewHolder.byIngredient.setVisibility(View.INVISIBLE);
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
+
+        // I am not sure what listener event it needs to be when you select an item in the list.
+        // The setOnItemSelectedListener might not be the right one.
+        viewHolder.spinnerMeasurement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                // Not sure if this gets the right spinner using parent. to get the measurement.
+                String measurementSelected = MeasurementDetails.getMeasurementType(parent.getSelectedItem().toString());
+
+                // Get the type from the enum
+                String measurementType = MeasurementDetails.getMeasurementType(measurementSelected);
+
+                //This needs te be adjusted to get a list based on the measurementType value
+                List<String> measurements = MeasurementDetails.getMeasurements("all", "volume");
+
+                // Not sure if this gets the right spinner using view.
+                Spinner spinnerConvMeasurement = view.findViewById(R.id.convMeasurement);
+
+                // Set up adapter to be used to update the spinner.
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, measurements);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                //Update the spinner with the new list of items.
+                //spinnerConvMeasurement.setAdapter(adapter); // currently crashes app
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
     }
 
     @Override

@@ -80,6 +80,9 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
+
+
+
     private void initializeDatabase() {
         dataDao = DataInitializeDatabase.getInstance(getApplicationContext());
     }
@@ -163,6 +166,31 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             viewModel.getRecipeWithIngredients().ingredients.remove(position);
             viewIngredientsAdapter.notifyItemRemoved(position);
         }
+    }
+
+    private void dummyMethod(int position) {
+        // If using this method, it would be executed like the deleteButtonClick above to change
+        // the spinner values based on when another spinner changes.
+        View viewIngredient = recyclerView.getLayoutManager().findViewByPosition(position);
+        Spinner spinnerMeasurement = viewIngredient.findViewById(R.id.measurement);
+        Spinner spinnerConvMeasurement = viewIngredient.findViewById(R.id.convMeasurement);
+
+        // This line gets the text of what the spinner is set to.
+        String measurementSelected = spinnerMeasurement.getSelectedItem().toString();
+
+        // Get the type from the enum
+        String measurementType = MeasurementDetails.getMeasurementType(measurementSelected);
+
+        //This needs te be adjusted to get a list based on the measurementType value
+        List<String> measurements = MeasurementDetails.getMeasurements("all", "volume");
+
+        // Set up adapter to be used to update the spinner.
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, measurements);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        //Update the spinner with the new list of items.
+        spinnerConvMeasurement.setAdapter(adapter);
     }
 
     private boolean getIngredientNames() {
