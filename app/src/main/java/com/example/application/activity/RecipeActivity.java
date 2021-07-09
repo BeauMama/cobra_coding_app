@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.application.MeasurementDetails;
 import com.example.application.R;
 import com.example.application.adapter.ViewIngredientsAdapter;
 import com.example.application.database.DataDao;
@@ -30,6 +31,7 @@ import com.example.application.viewmodel.RecipeViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,6 +47,16 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+
+        List<String> measurements = MeasurementDetails.getMeasurements("both", "volume");
+
+        for (String measurement : measurements) {
+            System.out.println("measurement: " + measurement);
+        }
+
+        System.out.println("fluid ounces: " + MeasurementDetails.getMeasurementSystem("fluid ounces"));
+        System.out.println("fluid ounces: " + MeasurementDetails.getMeasurementType("fluid ounces"));
+
 
         viewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         if (savedInstanceState == null) {

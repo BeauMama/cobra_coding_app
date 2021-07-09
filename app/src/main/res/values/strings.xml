@@ -37,8 +37,9 @@
     </string-array>
 
     <string-array name="measurement_system">
-        <item>Metric</item>
         <item>Imperial</item>
+        <item>Metric</item>
+        <item>Metric</item>
     </string-array>
 
     <string-array name="temp_measurement">
