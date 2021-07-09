@@ -83,7 +83,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
                 viewHolder.byIngredient.setVisibility(View.INVISIBLE);
                 viewHolder.calcConvQty.setVisibility(View.VISIBLE);
             }
-        } else if (selectPosition != -1) {
+        } else {
             // Check box checked/unchecked. Uncheck all checkboxes for what was not checked
             // and show/hide controls that need to be.
             viewHolder.checkBox.setChecked(false);
