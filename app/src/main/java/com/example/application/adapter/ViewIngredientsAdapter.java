@@ -65,20 +65,32 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             notifyDataSetChanged();
         });
 
-        if (selectPosition == position) {
-            if (viewHolder.checkBox.isChecked()) {
+        if (selectPosition == -1) {
+            // Checkbox has never been pressed. Set up visibility of items based on the recipe.
+            if (viewModel.getRecipeWithIngredients().ingredients.get(position).getIsConversionIngredient()) {
                 viewHolder.byIngredient.setVisibility(View.VISIBLE);
                 viewHolder.calcConvQty.setVisibility(View.INVISIBLE);
             } else {
                 viewHolder.byIngredient.setVisibility(View.INVISIBLE);
                 viewHolder.calcConvQty.setVisibility(View.VISIBLE);
             }
-        } else {
+        }
+        if (selectPosition == position) {
+            // Check boxed checked/unchecked. Hide/show the items for the related ingredient.
+            if (viewHolder.checkBox.isChecked()) {
+                viewHolder.byIngredient.setVisibility(View.VISIBLE);
+                viewHolder.calcConvQty.setVisibility(View.INVISIBLE);
+           } else {
+                viewHolder.byIngredient.setVisibility(View.INVISIBLE);
+                viewHolder.calcConvQty.setVisibility(View.VISIBLE);
+            }
+        } else if (selectPosition != -1) {
+            // Check box checked/unchecked. Uncheck all checkboxes for what was not checked
+            // and show/hide controls that need to be.
             viewHolder.checkBox.setChecked(false);
             viewHolder.byIngredient.setVisibility(View.INVISIBLE);
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
