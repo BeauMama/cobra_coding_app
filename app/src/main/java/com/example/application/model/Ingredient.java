@@ -11,6 +11,7 @@ import androidx.room.PrimaryKey;
 import com.example.application.BR;
 import com.example.application.activity.RecipeActivity;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Entity
@@ -128,8 +129,11 @@ public class Ingredient extends BaseObservable {
 
     @Bindable
     public String getQuantityConvertedString() {
+
         try {
-            return Double.toString(RecipeActivity.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement()));
+            double value = RecipeActivity.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement());
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            return decimalFormat.format(value);
         }
         catch (Exception e) {
             return "";

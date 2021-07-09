@@ -31,15 +31,25 @@
     <string name="add_ingredient">Add Ingredient</string>
     <string name="Delete">Delete</string>
     <string-array name="measurement">
-        <item>cups</item>
+        <item>fluid ounces</item>
         <item>teaspoons</item>
         <item>tablespoons</item>
+        <item>cups</item>
+        <item>pints</item>
+        <item>quarts</item>
+        <item>gallons</item>
+        <item>ounces</item>
+        <item>pounds</item>
+        <item>milliliters</item>
+        <item>liters</item>
+        <item>grams</item>
+        <item>kilograms</item>
     </string-array>
 
     <string-array name="measurement_system">
         <item>Imperial</item>
         <item>Metric</item>
-        <item>Metric</item>
+        <item>All</item>
     </string-array>
 
     <string-array name="temp_measurement">
