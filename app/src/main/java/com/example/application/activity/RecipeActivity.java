@@ -2,13 +2,10 @@ package com.example.application.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.service.controls.actions.BooleanAction;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -18,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.MeasurementDetails;
 import com.example.application.R;
+import com.example.application.SpinnerItemSelected;
 import com.example.application.adapter.ViewIngredientsAdapter;
 import com.example.application.database.DataDao;
 import com.example.application.database.DataGetIngredientNames;
@@ -37,7 +35,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class RecipeActivity extends AppCompatActivity implements ViewIngredientsAdapter.OnClickListener {
+public class RecipeActivity extends AppCompatActivity implements ViewIngredientsAdapter.OnClickListener, SpinnerItemSelected {
 
     private DataDao dataDao;
     private RecyclerView recyclerView;
@@ -50,39 +48,38 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
 
-        List<String> measurements = MeasurementDetails.getMeasurements("both", "volume");
-
-        for (String measurement : measurements) {
-            System.out.println("measurement: " + measurement);
-        }
-
-        System.out.println("fluid ounces: " + MeasurementDetails.getMeasurementSystem("fluid ounces"));
-        System.out.println("fluid ounces: " + MeasurementDetails.getMeasurementType("fluid ounces"));
-
+        initializeDatabase();
 
         viewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         if (savedInstanceState == null) {
             viewModel.init(this);
         }
 
-        initializeDatabase();
 
         if (loadRecipeWithIngredients() == false) {
             setupRecipeWithDummyData();
 
         }
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
-        initializeRecycleView();
-        binding.setViewModel(viewModel);
-
         if (getIngredientNames() == false) {
             viewModel.setIngredientNames(Arrays.asList("cinnamon","flour", "oil", "water"));
         }
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
+        initializeRecycleView();
+        binding.setViewModel(viewModel);
+        binding.setSpinnerItemSelected(this);
     }
 
+    @Override
+    public void fromMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
 
+    }
 
+    @Override
+    public void toMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
 
     private void initializeDatabase() {
         dataDao = DataInitializeDatabase.getInstance(getApplicationContext());
@@ -553,5 +550,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         return quantity;
     }
+
 
 }
