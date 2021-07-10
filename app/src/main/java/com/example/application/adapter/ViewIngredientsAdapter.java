@@ -61,10 +61,13 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     public void onBindViewHolder(@NonNull @NotNull ViewIngredientsAdapter.ViewHolder viewHolder, int position) {
         viewHolder.bind(viewModel, position);
 
+
+
         viewHolder.checkBox.setOnClickListener(view -> {
             selectPosition = viewHolder.getAdapterPosition();
             notifyDataSetChanged();
         });
+
 
         if (selectPosition == -1) {
             // Checkbox has never been pressed. Set up visibility of items based on the recipe.
@@ -91,6 +94,25 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             viewHolder.byIngredient.setVisibility(View.INVISIBLE);
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
+
+        //setup if statement if One Ingredient is picked the checkbox will visible else invisible
+        viewHolder.spinnerConvertBy.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String convertBySelected = (String) parent.getItemAtPosition( position );
+                if (convertBySelected.equals("One Ingredient")){
+                    viewHolder.checkBox.setVisibility( View.VISIBLE );
+                }else{
+                    viewHolder.checkBox.setVisibility( View.INVISIBLE );//Only works on the bottom ingredent
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        } );
 
 
         viewHolder.spinnerMeasurementFrom.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
@@ -165,6 +187,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         private Spinner spinnerMeasurementTo;
         private Spinner spinnerFromSystem;
         private Spinner spinnerToSystem;
+        private Spinner spinnerConvertBy;
 
 
 
@@ -172,19 +195,19 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             super(ingredientlistRowBinding.getRoot());
             this.ingredientlistRowBinding = ingredientlistRowBinding;
 
+            spinnerConvertBy = activity.findViewById(R.id.convType );
+
+
             calcConvQty = itemView.findViewById(R.id.calcConvQuantity);
 
             textView = itemView.findViewById(R.id.ingredentName);
             ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, viewModel.getIngredientNames());
             textView.setThreshold(1);
             textView.setAdapter(adapter);
-
             byIngredient = itemView.findViewById(R.id.editOneIngredient);
-
             this.onClickListener = onClickListener;
             button = itemView.findViewById(R.id.buttonDeleteIngredient);
             button.setOnClickListener(this);
-
             checkBox = itemView.findViewById(R.id.checkBoxIsConvIngredient);
             checkBox.setOnClickListener(this);
 
