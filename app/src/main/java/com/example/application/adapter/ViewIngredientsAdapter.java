@@ -172,10 +172,10 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             spinnerToSystem = activity.findViewById( R.id.toMeasSystem );
             String measurementType = MeasurementDetails.getMeasurementType( spinnerMeasurementFrom.getSelectedItem().toString());
 
-            ArrayAdapter adapter1 = new ArrayAdapter( activity, android.R.layout.simple_selectable_list_item, MeasurementDetails.getMeasurements(spinnerFromSystem.getSelectedItem().toString(),"All") );
+            ArrayAdapter adapter1 = new ArrayAdapter( activity, android.R.layout.simple_list_item_checked, MeasurementDetails.getMeasurements(spinnerFromSystem.getSelectedItem().toString(),"All") );
             spinnerMeasurementFrom.setAdapter( adapter1 );
 
-            ArrayAdapter adapter2 = new ArrayAdapter( activity, android.R.layout.simple_spinner_dropdown_item, MeasurementDetails.getMeasurements(spinnerToSystem.getSelectedItem().toString(),measurementType ) );
+            ArrayAdapter adapter2 = new ArrayAdapter( activity, android.R.layout.simple_list_item_checked, MeasurementDetails.getMeasurements(spinnerToSystem.getSelectedItem().toString(),measurementType ) );
             spinnerMeasurementTo.setAdapter( adapter2 );
 
                    }
