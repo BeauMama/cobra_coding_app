@@ -91,10 +91,12 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
 
+
+
         // I am not sure what listener event it needs to be when you select an item in the list.
         // The setOnItemSelectedListener might not be the right one.
+        /*
         viewHolder.spinnerMeasurementFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -120,6 +122,8 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
 
         });
+
+         */
     }
 
     @Override
@@ -168,7 +172,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             spinnerToSystem = activity.findViewById( R.id.toMeasSystem );
             String measurementType = MeasurementDetails.getMeasurementType( spinnerMeasurementFrom.getSelectedItem().toString());
 
-            ArrayAdapter adapter1 = new ArrayAdapter( activity, android.R.layout.simple_spinner_dropdown_item, MeasurementDetails.getMeasurements(spinnerFromSystem.getSelectedItem().toString(),"All") );
+            ArrayAdapter adapter1 = new ArrayAdapter( activity, android.R.layout.simple_selectable_list_item, MeasurementDetails.getMeasurements(spinnerFromSystem.getSelectedItem().toString(),"All") );
             spinnerMeasurementFrom.setAdapter( adapter1 );
 
             ArrayAdapter adapter2 = new ArrayAdapter( activity, android.R.layout.simple_spinner_dropdown_item, MeasurementDetails.getMeasurements(spinnerToSystem.getSelectedItem().toString(),measurementType ) );
