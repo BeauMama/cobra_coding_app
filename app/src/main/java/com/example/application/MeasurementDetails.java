@@ -10,11 +10,11 @@ public enum MeasurementDetails {
     TEASPOONS("teaspoons","Imperial","volume"),
     TABLESPOONS("tablespoons","Imperial","volume"),
     CUPS("cups","Imperial","volume"),
-    PINTS("pints", "Metric", "volume"),
+    PINTS("pints", "Imperial", "volume"),
     QUARTS("quarts", "Imperial", "volume"),
     GALLONS("gallons", "Imperial", "volume"),
 
-    OUNCES("ounces", "Imperial", "volume"),
+    OUNCES("ounces", "Imperial", "weight"),
     POUNDS("pounds","Imperial","weight"),
 
     MILLILITERS("milliliters","Metric", "volume"),
