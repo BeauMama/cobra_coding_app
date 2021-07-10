@@ -43,6 +43,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     private RecyclerView recyclerView;
     private ViewIngredientsAdapter viewIngredientsAdapter;
     private RecipeViewModel viewModel;
+    private ActivityRecipeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         }
 
-        ActivityRecipeBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
         initializeRecycleView();
         binding.setViewModel(viewModel);
 
@@ -153,10 +154,16 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     public void addIngredient(View view) {
-        Ingredient ingredient = new Ingredient();
-        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
-        viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
-        viewIngredientsAdapter.notifyItemInserted(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
+        Ingredient ingredient = new Ingredient(); //creates new
+        //setup defaults
+        ingredient.setName( "" );
+        ingredient.setMeasurement( "cups" );
+        ingredient.setConversionMeasurement( "cups" );
+        ingredient.setIsConversionIngredient( false );
+        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients()); //ingregient news to reference the recipe
+        viewModel.getRecipeWithIngredients().ingredients.add(ingredient); //Add it tot he recipe to the model
+        viewIngredientsAdapter.notifyItemInserted(viewModel.getRecipeWithIngredients().ingredients.size() - 1); //show new ingredient in recyelerview
+        binding.setViewModel(viewModel);//Bind new ingredient to the viewModel(rebinding add to the bind)
     }
 
     @Override
