@@ -28,6 +28,7 @@ import com.example.application.viewmodel.RecipeViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +93,27 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         }
 
 
+        viewHolder.spinnerMeasurementFrom.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                String measurementSelected = (String) parent.getItemAtPosition(position);
+                String measurementType = MeasurementDetails.getMeasurementType( measurementSelected);
+
+                Spinner spinner = (Spinner) viewHolder.spinnerMeasurementTo;
+                ArrayAdapter adapter = new ArrayAdapter( activity, android.R.layout.simple_list_item_checked,
+                        MeasurementDetails.getMeasurements(viewHolder.spinnerToSystem.getSelectedItem().toString(),measurementType ) );
+                viewHolder.spinnerMeasurementTo.setAdapter( adapter );
+                adapter.setDropDownViewResource( android.R.layout.simple_list_item_checked );
+                spinner.setAdapter( adapter );
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        } );
 
         // I am not sure what listener event it needs to be when you select an item in the list.
         // The setOnItemSelectedListener might not be the right one.
@@ -172,10 +194,12 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             spinnerToSystem = activity.findViewById( R.id.toMeasSystem );
             String measurementType = MeasurementDetails.getMeasurementType( spinnerMeasurementFrom.getSelectedItem().toString());
 
-            ArrayAdapter adapter1 = new ArrayAdapter( activity, android.R.layout.simple_list_item_checked, MeasurementDetails.getMeasurements(spinnerFromSystem.getSelectedItem().toString(),"All") );
+            ArrayAdapter adapter1 = new ArrayAdapter( activity, android.R.layout.simple_list_item_checked,
+                    MeasurementDetails.getMeasurements(spinnerFromSystem.getSelectedItem().toString(),"All") );
             spinnerMeasurementFrom.setAdapter( adapter1 );
 
-            ArrayAdapter adapter2 = new ArrayAdapter( activity, android.R.layout.simple_list_item_checked, MeasurementDetails.getMeasurements(spinnerToSystem.getSelectedItem().toString(),measurementType ) );
+            ArrayAdapter adapter2 = new ArrayAdapter( activity, android.R.layout.simple_list_item_checked,
+                    MeasurementDetails.getMeasurements(spinnerToSystem.getSelectedItem().toString(),measurementType ) );
             spinnerMeasurementTo.setAdapter( adapter2 );
 
                    }
