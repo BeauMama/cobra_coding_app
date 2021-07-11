@@ -183,7 +183,6 @@ public class Recipe extends BaseObservable {
         }
     }
 
-
     public double getConversionAmount() {
         return conversionAmount;
     }

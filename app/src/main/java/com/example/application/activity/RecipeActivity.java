@@ -50,6 +50,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     private ViewIngredientsAdapter viewIngredientsAdapter;
     private RecipeViewModel viewModel;
     private ActivityRecipeBinding binding;
+    private Boolean initializeFromSystem = true;
+    private Boolean initializeToSystem = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +115,21 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @Override
     public void fromMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
+        // Set up spinner with correct value from model when initializing it
+        if (initializeFromSystem) {
+            initializeFromSystem = false;
+            for (int itemPosition = 0; itemPosition < parent.getAdapter().getCount(); itemPosition++) {
+                String itemValue = (String) parent.getAdapter().getItem(itemPosition);
+                if (itemValue.equals(viewModel.getRecipeWithIngredients().recipe.getFromSystem())) {
+                    parent.setSelection(itemPosition);
+                    break;
+                }
+            }
+        }
 
         String systemSelected = parent.getSelectedItem().toString();
+        viewModel.getRecipeWithIngredients().recipe.setFromSystem(systemSelected);
+
         List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, "all");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, measurements);
@@ -130,7 +145,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             // is still in the list
             for (int itemPosition = 0; itemPosition < spinnerMeasurement.getAdapter().getCount(); itemPosition++) {
                 String itemValue = (String) spinnerMeasurement.getAdapter().getItem(itemPosition);
-                if (itemValue == oldMeasurementValue) {
+                if (itemValue.equals(oldMeasurementValue)) {
                     spinnerMeasurement.setSelection(itemPosition, false);
                     break;
                 }
@@ -140,9 +155,19 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @Override
     public void toMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        // Set up spinner with correct value from model when initializing it
+        if (initializeToSystem) {
+            initializeToSystem = false;
+            for (int itemPosition = 0; itemPosition < parent.getAdapter().getCount(); itemPosition++) {
+                String itemValue = (String) parent.getAdapter().getItem(itemPosition);
+                if (itemValue.equals(viewModel.getRecipeWithIngredients().recipe.getToSystem())) {
+                    parent.setSelection(itemPosition);
+                    break;
+                }
+            }
+        }
         String systemSelected = parent.getSelectedItem().toString();
-
+        viewModel.getRecipeWithIngredients().recipe.setToSystem(systemSelected);
 
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
             View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
@@ -164,7 +189,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             // is still in the list
             for (int itemPosition = 0; itemPosition < spinnerConvMeasurement.getAdapter().getCount(); itemPosition++) {
                 String itemValue = (String) spinnerConvMeasurement.getAdapter().getItem(itemPosition);
-                if (itemValue == oldMeasurementValue) {
+                if (itemValue.equals(oldMeasurementValue)) {
                     spinnerConvMeasurement.setSelection(itemPosition, false);
                     break;
                 }
@@ -269,31 +294,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
-    private void dummyMethod(int position) {
-        // If using this method, it would be executed like the deleteButtonClick above to change
-        // the spinner values based on when another spinner changes.
-        View viewIngredient = recyclerView.getLayoutManager().findViewByPosition(position);
-        Spinner spinnerMeasurement = viewIngredient.findViewById(R.id.measurement);
-        Spinner spinnerConvMeasurement = viewIngredient.findViewById(R.id.convMeasurement);
-
-        // This line gets the text of what the spinner is set to.
-        String measurementSelected = spinnerMeasurement.getSelectedItem().toString();
-
-        // Get the type from the enum
-        String measurementType = MeasurementDetails.getMeasurementType(measurementSelected);
-
-        //This needs te be adjusted to get a list based on the measurementType value
-        List<String> measurements = MeasurementDetails.getMeasurements("all", "volume");
-
-        // Set up adapter to be used to update the spinner.
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, measurements);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        //Update the spinner with the new list of items.
-        spinnerConvMeasurement.setAdapter(adapter);
-    }
-
     private boolean getIngredientNames() {
         DataGetIngredientNames dataGetIngredientNames = new DataGetIngredientNames(dataDao);
         ExecutorService executorService = Executors.newFixedThreadPool(3);
@@ -331,8 +331,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().recipe.setConversionType("One Ingredient"); // Example by one ingredient conversion
         viewModel.getRecipeWithIngredients().recipe.setConversionAmount((double) 2.5); // Not needed for this example
         viewModel.getRecipeWithIngredients().recipe.setNotes("This is my favorite scrambled egg recipe!");
-        viewModel.getRecipeWithIngredients().recipe.setFromSystem("All");
-        viewModel.getRecipeWithIngredients().recipe.setToSystem("Imperial");
+        viewModel.getRecipeWithIngredients().recipe.setFromSystem("Metric");
+        viewModel.getRecipeWithIngredients().recipe.setToSystem("Metric");
 
         viewModel.getRecipeWithIngredients().ingredients = new ArrayList<>();
 
