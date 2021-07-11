@@ -125,8 +125,7 @@
 
   <Spinner
       android:id="@+id/convType"
-      spinnerBinder="@={viewModel.getRecipeWithIngredients().recipe.conversionType}"
-      android:onItemSelected="@{spinnerItemSelected.convertBySelected}"
+      spinnerConvertByBinder="@={viewModel.getRecipeWithIngredients().recipe.conversionType}"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
@@ -313,6 +312,18 @@
       app:backgroundTint="@android:color/holo_red_dark"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
+
+  <Button
+      android:id="@+id/button3"
+      android:layout_width="61dp"
+      android:layout_height="22dp"
+      android:layout_marginTop="12dp"
+      android:layout_marginEnd="112dp"
+      android:layout_marginRight="112dp"
+      android:onClick="check"
+      android:text="Button"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/notes" />
 
  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

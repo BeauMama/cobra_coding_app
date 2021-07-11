@@ -1,5 +1,6 @@
 package com.example.application.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.InverseBindingAdapter;
+import androidx.databinding.InverseBindingListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -71,6 +75,16 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         initializeRecycleView();
         binding.setViewModel(viewModel);
         binding.setSpinnerItemSelected(this);
+    }
+
+
+    public void check (View view) {
+        Log.d("test conv type", viewModel.getRecipeWithIngredients().recipe.getConversionType());
+        Log.d("test conv amount", String.valueOf(viewModel.getRecipeWithIngredients().recipe.getConversionAmount()));
+        Log.d("test ing qty", String.valueOf(viewModel.getRecipeWithIngredients().ingredients.get(0).getQuantity()));
+        Log.d("test ing meas", viewModel.getRecipeWithIngredients().ingredients.get(0).getMeasurement());
+        Log.d("test ing conv meas", viewModel.getRecipeWithIngredients().ingredients.get(0).getConversionMeasurement());
+
     }
 
     @Override

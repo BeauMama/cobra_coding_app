@@ -92,6 +92,28 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
 
+        /*
+        //setup if statement if One Ingredient is picked the checkbox will visible else invisible
+        viewHolder.spinnerConvertBy.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String convertBySelected = (String) parent.getItemAtPosition( position );
+                if (convertBySelected.equals("One Ingredient")){
+                    viewHolder.checkBox.setVisibility( View.VISIBLE );
+                }else{
+                    viewHolder.checkBox.setVisibility( View.INVISIBLE );//Only works on the bottom ingredent
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        } );
+*/
+
+
         viewHolder.spinnerMeasurementFrom.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
