@@ -1,6 +1,7 @@
 package com.example.application.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,10 @@ import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.InverseBindingAdapter;
+import androidx.databinding.InverseBindingListener;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.BR;
@@ -61,13 +65,19 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     public void onBindViewHolder(@NonNull @NotNull ViewIngredientsAdapter.ViewHolder viewHolder, int position) {
         viewHolder.bind(viewModel, position);
 
+        for (int itemPosition = 0; itemPosition < viewHolder.spinnerMeasurementFrom.getAdapter().getCount(); itemPosition++) {
+            String itemValue = (String) viewHolder.spinnerMeasurementFrom.getAdapter().getItem(itemPosition);
 
+            if (itemValue.equals(viewModel.getRecipeWithIngredients().ingredients.get(position).getMeasurement())) {
+                viewHolder.spinnerMeasurementFrom.setSelection(itemPosition, false);
+                break;
+            }
+        }
 
         viewHolder.checkBox.setOnClickListener(view -> {
             selectPosition = viewHolder.getAdapterPosition();
             notifyDataSetChanged();
         });
-
 
         if (selectPosition == -1) {
             // Checkbox has never been pressed. Set up visibility of items based on the recipe.
@@ -95,79 +105,37 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
 
-        //setup if statement if One Ingredient is picked the checkbox will visible else invisible
-        viewHolder.spinnerConvertBy.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String convertBySelected = (String) parent.getItemAtPosition( position );
-                if (convertBySelected.equals("One Ingredient")){
-                    viewHolder.checkBox.setVisibility( View.VISIBLE );
-                }else{
-                    viewHolder.checkBox.setVisibility( View.INVISIBLE );//Only works on the bottom ingredent
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        } );
-
 
         viewHolder.spinnerMeasurementFrom.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                String measurementSelected = (String) parent.getItemAtPosition(position);
-                String measurementType = MeasurementDetails.getMeasurementType( measurementSelected);
-
-                Spinner spinner = (Spinner) viewHolder.spinnerMeasurementTo;
-                ArrayAdapter adapter = new ArrayAdapter( activity, android.R.layout.simple_list_item_checked,
-                        MeasurementDetails.getMeasurements(viewHolder.spinnerToSystem.getSelectedItem().toString(),measurementType ) );
-                viewHolder.spinnerMeasurementTo.setAdapter( adapter );
-                adapter.setDropDownViewResource( android.R.layout.simple_list_item_checked );
-                spinner.setAdapter( adapter );
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        } );
-
-        // I am not sure what listener event it needs to be when you select an item in the list.
-        // The setOnItemSelectedListener might not be the right one.
-        /*
-        viewHolder.spinnerMeasurementFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Not sure if this gets the right spinner using parent. to get the measurement.
-                String measurementSelected = MeasurementDetails.getMeasurementType(parent.getSelectedItem().toString());
-
-                // Get the type from the enum
+            public void onItemSelected(AdapterView<?> parent, View view, int spinnerPosition, long id) {
+                String measurementSelected = parent.getItemAtPosition(spinnerPosition).toString();
                 String measurementType = MeasurementDetails.getMeasurementType(measurementSelected);
 
-                //This needs te be adjusted to get a list based on the measurementType value
-                List<String> measurements = MeasurementDetails.getMeasurements("all", "volume");
+                viewModel.getRecipeWithIngredients().ingredients.get(position).setMeasurement(measurementSelected);
 
-                // Not sure if this gets the right spinner using view.
-                Spinner spinnerConvMeasurement = view.findViewById(R.id.convMeasurement);
+                Spinner spinner = (Spinner) viewHolder.spinnerMeasurementTo;
+                String oldMeasurementValue = spinner.getSelectedItem().toString();
+                ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_checked,
+                MeasurementDetails.getMeasurements(viewHolder.spinnerToSystem.getSelectedItem().toString(),measurementType));
+                viewHolder.spinnerMeasurementTo.setAdapter(adapter);
+                adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+                spinner.setAdapter(adapter);
 
-                // Set up adapter to be used to update the spinner.
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, measurements);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                //Update the spinner with the new list of items.
-                //spinnerConvMeasurement.setAdapter(adapter); // currently crashes app
+                // After changing the spinner list, set it back to what it was selected to before if the item
+                // is still in the list
+                for (int itemPosition = 0; itemPosition < spinner.getAdapter().getCount(); itemPosition++) {
+                    String itemValue = (String) spinner.getAdapter().getItem(itemPosition);
+                    if (itemValue == oldMeasurementValue) {
+                        spinner.setSelection(itemPosition, false);
+                        break;
+                    }
                 }
+            }
 
-
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
-
-         */
     }
 
     @Override
@@ -194,10 +162,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             this.ingredientlistRowBinding = ingredientlistRowBinding;
 
             spinnerConvertBy = activity.findViewById(R.id.convType );
-
-
             calcConvQty = itemView.findViewById(R.id.calcConvQuantity);
-
             textView = itemView.findViewById(R.id.ingredentName);
             ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, viewModel.getIngredientNames());
             textView.setThreshold(1);

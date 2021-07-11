@@ -43,8 +43,11 @@ public enum MeasurementDetails {
         List<String> measurements = new ArrayList<>();
         for (MeasurementDetails measurement : MeasurementDetails.values()) {
 
-            if (measurement.measurementSystem.toLowerCase().equals(measurementSystem.toLowerCase()) || measurementSystem.toLowerCase().equals("all")) {
-                if (measurement.measurementType.toLowerCase().equals(measurementType.toLowerCase()) || measurementType.toLowerCase().equals("all")) {
+            if (measurement.measurementSystem.toLowerCase().equals(measurementSystem.toLowerCase()) ||
+                    measurement.measurementSystem.toLowerCase().equals("units") ||
+                    measurementSystem.toLowerCase().equals("all")) {
+                if (measurement.measurementType.toLowerCase().equals(measurementType.toLowerCase()) ||
+                        measurementType.toLowerCase().equals("all")) {
                     if(!measurement.measurementType.toLowerCase().equals("temperature")) {
                         measurements.add(measurement.measurement);
                     }

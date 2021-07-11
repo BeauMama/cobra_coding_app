@@ -77,7 +77,9 @@ public class Ingredient extends BaseObservable {
         if (getQuantity() == 0) {
             return null;
         } else {
-            return Double.toString(getQuantity());
+            double value = getQuantity();
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            return decimalFormat.format(value);
         }
     }
     public void setQuantityString(String setQuantity) {
@@ -200,7 +202,9 @@ public class Ingredient extends BaseObservable {
         if (getConversionIngredientQuantity() == 0) {
             return null;
         } else {
-            return Double.toString(getConversionIngredientQuantity());
+            double value = RecipeActivity.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement());
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            return decimalFormat.format(value);
         }
     }
     public void setConversionIngredientQuantityString(String setConversionIngredientQuantity) {

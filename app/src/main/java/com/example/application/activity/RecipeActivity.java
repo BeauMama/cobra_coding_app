@@ -1,16 +1,23 @@
 package com.example.application.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.InverseBindingAdapter;
+import androidx.databinding.InverseBindingListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,10 +63,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             viewModel.init(this);
         }
 
-
         if (loadRecipeWithIngredients() == false) {
             setupRecipeWithDummyData();
-
         }
 
         if (getIngredientNames() == false) {
@@ -73,13 +78,47 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     @Override
+    public void convertBySelected(AdapterView<?> parent, View view, int position, long id) {
+        String convertBy = parent.getItemAtPosition(position).toString();
+
+        int visibility;
+        if (convertBy.toLowerCase().equals("one ingredient")) {
+            visibility = View.VISIBLE;
+        } else {
+            visibility = View.INVISIBLE;
+        }
+
+        for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
+            View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
+            CheckBox checkbox = ingredient.findViewById(R.id.checkBoxIsConvIngredient);
+            EditText editText = ingredient.findViewById(R.id.editOneIngredient);
+            TextView textView = ingredient.findViewById(R.id.calcConvQuantity);
+
+            checkbox.setVisibility(visibility);
+
+            if (visibility == View.VISIBLE) {
+                if (checkbox.isChecked()) {
+                    editText.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.INVISIBLE);
+                } else {
+                    editText.setVisibility(View.INVISIBLE);
+                    textView.setVisibility(View.VISIBLE);
+                }
+            } else {
+                editText.setVisibility(View.INVISIBLE);
+                textView.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    @Override
     public void fromMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
 
         String systemSelected = parent.getSelectedItem().toString();
         List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, "all");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, measurements);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, measurements);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
 
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
             View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
@@ -101,36 +140,36 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @Override
     public void toMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
-        /*
+
         String systemSelected = parent.getSelectedItem().toString();
 
 
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
             View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
+
             Spinner spinnerMeasurement = ingredient.findViewById(R.id.measurement);
+            String measurementTypeSelected = MeasurementDetails.getMeasurementType(spinnerMeasurement.getSelectedItem().toString());
+
             Spinner spinnerConvMeasurement = ingredient.findViewById(R.id.convMeasurement);
+            String oldMeasurementValue = spinnerConvMeasurement.getSelectedItem().toString();
 
-            String oldMeasurementValue = spinnerMeasurement.getSelectedItem().toString();
+            List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, measurementTypeSelected);
 
-            List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, "all");
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, measurements);
+            adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, measurements);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-            spinnerMeasurement.setAdapter(adapter);
+            spinnerConvMeasurement.setAdapter(adapter);
 
             // After changing the spinner list, set it back to what it was selected to before if the item
             // is still in the list
-            for (int itemPosition = 0; itemPosition < spinnerMeasurement.getAdapter().getCount(); itemPosition++) {
-                String itemValue = (String) spinnerMeasurement.getAdapter().getItem(itemPosition);
+            for (int itemPosition = 0; itemPosition < spinnerConvMeasurement.getAdapter().getCount(); itemPosition++) {
+                String itemValue = (String) spinnerConvMeasurement.getAdapter().getItem(itemPosition);
                 if (itemValue == oldMeasurementValue) {
-                    spinnerMeasurement.setSelection(itemPosition, false);
+                    spinnerConvMeasurement.setSelection(itemPosition, false);
                     break;
                 }
             }
         }
-        */
     }
 
     private void initializeDatabase() {
@@ -292,7 +331,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().recipe.setConversionType("One Ingredient"); // Example by one ingredient conversion
         viewModel.getRecipeWithIngredients().recipe.setConversionAmount((double) 2.5); // Not needed for this example
         viewModel.getRecipeWithIngredients().recipe.setNotes("This is my favorite scrambled egg recipe!");
-        viewModel.getRecipeWithIngredients().recipe.setFromSystem("Metric");
+        viewModel.getRecipeWithIngredients().recipe.setFromSystem("All");
         viewModel.getRecipeWithIngredients().recipe.setToSystem("Imperial");
 
         viewModel.getRecipeWithIngredients().ingredients = new ArrayList<>();
@@ -309,8 +348,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         ingredient = new Ingredient();
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         ingredient.setName("eggs");
-        ingredient.setMeasurement("cups");
-        ingredient.setConversionMeasurement("tablespoons");
+        ingredient.setMeasurement("units");
+        ingredient.setConversionMeasurement("units");
         ingredient.setQuantity((double) 5);
         ingredient.setIsConversionIngredient(true); // This is the conversion ingredient.
         ingredient.setConversionIngredientQuantity(4); // Recipe calls for 5 eggs but we only have 4.

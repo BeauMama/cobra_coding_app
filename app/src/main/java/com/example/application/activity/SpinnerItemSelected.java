@@ -6,4 +6,5 @@ import android.widget.AdapterView;
 public interface SpinnerItemSelected {
     public void fromMeasurementSelected(AdapterView<?> parent, View view, int position, long id);
     public void toMeasurementSelected(AdapterView<?> parent, View view, int position, long id);
+    public void convertBySelected(AdapterView<?> parent, View view, int position, long id);
 }

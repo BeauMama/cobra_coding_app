@@ -71,7 +71,6 @@
 
         <Spinner
             android:id="@+id/measurement"
-            spinnerBinder="@={viewModel.getRecipeWithIngredients().ingredients.get(position).measurement}"
             android:layout_width="0dp"
             android:layout_height="26dp"
             android:layout_marginStart="4dp"
