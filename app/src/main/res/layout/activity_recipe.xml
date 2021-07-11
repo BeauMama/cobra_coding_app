@@ -5,7 +5,7 @@
 
  <data>
      <variable name="viewModel" type="com.example.application.viewmodel.RecipeViewModel" />
-     <variable name="spinnerItemSelected" type="com.example.application.SpinnerItemSelected" />
+     <variable name="spinnerItemSelected" type="com.example.application.activity.SpinnerItemSelected" />
  </data>
 
  <androidx.constraintlayout.widget.ConstraintLayout

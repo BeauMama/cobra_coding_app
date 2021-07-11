@@ -2,6 +2,7 @@ package com.example.application.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.MeasurementDetails;
 import com.example.application.R;
-import com.example.application.SpinnerItemSelected;
 import com.example.application.adapter.ViewIngredientsAdapter;
 import com.example.application.database.DataDao;
 import com.example.application.database.DataGetIngredientNames;
@@ -74,11 +74,62 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     @Override
     public void fromMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
 
+        String systemSelected = parent.getSelectedItem().toString();
+        List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, "all");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, measurements);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
+            View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
+            Spinner spinnerMeasurement = ingredient.findViewById(R.id.measurement);
+            String oldMeasurementValue = spinnerMeasurement.getSelectedItem().toString();
+            spinnerMeasurement.setAdapter(adapter);
+
+            // After changing the spinner list, set it back to what it was selected to before if the item
+            // is still in the list
+            for (int itemPosition = 0; itemPosition < spinnerMeasurement.getAdapter().getCount(); itemPosition++) {
+                String itemValue = (String) spinnerMeasurement.getAdapter().getItem(itemPosition);
+                if (itemValue == oldMeasurementValue) {
+                    spinnerMeasurement.setSelection(itemPosition, false);
+                    break;
+                }
+            }
+        }
     }
 
     @Override
     public void toMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
+        /*
+        String systemSelected = parent.getSelectedItem().toString();
 
+
+        for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
+            View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
+            Spinner spinnerMeasurement = ingredient.findViewById(R.id.measurement);
+            Spinner spinnerConvMeasurement = ingredient.findViewById(R.id.convMeasurement);
+
+            String oldMeasurementValue = spinnerMeasurement.getSelectedItem().toString();
+
+            List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, "all");
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, measurements);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+            spinnerMeasurement.setAdapter(adapter);
+
+            // After changing the spinner list, set it back to what it was selected to before if the item
+            // is still in the list
+            for (int itemPosition = 0; itemPosition < spinnerMeasurement.getAdapter().getCount(); itemPosition++) {
+                String itemValue = (String) spinnerMeasurement.getAdapter().getItem(itemPosition);
+                if (itemValue == oldMeasurementValue) {
+                    spinnerMeasurement.setSelection(itemPosition, false);
+                    break;
+                }
+            }
+        }
+        */
     }
 
     private void initializeDatabase() {
@@ -161,6 +212,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient); //Add it tot he recipe to the model
         viewIngredientsAdapter.notifyItemInserted(viewModel.getRecipeWithIngredients().ingredients.size() - 1); //show new ingredient in recyelerview
         binding.setViewModel(viewModel);//Bind new ingredient to the viewModel(rebinding add to the bind)
+        binding.setSpinnerItemSelected(this);
     }
 
     @Override

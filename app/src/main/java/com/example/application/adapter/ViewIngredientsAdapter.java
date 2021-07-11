@@ -144,8 +144,6 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         private Spinner spinnerFromSystem;
         private Spinner spinnerToSystem;
 
-
-
         public ViewHolder(@NonNull @NotNull IngredientlistRowBinding ingredientlistRowBinding, OnClickListener onClickListener) {
             super(ingredientlistRowBinding.getRoot());
             this.ingredientlistRowBinding = ingredientlistRowBinding;

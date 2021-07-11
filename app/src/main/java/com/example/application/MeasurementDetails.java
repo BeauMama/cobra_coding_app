@@ -45,7 +45,9 @@ public enum MeasurementDetails {
 
             if (measurement.measurementSystem.toLowerCase().equals(measurementSystem.toLowerCase()) || measurementSystem.toLowerCase().equals("all")) {
                 if (measurement.measurementType.toLowerCase().equals(measurementType.toLowerCase()) || measurementType.toLowerCase().equals("all")) {
-                    measurements.add(measurement.measurement);
+                    if(!measurement.measurementType.toLowerCase().equals("temperature")) {
+                        measurements.add(measurement.measurement);
+                    }
                 }
             }
         }
