@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -181,12 +182,17 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         if (viewModel.getRecipeWithIngredients().recipe.getName().equals("")) {
             // The name should not be blank. Let the user know with a toast or some other method.
+            Toast.makeText( RecipeActivity.this,"Please enter a valid recipe name.",
+                    Toast.LENGTH_LONG).show() ;
+
             recipeValid = false;
         }
 
         for (Ingredient ingredient: viewModel.getRecipeWithIngredients().ingredients) {
             if (ingredient.getName().equals("")) {
                 // One of the recipe names are blank. Let the user know.
+                Toast.makeText( RecipeActivity.this,"Please enter an ingredient name.",
+                        Toast.LENGTH_LONG).show() ;
                 recipeValid = false;
             }
         }
