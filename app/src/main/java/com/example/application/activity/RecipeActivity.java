@@ -77,16 +77,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         binding.setSpinnerItemSelected(this);
     }
 
-
-    public void check (View view) {
-        Log.d("test conv type", viewModel.getRecipeWithIngredients().recipe.getConversionType());
-        Log.d("test conv amount", String.valueOf(viewModel.getRecipeWithIngredients().recipe.getConversionAmount()));
-        Log.d("test ing qty", String.valueOf(viewModel.getRecipeWithIngredients().ingredients.get(0).getQuantity()));
-        Log.d("test ing meas", viewModel.getRecipeWithIngredients().ingredients.get(0).getMeasurement());
-        Log.d("test ing conv meas", viewModel.getRecipeWithIngredients().ingredients.get(0).getConversionMeasurement());
-
-    }
-
     @Override
     public void convertBySelected(AdapterView<?> parent, View view, int position, long id) {
         String convertBy = parent.getItemAtPosition(position).toString();
@@ -341,7 +331,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().recipe.setConversionType("One Ingredient"); // Example by one ingredient conversion
         viewModel.getRecipeWithIngredients().recipe.setConversionAmount((double) 2.5); // Not needed for this example
         viewModel.getRecipeWithIngredients().recipe.setNotes("This is my favorite scrambled egg recipe!");
-        viewModel.getRecipeWithIngredients().recipe.setFromSystem("Metric");
+        viewModel.getRecipeWithIngredients().recipe.setFromSystem("All");
         viewModel.getRecipeWithIngredients().recipe.setToSystem("Imperial");
 
         viewModel.getRecipeWithIngredients().ingredients = new ArrayList<>();
@@ -358,8 +348,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         ingredient = new Ingredient();
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
         ingredient.setName("eggs");
-        ingredient.setMeasurement("cups");
-        ingredient.setConversionMeasurement("tablespoons");
+        ingredient.setMeasurement("units");
+        ingredient.setConversionMeasurement("units");
         ingredient.setQuantity((double) 5);
         ingredient.setIsConversionIngredient(true); // This is the conversion ingredient.
         ingredient.setConversionIngredientQuantity(4); // Recipe calls for 5 eggs but we only have 4.

@@ -66,7 +66,6 @@ public class ViewRecipeListAdapter extends RecyclerView.Adapter<ViewRecipeListAd
 
             this.selectItemListener = selectItemListener;
             linearLayout.setOnClickListener(this);
-
         }
 
         @Override

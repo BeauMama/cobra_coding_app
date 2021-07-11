@@ -1,6 +1,7 @@
 package com.example.application.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,10 @@ import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.InverseBindingAdapter;
+import androidx.databinding.InverseBindingListener;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.BR;
@@ -61,6 +65,15 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     public void onBindViewHolder(@NonNull @NotNull ViewIngredientsAdapter.ViewHolder viewHolder, int position) {
         viewHolder.bind(viewModel, position);
 
+        for (int itemPosition = 0; itemPosition < viewHolder.spinnerMeasurementFrom.getAdapter().getCount(); itemPosition++) {
+            String itemValue = (String) viewHolder.spinnerMeasurementFrom.getAdapter().getItem(itemPosition);
+
+            if (itemValue.equals(viewModel.getRecipeWithIngredients().ingredients.get(position).getMeasurement())) {
+                viewHolder.spinnerMeasurementFrom.setSelection(itemPosition, false);
+                break;
+            }
+        }
+
         viewHolder.checkBox.setOnClickListener(view -> {
             selectPosition = viewHolder.getAdapterPosition();
             notifyDataSetChanged();
@@ -92,33 +105,14 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
 
-        /*
-        //setup if statement if One Ingredient is picked the checkbox will visible else invisible
-        viewHolder.spinnerConvertBy.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String convertBySelected = (String) parent.getItemAtPosition( position );
-                if (convertBySelected.equals("One Ingredient")){
-                    viewHolder.checkBox.setVisibility( View.VISIBLE );
-                }else{
-                    viewHolder.checkBox.setVisibility( View.INVISIBLE );//Only works on the bottom ingredent
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        } );
-*/
-
 
         viewHolder.spinnerMeasurementFrom.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String measurementSelected = parent.getItemAtPosition(position).toString();
+            public void onItemSelected(AdapterView<?> parent, View view, int spinnerPosition, long id) {
+                String measurementSelected = parent.getItemAtPosition(spinnerPosition).toString();
                 String measurementType = MeasurementDetails.getMeasurementType(measurementSelected);
+
+                viewModel.getRecipeWithIngredients().ingredients.get(position).setMeasurement(measurementSelected);
 
                 Spinner spinner = (Spinner) viewHolder.spinnerMeasurementTo;
                 String oldMeasurementValue = spinner.getSelectedItem().toString();
@@ -168,10 +162,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             this.ingredientlistRowBinding = ingredientlistRowBinding;
 
             spinnerConvertBy = activity.findViewById(R.id.convType );
-
-
             calcConvQty = itemView.findViewById(R.id.calcConvQuantity);
-
             textView = itemView.findViewById(R.id.ingredentName);
             ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, viewModel.getIngredientNames());
             textView.setThreshold(1);

@@ -204,7 +204,9 @@ public class Recipe extends BaseObservable {
         if (getConversionAmount() == 0) {
             return null;
         } else {
-            return Double.toString(getConversionAmount());
+            double value = getConversionAmount();
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            return decimalFormat.format(value);
         }
     }
 
