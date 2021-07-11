@@ -56,10 +56,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             viewModel.init(this);
         }
 
-
         if (loadRecipeWithIngredients() == false) {
             setupRecipeWithDummyData();
-
         }
 
         if (getIngredientNames() == false) {
@@ -78,8 +76,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         String systemSelected = parent.getSelectedItem().toString();
         List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, "all");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, measurements);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, measurements);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
 
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
             View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
@@ -101,36 +99,36 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @Override
     public void toMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
-        /*
+
         String systemSelected = parent.getSelectedItem().toString();
 
 
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
             View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
+
             Spinner spinnerMeasurement = ingredient.findViewById(R.id.measurement);
+            String measurementTypeSelected = MeasurementDetails.getMeasurementType(spinnerMeasurement.getSelectedItem().toString());
+
             Spinner spinnerConvMeasurement = ingredient.findViewById(R.id.convMeasurement);
+            String oldMeasurementValue = spinnerConvMeasurement.getSelectedItem().toString();
 
-            String oldMeasurementValue = spinnerMeasurement.getSelectedItem().toString();
+            List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, measurementTypeSelected);
 
-            List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, "all");
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, measurements);
+            adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, measurements);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-            spinnerMeasurement.setAdapter(adapter);
+            spinnerConvMeasurement.setAdapter(adapter);
 
             // After changing the spinner list, set it back to what it was selected to before if the item
             // is still in the list
-            for (int itemPosition = 0; itemPosition < spinnerMeasurement.getAdapter().getCount(); itemPosition++) {
-                String itemValue = (String) spinnerMeasurement.getAdapter().getItem(itemPosition);
+            for (int itemPosition = 0; itemPosition < spinnerConvMeasurement.getAdapter().getCount(); itemPosition++) {
+                String itemValue = (String) spinnerConvMeasurement.getAdapter().getItem(itemPosition);
                 if (itemValue == oldMeasurementValue) {
-                    spinnerMeasurement.setSelection(itemPosition, false);
+                    spinnerConvMeasurement.setSelection(itemPosition, false);
                     break;
                 }
             }
         }
-        */
     }
 
     private void initializeDatabase() {
