@@ -232,6 +232,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             ExecutorService executorService = Executors.newFixedThreadPool(3);
             try {
                 viewModel.setRecipeWithIngredients(executorService.submit(dataSaveRecipeWithIngredients).get());
+                Toast.makeText( this,"Recipe saved", Toast.LENGTH_SHORT).show();
 
             } catch (ExecutionException e) {
                 e.printStackTrace();
@@ -247,7 +248,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         if (viewModel.getRecipeWithIngredients().recipe.getName().equals("")) {
             // The name should not be blank. Let the user know with a toast or some other method.
             Toast.makeText( RecipeActivity.this,"Please enter a valid recipe name.",
-                    Toast.LENGTH_LONG).show() ;
+                    Toast.LENGTH_LONG).show();
 
             recipeValid = false;
         }
@@ -256,7 +257,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             if (ingredient.getName().equals("")) {
                 // One of the recipe names are blank. Let the user know.
                 Toast.makeText( RecipeActivity.this,"Please enter an ingredient name.",
-                        Toast.LENGTH_LONG).show() ;
+                        Toast.LENGTH_LONG).show();
                 recipeValid = false;
             }
         }
