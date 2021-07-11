@@ -92,26 +92,6 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
 
-        //setup if statement if One Ingredient is picked the checkbox will visible else invisible
-        viewHolder.spinnerConvertBy.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String convertBySelected = (String) parent.getItemAtPosition( position );
-                if (convertBySelected.equals("One Ingredient")){
-                    viewHolder.checkBox.setVisibility( View.VISIBLE );
-                }else{
-                    viewHolder.checkBox.setVisibility( View.INVISIBLE );//Only works on the bottom ingredent
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        } );
-
-
         viewHolder.spinnerMeasurementFrom.setOnItemSelectedListener( new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -139,39 +119,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
-        } );
-
-        // I am not sure what listener event it needs to be when you select an item in the list.
-        // The setOnItemSelectedListener might not be the right one.
-        /*
-        viewHolder.spinnerMeasurementFrom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Not sure if this gets the right spinner using parent. to get the measurement.
-                String measurementSelected = MeasurementDetails.getMeasurementType(parent.getSelectedItem().toString());
-
-                // Get the type from the enum
-                String measurementType = MeasurementDetails.getMeasurementType(measurementSelected);
-
-                //This needs te be adjusted to get a list based on the measurementType value
-                List<String> measurements = MeasurementDetails.getMeasurements("all", "volume");
-
-                // Not sure if this gets the right spinner using view.
-                Spinner spinnerConvMeasurement = view.findViewById(R.id.convMeasurement);
-
-                // Set up adapter to be used to update the spinner.
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, measurements);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                //Update the spinner with the new list of items.
-                //spinnerConvMeasurement.setAdapter(adapter); // currently crashes app
-                }
-
-
         });
-
-         */
     }
 
     @Override

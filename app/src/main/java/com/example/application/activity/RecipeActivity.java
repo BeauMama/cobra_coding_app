@@ -6,7 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,6 +71,40 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         initializeRecycleView();
         binding.setViewModel(viewModel);
         binding.setSpinnerItemSelected(this);
+    }
+
+    @Override
+    public void convertBySelected(AdapterView<?> parent, View view, int position, long id) {
+        String convertBy = parent.getItemAtPosition(position).toString();
+
+        int visibility;
+        if (convertBy.toLowerCase().equals("one ingredient")) {
+            visibility = View.VISIBLE;
+        } else {
+            visibility = View.INVISIBLE;
+        }
+
+        for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
+            View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
+            CheckBox checkbox = ingredient.findViewById(R.id.checkBoxIsConvIngredient);
+            EditText editText = ingredient.findViewById(R.id.editOneIngredient);
+            TextView textView = ingredient.findViewById(R.id.calcConvQuantity);
+
+            checkbox.setVisibility(visibility);
+
+            if (visibility == View.VISIBLE) {
+                if (checkbox.isChecked()) {
+                    editText.setVisibility(View.VISIBLE);
+                    textView.setVisibility(View.INVISIBLE);
+                } else {
+                    editText.setVisibility(View.INVISIBLE);
+                    textView.setVisibility(View.VISIBLE);
+                }
+            } else {
+                editText.setVisibility(View.INVISIBLE);
+                textView.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
