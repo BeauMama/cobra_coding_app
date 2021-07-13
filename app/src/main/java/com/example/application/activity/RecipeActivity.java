@@ -1,6 +1,5 @@
 package com.example.application.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.InverseBindingAdapter;
-import androidx.databinding.InverseBindingListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -137,19 +133,22 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
             View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
-            Spinner spinnerMeasurement = ingredient.findViewById(R.id.measurement);
-            String oldMeasurementValue = spinnerMeasurement.getSelectedItem().toString();
-            spinnerMeasurement.setAdapter(adapter);
+            //try {
+                Spinner spinnerMeasurement = ingredient.findViewById(R.id.measurement);
+                String oldMeasurementValue = spinnerMeasurement.getSelectedItem().toString();
+                spinnerMeasurement.setAdapter(adapter);
 
-            // After changing the spinner list, set it back to what it was selected to before if the item
-            // is still in the list
-            for (int itemPosition = 0; itemPosition < spinnerMeasurement.getAdapter().getCount(); itemPosition++) {
-                String itemValue = (String) spinnerMeasurement.getAdapter().getItem(itemPosition);
-                if (itemValue.equals(oldMeasurementValue)) {
-                    spinnerMeasurement.setSelection(itemPosition, false);
-                    break;
+                // After changing the spinner list, set it back to what it was selected to before if the item
+                // is still in the list
+                for (int itemPosition = 0; itemPosition < spinnerMeasurement.getAdapter().getCount(); itemPosition++) {
+                    String itemValue = (String) spinnerMeasurement.getAdapter().getItem(itemPosition);
+                    if (itemValue.equals(oldMeasurementValue)) {
+                        spinnerMeasurement.setSelection(itemPosition, false);
+                        break;
+                    }
                 }
-            }
+            //}
+           // catch (Exception e) { }
         }
     }
 
@@ -172,28 +171,31 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
             View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
 
-            Spinner spinnerMeasurement = ingredient.findViewById(R.id.measurement);
-            String measurementTypeSelected = MeasurementDetails.getMeasurementType(spinnerMeasurement.getSelectedItem().toString());
+            //try {
+                Spinner spinnerMeasurement = ingredient.findViewById(R.id.measurement);
+                String measurementTypeSelected = MeasurementDetails.getMeasurementType(spinnerMeasurement.getSelectedItem().toString());
 
-            Spinner spinnerConvMeasurement = ingredient.findViewById(R.id.convMeasurement);
-            String oldMeasurementValue = spinnerConvMeasurement.getSelectedItem().toString();
+                Spinner spinnerConvMeasurement = ingredient.findViewById(R.id.convMeasurement);
+                String oldMeasurementValue = spinnerConvMeasurement.getSelectedItem().toString();
 
-            List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, measurementTypeSelected);
+                List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, measurementTypeSelected);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, measurements);
-            adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, measurements);
+                adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
 
-            spinnerConvMeasurement.setAdapter(adapter);
+                spinnerConvMeasurement.setAdapter(adapter);
 
-            // After changing the spinner list, set it back to what it was selected to before if the item
-            // is still in the list
-            for (int itemPosition = 0; itemPosition < spinnerConvMeasurement.getAdapter().getCount(); itemPosition++) {
-                String itemValue = (String) spinnerConvMeasurement.getAdapter().getItem(itemPosition);
-                if (itemValue.equals(oldMeasurementValue)) {
-                    spinnerConvMeasurement.setSelection(itemPosition, false);
-                    break;
+                // After changing the spinner list, set it back to what it was selected to before if the item
+                // is still in the list
+                for (int itemPosition = 0; itemPosition < spinnerConvMeasurement.getAdapter().getCount(); itemPosition++) {
+                    String itemValue = (String) spinnerConvMeasurement.getAdapter().getItem(itemPosition);
+                    if (itemValue.equals(oldMeasurementValue)) {
+                        spinnerConvMeasurement.setSelection(itemPosition, false);
+                        break;
+                    }
                 }
-            }
+            //}
+            //catch (Exception e) { }
         }
     }
 
@@ -273,25 +275,49 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     public void addIngredient(View view) {
+        Log.d("adapter size", String.valueOf(viewModel.getAdapter().getItemCount()));
+        Log.d("recycler size", String.valueOf(recyclerView.getChildCount()));
+        Log.d("manager size", String.valueOf(recyclerView.getLayoutManager().getChildCount()));
+
         Ingredient ingredient = new Ingredient(); //creates new
         //setup defaults
-        ingredient.setName( "" );
-        ingredient.setMeasurement( "cups" );
-        ingredient.setConversionMeasurement( "cups" );
-        ingredient.setIsConversionIngredient( false );
-        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients()); //ingregient news to reference the recipe
-        viewModel.getRecipeWithIngredients().ingredients.add(ingredient); //Add it tot he recipe to the model
-        viewIngredientsAdapter.notifyItemInserted(viewModel.getRecipeWithIngredients().ingredients.size() - 1); //show new ingredient in recyelerview
-        binding.setViewModel(viewModel);//Bind new ingredient to the viewModel(rebinding add to the bind)
+        ingredient.setName("new ingredient");
+        ingredient.setMeasurement("cups");
+        ingredient.setConversionMeasurement("cups");
+        ingredient.setIsConversionIngredient(false);
+        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients()); //ingredient news to reference the recipe
+        viewModel.getRecipeWithIngredients().ingredients.add(ingredient); //Add it to the recipe to the model
+        viewModel.getAdapter().notifyItemInserted(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
+        binding.setViewModel(viewModel); //Bind new ingredient to the viewModel(rebinding add to the bind)
         binding.setSpinnerItemSelected(this);
+
+        viewModel.getAdapter().notifyDataSetChanged();
+        //recyclerView.getAdapter().notifyDataSetChanged();
+        //recyclerView.getLayoutManager().
+
+
+        // Why doesn't the recycler view size get larger when adding an ingredient?
+        Log.d("adapter size", String.valueOf(viewModel.getAdapter().getItemCount()));
+        Log.d("recycler size", String.valueOf(recyclerView.getChildCount()));
+        Log.d("manager size", String.valueOf(recyclerView.getLayoutManager().getChildCount()));
+
+    }
+
+
+    public void buttonTest(View view) {
+        Log.d("adapter size", String.valueOf(viewModel.getAdapter().getItemCount()));
+        Log.d("recycler size", String.valueOf(recyclerView.getChildCount()));
+
+        for (Ingredient ingredient : viewModel.getRecipeWithIngredients().ingredients) {
+            Log.d("ingredient", ingredient.getName());
+        }
     }
 
     @Override
     public void deleteButtonClick(int position) {
-
         if (viewModel.getRecipeWithIngredients().ingredients.size() > 1) {
             viewModel.getRecipeWithIngredients().ingredients.remove(position);
-            viewIngredientsAdapter.notifyItemRemoved(position);
+            recyclerView.removeViewAt(position);
         }
     }
 

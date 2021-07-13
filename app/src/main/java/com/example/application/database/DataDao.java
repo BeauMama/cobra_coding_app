@@ -66,4 +66,7 @@ public interface DataDao {
     int updateIngredient(int id, int recipeId, String name, double quantity, String measurement,
         String conversionMeasurement, Boolean isConversionIngredient, double conversionIngredientQuantity);
 
+    @Query("DELETE FROM Ingredient WHERE recipeId = :recipeId AND id NOT IN (:ids)")
+    void deleteIngredientsNotInId(int recipeId, List<Integer> ids);
+
 }

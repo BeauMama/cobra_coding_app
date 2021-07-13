@@ -1,10 +1,14 @@
 package com.example.application.database;
 
+import android.util.Log;
+import android.widget.ArrayAdapter;
+
 import com.example.application.model.Ingredient;
 import com.example.application.model.Recipe;
 import com.example.application.model.RecipeWithIngredients;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -22,6 +26,7 @@ public class DataSaveRecipeWithIngredients implements Callable<RecipeWithIngredi
 
     public RecipeWithIngredients call() throws InvalidParameterException {
         long recipeId = recipe.getId();
+        List<Integer> ingredientId = new ArrayList<>();
 
         if (recipeId == 0) {
             recipeId = dataDao.insertRecipe(recipe);
@@ -41,7 +46,11 @@ public class DataSaveRecipeWithIngredients implements Callable<RecipeWithIngredi
                 dataDao.updateIngredient(ingredient.getId(), (int) recipeId, ingredient.getName(),
                     ingredient.getQuantity(), ingredient.getMeasurement(), ingredient.getConversionMeasurement(),
                     ingredient.getIsConversionIngredient(), ingredient.getConversionIngredientQuantity());
+
+                ingredientId.add(ingredient.getId());
             }
+
+            dataDao.deleteIngredientsNotInId(recipe.getId(), ingredientId);
         }
 
         return dataDao.getRecipeWithIngredientsById((int) recipeId);

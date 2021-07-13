@@ -1,6 +1,7 @@
 package com.example.application.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,26 +37,30 @@ public class SpinnerConvertByAdapter {
                 Activity activity = (Activity) view.getContext();
                 RecyclerView recyclerView = activity.findViewById(R.id.ingredientList);
 
+                Log.d("item count", String.valueOf(recyclerView.getAdapter().getItemCount()));
                 for(int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
                     View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
-                    CheckBox checkbox = ingredient.findViewById(R.id.checkBoxIsConvIngredient);
-                    EditText editText = ingredient.findViewById(R.id.editOneIngredient);
-                    TextView textView = ingredient.findViewById(R.id.calcConvQuantity);
+                    //try {
+                        CheckBox checkbox = ingredient.findViewById(R.id.checkBoxIsConvIngredient);
+                        EditText editText = ingredient.findViewById(R.id.editOneIngredient);
+                        TextView textView = ingredient.findViewById(R.id.calcConvQuantity);
 
-                    checkbox.setVisibility(visibility);
+                        checkbox.setVisibility(visibility);
 
-                    if (visibility == View.VISIBLE) {
-                        if (checkbox.isChecked()) {
-                            editText.setVisibility(View.VISIBLE);
-                            textView.setVisibility(View.INVISIBLE);
+                        if (visibility == View.VISIBLE) {
+                            if (checkbox.isChecked()) {
+                                editText.setVisibility(View.VISIBLE);
+                                textView.setVisibility(View.INVISIBLE);
+                            } else {
+                                editText.setVisibility(View.INVISIBLE);
+                                textView.setVisibility(View.VISIBLE);
+                            }
                         } else {
                             editText.setVisibility(View.INVISIBLE);
                             textView.setVisibility(View.VISIBLE);
                         }
-                    } else {
-                        editText.setVisibility(View.INVISIBLE);
-                        textView.setVisibility(View.VISIBLE);
-                    }
+                    //}
+                    //catch (Exception e) {            }
                 }
             }
             @Override
