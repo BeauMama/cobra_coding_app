@@ -37,7 +37,6 @@ public class SpinnerConvertByAdapter {
                 Activity activity = (Activity) view.getContext();
                 RecyclerView recyclerView = activity.findViewById(R.id.ingredientList);
 
-                Log.d("item count", String.valueOf(recyclerView.getAdapter().getItemCount()));
                 for(int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
                     View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
                     //try {

@@ -22,6 +22,7 @@ import com.example.application.MeasurementDetails;
 import com.example.application.R;
 import com.example.application.adapter.ViewIngredientsAdapter;
 import com.example.application.database.DataDao;
+import com.example.application.database.DataDeleteRecipe;
 import com.example.application.database.DataGetIngredientNames;
 import com.example.application.database.DataGetRecipeWithIngredientsById;
 import com.example.application.database.DataInitializeDatabase;
@@ -61,18 +62,18 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             viewModel.init(this);
         }
 
-        if (loadRecipeWithIngredients() == false) {
-            setupRecipeWithDummyData();
-        }
-
-        if (getIngredientNames() == false) {
-            viewModel.setIngredientNames(Arrays.asList("cinnamon","flour", "oil", "water"));
-        }
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
         initializeRecycleView();
+
+        if (loadRecipeWithIngredients() == false) {
+            setupRecipeWithDefaultData();
+        }
+
+        getIngredientNames();
+
         binding.setViewModel(viewModel);
         binding.setSpinnerItemSelected(this);
+
     }
 
     @Override
@@ -244,6 +245,22 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
+    public void deleteRecipe(View view) {
+        DataDeleteRecipe dataDeleteRecipe = new DataDeleteRecipe(dataDao, viewModel.getRecipeWithIngredients().recipe.getId());
+
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        try {
+            executorService.submit(dataDeleteRecipe).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        setupRecipeWithDefaultData();
+
+    }
+
     private Boolean validRecipe() {
         Boolean recipeValid = true;
 
@@ -281,7 +298,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         Ingredient ingredient = new Ingredient(); //creates new
         //setup defaults
-        ingredient.setName("new ingredient");
+        ingredient.setName("");
         ingredient.setMeasurement("cups");
         ingredient.setConversionMeasurement("cups");
         ingredient.setIsConversionIngredient(false);
@@ -314,7 +331,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     @Override
-    public void deleteButtonClick(int position) {
+    public void deleteIngredient(int position) {
         if (viewModel.getRecipeWithIngredients().ingredients.size() > 1) {
             viewModel.getRecipeWithIngredients().ingredients.remove(position);
             recyclerView.removeViewAt(position);
@@ -344,52 +361,90 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         startActivity(intent);
     }
 
-    private void setupRecipeWithDummyData() {
-        // Temporarily setting data for testing.
-        viewModel.setRecipeWithIngredients(new RecipeWithIngredients());
-        viewModel.getRecipeWithIngredients().recipe = new Recipe();
-        viewModel.getRecipeWithIngredients().recipe.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
-        viewModel.getRecipeWithIngredients().recipe.setName("Scrambled eggs");
-        viewModel.getRecipeWithIngredients().recipe.setServingSize(2); // Not needed for this example.
-        viewModel.getRecipeWithIngredients().recipe.setCookTimeMinutes(4);
-        viewModel.getRecipeWithIngredients().recipe.setTemperature(180);
-        viewModel.getRecipeWithIngredients().recipe.setTemperatureMeasurement("C");
-        viewModel.getRecipeWithIngredients().recipe.setConversionTemperatureMeasurement("F");
-        viewModel.getRecipeWithIngredients().recipe.setConversionType("One Ingredient"); // Example by one ingredient conversion
-        viewModel.getRecipeWithIngredients().recipe.setConversionAmount((double) 2.5); // Not needed for this example
-        viewModel.getRecipeWithIngredients().recipe.setNotes("This is my favorite scrambled egg recipe!");
-        viewModel.getRecipeWithIngredients().recipe.setFromSystem("Metric");
-        viewModel.getRecipeWithIngredients().recipe.setToSystem("Metric");
+    private Boolean setSpinnerToValue(Spinner spinner, String value) {
+        for (int itemPosition = 0; itemPosition < spinner.getAdapter().getCount(); itemPosition++) {
+            String itemValue = (String) spinner.getAdapter().getItem(itemPosition);
+            if (itemValue.toLowerCase().equals(value.toLowerCase())) {
+                spinner.setSelection(itemPosition, false);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void setupRecipeWithDefaultData() {
+        if (viewModel.getRecipeWithIngredients() == null) {
+            viewModel.setRecipeWithIngredients(new RecipeWithIngredients());
+        }
+        if (viewModel.getRecipeWithIngredients().recipe == null) {
+            viewModel.getRecipeWithIngredients().recipe = new Recipe();
+        }
+
+        // Recipe
+        Recipe recipe = viewModel.getRecipeWithIngredients().recipe;
+        recipe.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
+        recipe.setId(0);
+        recipe.setName("");
+        recipe.setServingSize(0);
+        recipe.setCookTimeMinutes(0);
+        recipe.setTemperature(0);
+        recipe.setTemperatureMeasurement("F");
+        recipe.setConversionTemperatureMeasurement("F");
+        recipe.setConversionType("Multiply by");
+        recipe.setConversionAmount(0);
+        recipe.setNotes("");
+
+        recipe.setFromSystem("All");
+        recipe.setToSystem("All");
+        // These views are not data bound.
+        setSpinnerToValue(findViewById(R.id.fromMeasSystem), "All");
+        setSpinnerToValue(findViewById(R.id.toMeasSystem), "All");
+
+        // Ingredients
+        if (viewModel.getRecipeWithIngredients().ingredients != null) {
+            viewModel.getRecipeWithIngredients().ingredients.clear();
+        }
+
+        if (recyclerView != null) {
+            recyclerView.removeAllViews();
+        }
 
         viewModel.getRecipeWithIngredients().ingredients = new ArrayList<>();
+        Ingredient ingredient;
 
-        Ingredient ingredient = new Ingredient();
-        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
-        ingredient.setName("milk");
-        ingredient.setMeasurement("cups");
-        ingredient.setConversionMeasurement("cups");
-        ingredient.setQuantity((double) 60);
-        ingredient.setIsConversionIngredient(false);
-        viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
+        for(int i = 0; i < 3; i++) {
+            Log.d("adapter size b", String.valueOf(viewModel.getAdapter().getItemCount()));
+            Log.d("recycler size b", String.valueOf(recyclerView.getChildCount()));
 
-        ingredient = new Ingredient();
-        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
-        ingredient.setName("eggs");
-        ingredient.setMeasurement("units");
-        ingredient.setConversionMeasurement("units");
-        ingredient.setQuantity((double) 5);
-        ingredient.setIsConversionIngredient(true); // This is the conversion ingredient.
-        ingredient.setConversionIngredientQuantity(4); // Recipe calls for 5 eggs but we only have 4.
-        viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
+            ingredient = new Ingredient();
+            ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
+            ingredient.setId(0);
+            ingredient.setRecipeId(0);
+            ingredient.setName("");
+            ingredient.setQuantity(0);
+            ingredient.setMeasurement("cups");
+            ingredient.setConversionMeasurement("cups");
+            ingredient.setIsConversionIngredient(false);
+            ingredient.setConversionIngredientQuantity(0);
+            viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 
-        ingredient = new Ingredient();
-        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
-        ingredient.setName("salt");
-        ingredient.setMeasurement("tablespoons");
-        ingredient.setConversionMeasurement("teaspoons");
-        ingredient.setQuantity((double) 5);
-        ingredient.setIsConversionIngredient(false);
-        viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
+            //viewModel.getAdapter().notifyItemInserted(i);
+            View ingredientView = recyclerView.getLayoutManager().getChildAt(1);
+
+
+            Log.d("adapter size a", String.valueOf(viewModel.getAdapter().getItemCount()));
+            Log.d("recycler size a", String.valueOf(recyclerView.getChildCount()));
+
+            //CheckBox checkBox = ingredientView.findViewById(R.id.checkBoxIsConvIngredient);
+           // EditText editText = ingredientView.findViewById(R.id.editOneIngredient);
+            //TextView textView = ingredientView.findViewById(R.id.calcConvQuantity);
+
+           // checkBox.setVisibility(View.INVISIBLE);
+         //   editText.setVisibility(View.INVISIBLE);
+        //    textView.setVisibility(View.VISIBLE);
+
+        }
+
     }
 
     public static Double convertMeasurement(Double quantity, String startingUnit, String endingUnit) {

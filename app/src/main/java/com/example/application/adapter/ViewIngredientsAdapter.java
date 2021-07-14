@@ -1,7 +1,6 @@
 package com.example.application.adapter;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,31 +9,22 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.InverseBindingAdapter;
-import androidx.databinding.InverseBindingListener;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.BR;
 import com.example.application.MeasurementDetails;
 import com.example.application.R;
-import com.example.application.activity.RecipeActivity;
 import com.example.application.databinding.IngredientlistRowBinding;
 import com.example.application.viewmodel.RecipeViewModel;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredientsAdapter.ViewHolder> {
 
@@ -163,7 +153,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
             spinnerConvertBy = activity.findViewById(R.id.convType );
             calcConvQty = itemView.findViewById(R.id.calcConvQuantity);
-            textView = itemView.findViewById(R.id.ingredentName);
+            textView = itemView.findViewById(R.id.ingredientName);
             ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, viewModel.getIngredientNames());
             textView.setThreshold(1);
             textView.setAdapter(adapter);
@@ -200,7 +190,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.buttonDeleteIngredient:
-                    onClickListener.deleteButtonClick(getAdapterPosition());
+                    onClickListener.deleteIngredient(getAdapterPosition());
                     break;
                 default:
                     break;
@@ -215,7 +205,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     }
 
     public interface OnClickListener {
-        void deleteButtonClick(int position);
+        void deleteIngredient(int position);
         //void ingredientCheckboxClick(int position);
     }
 }

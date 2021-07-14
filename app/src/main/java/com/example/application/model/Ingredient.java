@@ -56,23 +56,24 @@ public class Ingredient extends BaseObservable {
         this.recipeId = recipeId;
     }
 
+    @Bindable
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
+        notifyPropertyChanged(BR.name);
     }
 
     public double getQuantity() {
         return quantity;
     }
-
-
     public void setQuantity(double quantity) {
         this.quantity = quantity;
+        notifyPropertyChanged(BR.quantityString);
         notifyPropertyChanged(BR.quantityConvertedString);
     }
-
+    @Bindable
     public String getQuantityString() {
         if (getQuantity() == 0) {
             return null;
@@ -141,9 +142,9 @@ public class Ingredient extends BaseObservable {
             return "";
         }
     }
-
     public void setQuantityConvertedString(String string) { }
 
+    @Bindable
     public String getMeasurement() {
         return measurement;
     }
@@ -156,12 +157,13 @@ public class Ingredient extends BaseObservable {
         }
         catch (Exception e) {
         }
+        notifyPropertyChanged(BR.measurement);
     }
 
+    @Bindable
     public String getConversionMeasurement() {
         return conversionMeasurement;
     }
-
     public void setConversionMeasurement(String conversionMeasurement) {
         this.conversionMeasurement = conversionMeasurement;
         try {
@@ -171,6 +173,7 @@ public class Ingredient extends BaseObservable {
         }
         catch (Exception e) {
         }
+        notifyPropertyChanged(BR.conversionMeasurement);
     }
 
     @Bindable
@@ -179,8 +182,8 @@ public class Ingredient extends BaseObservable {
     }
     public void setIsConversionIngredient(Boolean isConversionIngredient) {
         this.isConversionIngredient = isConversionIngredient;
-        notifyPropertyChanged(BR.quantityConvertedString);
         notifyPropertyChanged(BR.isConversionIngredient);
+        notifyPropertyChanged(BR.quantityConvertedString);
     }
 
     public double getConversionIngredientQuantity() {
@@ -196,8 +199,9 @@ public class Ingredient extends BaseObservable {
         }
         catch (Exception e) {
         }
+        notifyPropertyChanged(BR.conversionIngredientQuantityString);
     }
-
+    @Bindable
     public String getConversionIngredientQuantityString() {
         if (getConversionIngredientQuantity() == 0) {
             return null;

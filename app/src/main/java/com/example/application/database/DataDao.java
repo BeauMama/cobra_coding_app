@@ -23,14 +23,6 @@ public interface DataDao {
     @Query("SELECT DISTINCT name FROM Ingredient ORDER BY name")
     List<String> getIngredientNames();
 
-    /*
-    @Query("DELETE FROM Recipe")
-    void deleteRecipeTable();
-
-    @Query("DELETE FROM Ingredient")
-    void deleteIngredientTable();
-     */
-
     @Insert(entity = Recipe.class)
     long insertRecipe(Recipe recipe);
 
@@ -68,5 +60,11 @@ public interface DataDao {
 
     @Query("DELETE FROM Ingredient WHERE recipeId = :recipeId AND id NOT IN (:ids)")
     void deleteIngredientsNotInId(int recipeId, List<Integer> ids);
+
+    @Query("DELETE FROM Recipe WHERE id = :recipeId")
+    void deleteRecipeById(int recipeId);
+
+    @Query("DELETE FROM Ingredient WHERE recipeId = :recipeId")
+    void deleteIngredientByRecipeId(int recipeId);
 
 }

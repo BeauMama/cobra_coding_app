@@ -55,17 +55,18 @@ public class Recipe extends BaseObservable {
         this.id = id;
     }
 
+    @Bindable
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
+        notifyPropertyChanged(BR.name);
     }
 
     public int getServingSize() {
         return servingSize;
     }
-
     public void setServingSize(int servingSize) {
         this.servingSize = servingSize;
 
@@ -76,8 +77,10 @@ public class Recipe extends BaseObservable {
         }
         catch (Exception e) {
         }
+        notifyPropertyChanged(BR.servingSizeString);
     }
 
+    @Bindable
     public String getServingSizeString() {
         if (getServingSize() == 0) {
             return null;
@@ -85,7 +88,6 @@ public class Recipe extends BaseObservable {
             return Integer.toString(getServingSize());
         }
     }
-
     public void setServingSizeString(String servingSize) {
         try {
             int val = Integer.parseInt(servingSize);
@@ -95,14 +97,15 @@ public class Recipe extends BaseObservable {
         }
     }
 
+
     public int getCookTimeMinutes() {
         return cookTimeMinutes;
     }
-
     public void setCookTimeMinutes(int cookTimeMinutes) {
         this.cookTimeMinutes = cookTimeMinutes;
+        notifyPropertyChanged(BR.cookTimeMinutesString);
     }
-
+    @Bindable
     public String getCookTimeMinutesString() {
         if (getCookTimeMinutes() == 0) {
             return null;
@@ -110,7 +113,6 @@ public class Recipe extends BaseObservable {
             return Integer.toString(getCookTimeMinutes());
         }
     }
-
     public void setCookTimeMinutesString(String cookTimeMinutes) {
         try {
             int val = Integer.parseInt(cookTimeMinutes);
@@ -125,9 +127,10 @@ public class Recipe extends BaseObservable {
     }
     public void setTemperature(int temperature) {
         this.temperature = temperature;
+        notifyPropertyChanged(BR.temperatureString);
         notifyPropertyChanged(BR.temperatureConvertedString);
     }
-
+    @Bindable
     public String getTemperatureString() {
         if (getTemperature() == 0) {
             return null;
@@ -144,19 +147,23 @@ public class Recipe extends BaseObservable {
         }
     }
 
+    @Bindable
     public String getTemperatureMeasurement() {
         return temperatureMeasurement;
     }
     public void setTemperatureMeasurement(String temperatureMeasurement) {
         this.temperatureMeasurement = temperatureMeasurement;
+        notifyPropertyChanged(BR.temperatureMeasurement);
         notifyPropertyChanged(BR.temperatureConvertedString);
     }
 
+    @Bindable
     public String getConversionTemperatureMeasurement() {
         return conversionTemperatureMeasurement;
     }
     public void setConversionTemperatureMeasurement(String conversionTemperatureMeasurement) {
         this.conversionTemperatureMeasurement = conversionTemperatureMeasurement;
+        notifyPropertyChanged(BR.conversionTemperatureMeasurement);
         notifyPropertyChanged(BR.temperatureConvertedString);
     }
 
@@ -168,6 +175,7 @@ public class Recipe extends BaseObservable {
     }
     public void setTemperatureConvertedString(String string) { }
 
+    @Bindable
     public String getConversionType() {
         return conversionType;
     }
@@ -181,12 +189,12 @@ public class Recipe extends BaseObservable {
         }
         catch (Exception e) {
         }
+        notifyPropertyChanged(BR.conversionType);
     }
 
     public double getConversionAmount() {
         return conversionAmount;
     }
-
     public void setConversionAmount(double conversionAmount) {
         this.conversionAmount = conversionAmount;
 
@@ -197,8 +205,9 @@ public class Recipe extends BaseObservable {
         }
         catch (Exception e) {
         }
+        notifyPropertyChanged(BR.conversionAmountString);
     }
-
+    @Bindable
     public String getConversionAmountString() {
         if (getConversionAmount() == 0) {
             return null;
@@ -208,7 +217,6 @@ public class Recipe extends BaseObservable {
             return decimalFormat.format(value);
         }
     }
-
     public void setConversionAmountString(String setConversionAmount) {
         try {
             double val = Double.parseDouble(setConversionAmount);
@@ -218,11 +226,13 @@ public class Recipe extends BaseObservable {
         }
     }
 
+    @Bindable
     public String getNotes() {
         return notes;
     }
     public void setNotes(String notes) {
         this.notes = notes;
+        notifyPropertyChanged(BR.notes);
     }
 
     public String getFromSystem() {
@@ -238,5 +248,4 @@ public class Recipe extends BaseObservable {
     public void setToSystem(String toSystem) {
         this.toSystem = toSystem;
     }
-
 }
