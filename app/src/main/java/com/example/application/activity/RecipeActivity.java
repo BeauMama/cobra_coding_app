@@ -319,6 +319,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         binding.setViewModel(viewModel); //Bind new ingredient to the viewModel(rebinding add to the bind)
         binding.setSpinnerItemSelected(this);
 
+        recyclerView.scrollToPosition(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
+
         viewModel.getAdapter().notifyDataSetChanged();
         //recyclerView.getAdapter().notifyDataSetChanged();
         //recyclerView.getLayoutManager().
