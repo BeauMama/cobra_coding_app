@@ -38,7 +38,7 @@ public class SpinnerConvertByAdapter {
                     visibility = View.INVISIBLE;
                     editTextConvAmount.setVisibility(View.VISIBLE);
                 }
-                
+
                 for(int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
                     View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
                     //try {

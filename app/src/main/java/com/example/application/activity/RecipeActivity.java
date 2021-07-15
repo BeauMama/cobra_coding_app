@@ -62,18 +62,16 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             viewModel.init(this);
         }
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
-        initializeRecycleView();
-
         if (loadRecipeWithIngredients() == false) {
             setupRecipeWithDefaultData();
         }
 
         getIngredientNames();
 
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
+        initializeRecycleView();
         binding.setViewModel(viewModel);
         binding.setSpinnerItemSelected(this);
-
     }
 
     @Override
@@ -227,7 +225,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     public void saveRecipe(View view) {
-
         if (validRecipe()) {
             // The recipe is valid. Save it to the database.
             DataSaveRecipeWithIngredients dataSaveRecipeWithIngredients = new DataSaveRecipeWithIngredients(dataDao, viewModel.getRecipeWithIngredients());
@@ -245,6 +242,43 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
+    private Boolean validRecipe() {
+        Boolean recipeValid = true;
+        String message = "";
+
+        if (viewModel.getRecipeWithIngredients().recipe.getName().equals("")) {
+            // The name should not be blank. Let the user know with a toast or some other method.
+            message = "Please enter a recipe name";
+            recipeValid = false;
+
+        } else {
+            for (Ingredient ingredient : viewModel.getRecipeWithIngredients().ingredients) {
+                if (ingredient.getName().equals("")) {
+                    // One of the recipe names are blank. Let the user know.
+                    message = "Please enter an ingredient name";
+                    recipeValid = false;
+                    break;
+                }
+                if (ingredient.getMeasurement().toLowerCase().equals("select")) {
+                    message = "Please select a measurement for the ingredient";
+                    recipeValid = false;
+                    break;
+                }
+                if (ingredient.getConversionMeasurement().toLowerCase().equals("select")) {
+                    message = "Please select a conversion measurement for the ingredient";
+                    recipeValid = false;
+                    break;
+                }
+            }
+        }
+
+        if (!recipeValid) {
+            Toast.makeText( this, message, Toast.LENGTH_LONG).show();
+        }
+
+        return recipeValid;
+    }
+
     public void deleteRecipe(View view) {
         DataDeleteRecipe dataDeleteRecipe = new DataDeleteRecipe(dataDao, viewModel.getRecipeWithIngredients().recipe.getId());
 
@@ -259,29 +293,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         setupRecipeWithDefaultData();
 
-    }
-
-    private Boolean validRecipe() {
-        Boolean recipeValid = true;
-
-        if (viewModel.getRecipeWithIngredients().recipe.getName().equals("")) {
-            // The name should not be blank. Let the user know with a toast or some other method.
-            Toast.makeText( RecipeActivity.this,"Please enter a valid recipe name.",
-                    Toast.LENGTH_LONG).show();
-
-            recipeValid = false;
-        }
-
-        for (Ingredient ingredient: viewModel.getRecipeWithIngredients().ingredients) {
-            if (ingredient.getName().equals("")) {
-                // One of the recipe names are blank. Let the user know.
-                Toast.makeText( RecipeActivity.this,"Please enter an ingredient name.",
-                        Toast.LENGTH_LONG).show();
-                recipeValid = false;
-            }
-        }
-
-        return recipeValid;
     }
 
     private void initializeRecycleView() {
@@ -319,7 +330,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         Log.d("manager size", String.valueOf(recyclerView.getLayoutManager().getChildCount()));
 
     }
-
 
     public void buttonTest(View view) {
         Log.d("adapter size", String.valueOf(viewModel.getAdapter().getItemCount()));
@@ -360,8 +370,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         Intent intent = new Intent(this, LoadRecipeActivity.class);
         startActivity(intent);
     }
-
-
 
     private void setupRecipeWithDefaultData() {
         if (viewModel.getRecipeWithIngredients() == null) {
@@ -404,8 +412,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         Ingredient ingredient;
 
         for(int i = 0; i < 3; i++) {
-            Log.d("adapter size b", String.valueOf(viewModel.getAdapter().getItemCount()));
-            Log.d("recycler size b", String.valueOf(recyclerView.getChildCount()));
+            //Log.d("adapter size b", String.valueOf(viewModel.getAdapter().getItemCount()));
+            //Log.d("recycler size b", String.valueOf(recyclerView.getChildCount()));
 
             ingredient = new Ingredient();
             ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
@@ -420,11 +428,11 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
 
             //viewModel.getAdapter().notifyItemInserted(i);
-            View ingredientView = recyclerView.getLayoutManager().getChildAt(1);
+            //View ingredientView = recyclerView.getLayoutManager().getChildAt(1);
 
 
-            Log.d("adapter size a", String.valueOf(viewModel.getAdapter().getItemCount()));
-            Log.d("recycler size a", String.valueOf(recyclerView.getChildCount()));
+            //Log.d("adapter size a", String.valueOf(viewModel.getAdapter().getItemCount()));
+            //Log.d("recycler size a", String.valueOf(recyclerView.getChildCount()));
 
             //CheckBox checkBox = ingredientView.findViewById(R.id.checkBoxIsConvIngredient);
            // EditText editText = ingredientView.findViewById(R.id.editOneIngredient);
