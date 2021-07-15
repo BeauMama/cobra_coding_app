@@ -299,8 +299,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         Ingredient ingredient = new Ingredient(); //creates new
         //setup defaults
         ingredient.setName("");
-        ingredient.setMeasurement("cups");
-        ingredient.setConversionMeasurement("cups");
+        ingredient.setMeasurement("select");
+        ingredient.setConversionMeasurement("select");
         ingredient.setIsConversionIngredient(false);
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients()); //ingredient news to reference the recipe
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient); //Add it to the recipe to the model
@@ -361,16 +361,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         startActivity(intent);
     }
 
-    private Boolean setSpinnerToValue(Spinner spinner, String value) {
-        for (int itemPosition = 0; itemPosition < spinner.getAdapter().getCount(); itemPosition++) {
-            String itemValue = (String) spinner.getAdapter().getItem(itemPosition);
-            if (itemValue.toLowerCase().equals(value.toLowerCase())) {
-                spinner.setSelection(itemPosition, false);
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     private void setupRecipeWithDefaultData() {
         if (viewModel.getRecipeWithIngredients() == null) {
@@ -397,8 +388,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         recipe.setFromSystem("All");
         recipe.setToSystem("All");
         // These views are not data bound.
-        setSpinnerToValue(findViewById(R.id.fromMeasSystem), "All");
-        setSpinnerToValue(findViewById(R.id.toMeasSystem), "All");
+        RecipeViewModel.setSpinnerToValue(findViewById(R.id.fromMeasSystem), "All");
+        RecipeViewModel.setSpinnerToValue(findViewById(R.id.toMeasSystem), "All");
 
         // Ingredients
         if (viewModel.getRecipeWithIngredients().ingredients != null) {
@@ -422,8 +413,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             ingredient.setRecipeId(0);
             ingredient.setName("");
             ingredient.setQuantity(0);
-            ingredient.setMeasurement("cups");
-            ingredient.setConversionMeasurement("cups");
+            ingredient.setMeasurement("select");
+            ingredient.setConversionMeasurement("select");
             ingredient.setIsConversionIngredient(false);
             ingredient.setConversionIngredientQuantity(0);
             viewModel.getRecipeWithIngredients().ingredients.add(ingredient);

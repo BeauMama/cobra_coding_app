@@ -38,8 +38,9 @@ public enum MeasurementDetails {
     public static List<String> getMeasurements(String measurementSystem, String measurementType) {
         List<String> measurements = new ArrayList<>();
         for (MeasurementDetails measurement : MeasurementDetails.values()) {
-
-            if (measurement.measurementSystem.toLowerCase().equals(measurementSystem.toLowerCase()) ||
+            if (measurement.measurement.toLowerCase().equals("select") && !measurementType.toLowerCase().equals("quantity")) {
+                measurements.add(measurement.measurement);
+            } else if (measurement.measurementSystem.toLowerCase().equals(measurementSystem.toLowerCase()) ||
                     measurement.measurementSystem.toLowerCase().equals("units") ||
                     measurementSystem.toLowerCase().equals("all")) {
                 if (measurement.measurementType.toLowerCase().equals(measurementType.toLowerCase()) ||

@@ -1,6 +1,8 @@
 package com.example.application.viewmodel;
 
 import android.app.Activity;
+import android.widget.Spinner;
+
 import androidx.lifecycle.ViewModel;
 
 import com.example.application.R;
@@ -37,5 +39,16 @@ public class RecipeViewModel extends ViewModel {
 
     public void setIngredientNames(List<String> ingredientNames) {
         this.ingredientNames = ingredientNames;
+    }
+
+    public static Boolean setSpinnerToValue(Spinner spinner, String value) {
+        for (int itemPosition = 0; itemPosition < spinner.getAdapter().getCount(); itemPosition++) {
+            String itemValue = (String) spinner.getAdapter().getItem(itemPosition);
+            if (itemValue.toLowerCase().equals(value.toLowerCase())) {
+                spinner.setSelection(itemPosition, false);
+                return true;
+            }
+        }
+        return false;
     }
 }
