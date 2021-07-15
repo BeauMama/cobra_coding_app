@@ -6,26 +6,22 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public enum MeasurementDetails {
-    FLUIDOUNCES("fluid ounces","Imperial","volume"),
-    TEASPOONS("teaspoons","Imperial","volume"),
-    TABLESPOONS("tablespoons","Imperial","volume"),
+    SELECT("select", "select", "select"),
+    CELSIUS("C", "Metric","temperature"),
+    FAHRENHEIT("F", "Imperial","temperature"),
     CUPS("cups","Imperial","volume"),
-    PINTS("pints", "Imperial", "volume"),
-    QUARTS("quarts", "Imperial", "volume"),
+    FLUIDOUNCES("fluid ounces","Imperial","volume"),
     GALLONS("gallons", "Imperial", "volume"),
-
-    OUNCES("ounces", "Imperial", "weight"),
-    POUNDS("pounds","Imperial","weight"),
-
-    MILLILITERS("milliliters","Metric", "volume"),
-    LITERS("liters", "Metric", "volume"),
-
     GRAMS("grams", "Metric","weight"),
     KILOGRAMS("kilograms", "Metric", "weight"),
-
-    FAHRENHEIT("F", "Imperial","temperature"),
-    CELSIUS("C", "Metric","temperature"),
-
+    LITERS("liters", "Metric", "volume"),
+    MILLILITERS("milliliters","Metric", "volume"),
+    OUNCES("ounces", "Imperial", "weight"),
+    PINTS("pints", "Imperial", "volume"),
+    POUNDS("pounds","Imperial","weight"),
+    QUARTS("quarts", "Imperial", "volume"),
+    TABLESPOONS("tablespoons","Imperial","volume"),
+    TEASPOONS("teaspoons","Imperial","volume"),
     UNITS("units","Units","quantity");
 
     private final String measurement;

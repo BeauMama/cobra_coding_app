@@ -31,33 +31,32 @@
     <string name="add_ingredient">Add Ingredient</string>
     <string name="Delete">Delete</string>
     <string-array name="measurement">
-        <item>fluid ounces</item>
-        <item>teaspoons</item>
-        <item>tablespoons</item>
+        <item>select</item>
         <item>cups</item>
-        <item>pints</item>
-        <item>quarts</item>
+        <item>fluid ounces</item>
         <item>gallons</item>
-        <item>ounces</item>
-        <item>pounds</item>
-        <item>milliliters</item>
-        <item>liters</item>
         <item>grams</item>
         <item>kilograms</item>
+        <item>liters</item>
+        <item>milliliters</item>
+        <item>ounces</item>
+        <item>pints</item>
+        <item>pounds</item>
+        <item>quarts</item>
+        <item>tablespoons</item>
+        <item>teaspoons</item>
         <item>units</item>
-
     </string-array>
 
     <string-array name="measurement_system">
         <item>All</item>
         <item>Imperial</item>
         <item>Metric</item>
-
     </string-array>
 
     <string-array name="temp_measurement">
-        <item>F</item>
         <item>C</item>
+        <item>F</item>
     </string-array>
 
     <string-array name="conversion">
