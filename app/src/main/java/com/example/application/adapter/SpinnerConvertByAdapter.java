@@ -26,17 +26,19 @@ public class SpinnerConvertByAdapter {
                 newTextAttrChanged.onChange();
 
                 String convertBy = parent.getItemAtPosition(position).toString();
+                Activity activity = (Activity) view.getContext();
+                RecyclerView recyclerView = activity.findViewById(R.id.ingredientList);
+                EditText editTextConvAmount =  activity.findViewById(R.id.convAmount);
 
                 int visibility;
                 if (convertBy.toLowerCase().equals("one ingredient")) {
                     visibility = View.VISIBLE;
+                    editTextConvAmount.setVisibility(View.INVISIBLE);
                 } else {
                     visibility = View.INVISIBLE;
+                    editTextConvAmount.setVisibility(View.VISIBLE);
                 }
-
-                Activity activity = (Activity) view.getContext();
-                RecyclerView recyclerView = activity.findViewById(R.id.ingredientList);
-
+                
                 for(int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
                     View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
                     //try {
