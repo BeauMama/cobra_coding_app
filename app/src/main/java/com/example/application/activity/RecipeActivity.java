@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -121,6 +122,9 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     public void addIngredient(View view) {
+        //Get auto complete to work when you add new ingredient.
+        AutoCompleteTextView textView = findViewById(R.id.ingredientName);
+
         Ingredient ingredient = new Ingredient(); //creates new
         ingredient.setName("");
         ingredient.setMeasurement("select");
@@ -131,6 +135,10 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getAdapter().notifyItemInserted(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
         viewModel.getBinding().setViewModel(viewModel); //Bind new ingredient to the viewModel(rebinding add to the bind)
         viewModel.getBinding().setSpinnerItemSelected(this);
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, viewModel.getIngredientNames());
+        textView.setThreshold(1);
+        textView.setAdapter(adapter);
 
         //recyclerView.scrollToPosition(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
     }
