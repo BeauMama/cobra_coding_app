@@ -1,6 +1,7 @@
 package com.example.application.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.application.BR;
 import com.example.application.MeasurementDetails;
 import com.example.application.R;
-import com.example.application.activity.RecipeActivity;
 import com.example.application.databinding.IngredientlistRowBinding;
 import com.example.application.viewmodel.RecipeViewModel;
 
@@ -46,6 +46,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        Log.d("onCreateViewHolder", "ran");
         IngredientlistRowBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                 R.layout.ingredientlist_row, parent, false);
 
@@ -54,12 +55,14 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewIngredientsAdapter.ViewHolder viewHolder, int position) {
+        Log.d("onBindViewHolder", String.valueOf(position));
+
         viewHolder.bind(viewModel, position);
 
         RecipeViewModel.setSpinnerToValue(viewHolder.spinnerMeasurementFrom,
                 viewModel.getRecipeWithIngredients().ingredients.get(position).getMeasurement());
 
-        viewHolder.checkBox.setOnClickListener(view -> {
+        viewHolder.checkBoxIsConvIngredient.setOnClickListener(view -> {
             selectPosition = viewHolder.getAdapterPosition();
             notifyDataSetChanged();
         });
@@ -75,7 +78,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             }
         } else if (selectPosition == position) {
             // Check boxed checked/unchecked. Hide/show the items for the related ingredient.
-            if (viewHolder.checkBox.isChecked()) {
+            if (viewHolder.checkBoxIsConvIngredient.isChecked()) {
                 viewHolder.byIngredient.setVisibility(View.VISIBLE);
                 viewHolder.calcConvQty.setVisibility(View.INVISIBLE);
            } else {
@@ -85,7 +88,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         } else {
             // Check box checked/unchecked. Uncheck all checkboxes for what was not checked
             // and show/hide controls that need to be.
-            viewHolder.checkBox.setChecked(false);
+            viewHolder.checkBoxIsConvIngredient.setChecked(false);
             viewHolder.byIngredient.setVisibility(View.INVISIBLE);
             viewHolder.calcConvQty.setVisibility(View.VISIBLE);
         }
@@ -115,10 +118,40 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
+
+
+
+
+
+
+
+
+
+        if (viewModel.getRecipeWithIngredients().recipe.getConversionType().toLowerCase().equals("one ingredient")) {
+            //viewHolder.checkBoxIsConvIngredient.setVisibility(View.VISIBLE);
+        } else {
+           // viewHolder.checkBoxIsConvIngredient.setVisibility(View.INVISIBLE);
+        }
+
+
+        //            View ingredientView = recyclerView.getLayoutManager().findViewByPosition(i);
+
+//            if (ingredientView != null) {
+//                CheckBox checkBox = ingredientView.findViewById(R.id.checkBoxIsConvIngredient);
+//                EditText editText = ingredientView.findViewById(R.id.editOneIngredient);
+//                TextView textView = ingredientView.findViewById(R.id.calcConvQuantity);
+//
+//                checkBox.setVisibility(View.INVISIBLE);
+//                editText.setVisibility(View.INVISIBLE);
+//                textView.setVisibility(View.VISIBLE);
+//            }
+
+
     }
 
     @Override
     public int getItemCount() {
+        Log.d("getItemCount", "ran");
         return viewModel.getRecipeWithIngredients().ingredients.size();
     }
 
@@ -128,7 +161,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         private OnClickListener onClickListener;
         public IngredientlistRowBinding ingredientlistRowBinding;
         private TextView calcConvQty;
-        private CheckBox checkBox;
+        private CheckBox checkBoxIsConvIngredient;
         private EditText byIngredient;
         private Spinner spinnerMeasurementFrom;
         private Spinner spinnerMeasurementTo;
@@ -138,6 +171,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
         public ViewHolder(@NonNull @NotNull IngredientlistRowBinding ingredientlistRowBinding, OnClickListener onClickListener) {
             super(ingredientlistRowBinding.getRoot());
+            Log.d("VieHolder", "ran");
             this.ingredientlistRowBinding = ingredientlistRowBinding;
 
             spinnerConvertBy = activity.findViewById(R.id.convType );
@@ -150,8 +184,8 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             this.onClickListener = onClickListener;
             button = itemView.findViewById(R.id.buttonDeleteIngredient);
             button.setOnClickListener(this);
-            checkBox = itemView.findViewById(R.id.checkBoxIsConvIngredient);
-            checkBox.setOnClickListener(this);
+            checkBoxIsConvIngredient = itemView.findViewById(R.id.checkBoxIsConvIngredient);
+            checkBoxIsConvIngredient.setOnClickListener(this);
 
             spinnerMeasurementFrom = itemView.findViewById(R.id.measurement);
             spinnerMeasurementTo = itemView.findViewById( R.id.convMeasurement );

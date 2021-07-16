@@ -1,6 +1,7 @@
 package com.example.application.model;
 
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
@@ -16,6 +17,9 @@ import com.example.application.activity.RecipeActivity;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 @Entity
@@ -46,6 +50,10 @@ public class Recipe extends BaseObservable {
     @Ignore
     public void setRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients) {
         this.recipeWithIngredients = recipeWithIngredients;
+    }
+
+    public ArrayList<String> getTest() {
+        return new ArrayList<String>(Arrays.asList("cinnamon", "flour", "oil", "water", "F", "C"));
     }
 
     public int getId() {

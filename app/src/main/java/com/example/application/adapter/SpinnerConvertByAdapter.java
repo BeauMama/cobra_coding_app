@@ -41,7 +41,7 @@ public class SpinnerConvertByAdapter {
 
                 for(int i = 0; i < recyclerView.getAdapter().getItemCount(); i++) {
                     View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
-                    //try {
+                    if (ingredient != null) {
                         CheckBox checkbox = ingredient.findViewById(R.id.checkBoxIsConvIngredient);
                         EditText editText = ingredient.findViewById(R.id.editOneIngredient);
                         TextView textView = ingredient.findViewById(R.id.calcConvQuantity);
@@ -60,8 +60,7 @@ public class SpinnerConvertByAdapter {
                             editText.setVisibility(View.INVISIBLE);
                             textView.setVisibility(View.VISIBLE);
                         }
-                    //}
-                    //catch (Exception e) {            }
+                    }
                 }
             }
             @Override

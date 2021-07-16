@@ -1,5 +1,6 @@
 package com.example.application.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,7 @@ import com.example.application.viewmodel.RecipeViewModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,10 +45,8 @@ import java.util.concurrent.Executors;
 public class RecipeActivity extends AppCompatActivity implements ViewIngredientsAdapter.OnClickListener, SpinnerItemSelected {
 
     private DataDao dataDao;
-    private RecyclerView recyclerView;
-    private ViewIngredientsAdapter viewIngredientsAdapter;
     private RecipeViewModel viewModel;
-    private ActivityRecipeBinding binding;
+
     private Boolean initializeFromSystem = true;
     private Boolean initializeToSystem = true;
 
@@ -68,10 +68,140 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         getIngredientNames();
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
+        viewModel.setBinding(DataBindingUtil.setContentView(this, R.layout.activity_recipe));
         initializeRecycleView();
-        binding.setViewModel(viewModel);
-        binding.setSpinnerItemSelected(this);
+        viewModel.getBinding().setViewModel(viewModel);
+        viewModel.getBinding().setSpinnerItemSelected(this);
+    }
+
+    private void initializeRecycleView() {
+        viewModel.setRecyclerView(findViewById(R.id.ingredientList));
+        viewModel.getRecyclerView().setLayoutManager(new LinearLayoutManager(this));
+        viewModel.setViewIngredientsAdapter(viewModel.getAdapter());
+        viewModel.getRecyclerView().setAdapter(viewModel.getViewIngredientsAdapter());
+    }
+
+    @SuppressLint("LongLogTag")
+    public void buttonTest(View view) {
+        Log.d("model adapter item count", String.valueOf(viewModel.getAdapter().getItemCount()));
+        Log.d("recycler adapter item count", String.valueOf(viewModel.getRecyclerView().getAdapter().getItemCount()));
+        Log.d("recycler manager item count", String.valueOf(viewModel.getRecyclerView().getLayoutManager().getItemCount()));
+        Log.d("ingredient size", String.valueOf(viewModel.getRecipeWithIngredients().ingredients.size()));
+
+        Log.d("recycler child count", String.valueOf(viewModel.getRecyclerView().getChildCount()));
+        Log.d("recycler manager child count", String.valueOf(viewModel.getRecyclerView().getLayoutManager().getChildCount()));
+
+        int i = 0;
+        for (Ingredient ingredient : viewModel.getRecipeWithIngredients().ingredients) {
+            Log.d("ingredient", "name: " + ingredient.getName());
+            try {
+                View ingredientView1 = Objects.requireNonNull(viewModel.getRecyclerView().getLayoutManager().findViewByPosition(i));
+                if (ingredientView1 == null) {
+                    Log.d("ingredient1", "null");
+                } else {
+                    Log.d("ingredient1", "not null");
+                }
+                View ingredientView2 = Objects.requireNonNull(viewModel.getRecyclerView().findViewHolderForLayoutPosition(i)).itemView;
+                if (ingredientView2 == null) {
+                    Log.d("ingredient2", "null");
+                } else {
+                    Log.d("ingredient2", "not null");
+                }
+                Spinner spinnerMeasurement = ingredientView2.findViewById(R.id.measurement);
+                Log.d("found spinner " + i, String.valueOf(spinnerMeasurement.getSelectedItem()));
+            }
+            catch (Exception e) {
+                Log.d("exception", String.valueOf(e));
+                Log.d("error spinner", String.valueOf(i));
+            }
+            i++;
+        }
+    }
+
+    public void addIngredient(View view) {
+        Ingredient ingredient = new Ingredient(); //creates new
+        ingredient.setName("");
+        ingredient.setMeasurement("select");
+        ingredient.setConversionMeasurement("select");
+        ingredient.setIsConversionIngredient(false);
+        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients()); //ingredient news to reference the recipe
+        viewModel.getRecipeWithIngredients().ingredients.add(ingredient); //Add it to the recipe to the model
+        viewModel.getAdapter().notifyItemInserted(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
+        viewModel.getBinding().setViewModel(viewModel); //Bind new ingredient to the viewModel(rebinding add to the bind)
+        viewModel.getBinding().setSpinnerItemSelected(this);
+
+        //recyclerView.scrollToPosition(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
+    }
+
+    private void setupRecipeWithDefaultData() {
+        if (viewModel.getRecipeWithIngredients() == null) {
+            viewModel.setRecipeWithIngredients(new RecipeWithIngredients());
+        }
+        if (viewModel.getRecipeWithIngredients().recipe == null) {
+            viewModel.getRecipeWithIngredients().recipe = new Recipe();
+        }
+
+        // Recipe
+        Recipe recipe = viewModel.getRecipeWithIngredients().recipe;
+        recipe.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
+        recipe.setId(0);
+        recipe.setName("");
+        recipe.setServingSize(0);
+        recipe.setCookTimeMinutes(0);
+        recipe.setTemperature(0);
+        recipe.setTemperatureMeasurement("F");
+        recipe.setConversionTemperatureMeasurement("F");
+        recipe.setConversionType("Multiply by");
+        recipe.setConversionAmount(0);
+        recipe.setNotes("");
+
+        recipe.setFromSystem("All");
+        recipe.setToSystem("All");
+        // These views are not data bound.
+        RecipeViewModel.setSpinnerToValue(findViewById(R.id.fromMeasSystem), "All");
+        RecipeViewModel.setSpinnerToValue(findViewById(R.id.toMeasSystem), "All");
+
+        // Ingredients
+        if (viewModel.getRecipeWithIngredients().ingredients != null) {
+            viewModel.getRecipeWithIngredients().ingredients.clear();
+        }
+
+        if (viewModel.getRecyclerView() != null) {
+            viewModel.getRecyclerView().removeAllViews();
+        }
+
+        viewModel.getRecipeWithIngredients().ingredients = new ArrayList<>();
+        Ingredient ingredient;
+
+        for(int i = 0; i < 3; i++) {
+            ingredient = new Ingredient();
+            ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
+            ingredient.setId(0);
+            ingredient.setRecipeId(0);
+            ingredient.setName("");
+            ingredient.setQuantity(0);
+            ingredient.setMeasurement("select");
+            ingredient.setConversionMeasurement("select");
+            ingredient.setIsConversionIngredient(false);
+            ingredient.setConversionIngredientQuantity(0);
+            viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
+
+            //viewModel.getAdapter().notifyItemInserted(i);
+
+//            View ingredientView = recyclerView.getLayoutManager().findViewByPosition(i);
+
+//            if (ingredientView != null) {
+//                CheckBox checkBox = ingredientView.findViewById(R.id.checkBoxIsConvIngredient);
+//                EditText editText = ingredientView.findViewById(R.id.editOneIngredient);
+//                TextView textView = ingredientView.findViewById(R.id.calcConvQuantity);
+//
+//                checkBox.setVisibility(View.INVISIBLE);
+//                editText.setVisibility(View.INVISIBLE);
+//                textView.setVisibility(View.VISIBLE);
+//            }
+
+        }
+
     }
 
     @Override
@@ -86,7 +216,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
 
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
-            View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
+            View ingredient = viewModel.getRecyclerView().getLayoutManager().findViewByPosition(i);
             CheckBox checkbox = ingredient.findViewById(R.id.checkBoxIsConvIngredient);
             EditText editText = ingredient.findViewById(R.id.editOneIngredient);
             TextView textView = ingredient.findViewById(R.id.calcConvQuantity);
@@ -131,23 +261,17 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
 
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
-            View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
-            //try {
+            View ingredient = viewModel.getRecyclerView().getLayoutManager().findViewByPosition(i);
+            if (ingredient != null) {
                 Spinner spinnerMeasurement = ingredient.findViewById(R.id.measurement);
                 String oldMeasurementValue = spinnerMeasurement.getSelectedItem().toString();
                 spinnerMeasurement.setAdapter(adapter);
 
                 // After changing the spinner list, set it back to what it was selected to before if the item
                 // is still in the list
-                for (int itemPosition = 0; itemPosition < spinnerMeasurement.getAdapter().getCount(); itemPosition++) {
-                    String itemValue = (String) spinnerMeasurement.getAdapter().getItem(itemPosition);
-                    if (itemValue.equals(oldMeasurementValue)) {
-                        spinnerMeasurement.setSelection(itemPosition, false);
-                        break;
-                    }
-                }
-            //}
-           // catch (Exception e) { }
+                RecipeViewModel.setSpinnerToValue(spinnerMeasurement, oldMeasurementValue);
+            }
+
         }
     }
 
@@ -168,9 +292,9 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecipeWithIngredients().recipe.setToSystem(systemSelected);
 
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
-            View ingredient = recyclerView.getLayoutManager().findViewByPosition(i);
+            View ingredient = viewModel.getRecyclerView().getLayoutManager().findViewByPosition(i);
 
-            //try {
+            if (ingredient != null) {
                 Spinner spinnerMeasurement = ingredient.findViewById(R.id.measurement);
                 String measurementTypeSelected = MeasurementDetails.getMeasurementType(spinnerMeasurement.getSelectedItem().toString());
 
@@ -186,15 +310,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
                 // After changing the spinner list, set it back to what it was selected to before if the item
                 // is still in the list
-                for (int itemPosition = 0; itemPosition < spinnerConvMeasurement.getAdapter().getCount(); itemPosition++) {
-                    String itemValue = (String) spinnerConvMeasurement.getAdapter().getItem(itemPosition);
-                    if (itemValue.equals(oldMeasurementValue)) {
-                        spinnerConvMeasurement.setSelection(itemPosition, false);
-                        break;
-                    }
-                }
-            //}
-            //catch (Exception e) { }
+                RecipeViewModel.setSpinnerToValue(spinnerConvMeasurement, oldMeasurementValue);
+            }
         }
     }
 
@@ -292,61 +409,14 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
 
         setupRecipeWithDefaultData();
-
     }
 
-    private void initializeRecycleView() {
-        recyclerView = findViewById(R.id.ingredientList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        viewIngredientsAdapter = viewModel.getAdapter();
-        recyclerView.setAdapter(viewIngredientsAdapter);
-    }
-
-    public void addIngredient(View view) {
-        Log.d("adapter size", String.valueOf(viewModel.getAdapter().getItemCount()));
-        Log.d("recycler size", String.valueOf(recyclerView.getChildCount()));
-        Log.d("manager size", String.valueOf(recyclerView.getLayoutManager().getChildCount()));
-
-        Ingredient ingredient = new Ingredient(); //creates new
-        //setup defaults
-        ingredient.setName("");
-        ingredient.setMeasurement("select");
-        ingredient.setConversionMeasurement("select");
-        ingredient.setIsConversionIngredient(false);
-        ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients()); //ingredient news to reference the recipe
-        viewModel.getRecipeWithIngredients().ingredients.add(ingredient); //Add it to the recipe to the model
-        viewModel.getAdapter().notifyItemInserted(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
-        binding.setViewModel(viewModel); //Bind new ingredient to the viewModel(rebinding add to the bind)
-        binding.setSpinnerItemSelected(this);
-
-        recyclerView.scrollToPosition(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
-
-        viewModel.getAdapter().notifyDataSetChanged();
-        //recyclerView.getAdapter().notifyDataSetChanged();
-        //recyclerView.getLayoutManager().
-
-
-        // Why doesn't the recycler view size get larger when adding an ingredient?
-        Log.d("adapter size", String.valueOf(viewModel.getAdapter().getItemCount()));
-        Log.d("recycler size", String.valueOf(recyclerView.getChildCount()));
-        Log.d("manager size", String.valueOf(recyclerView.getLayoutManager().getChildCount()));
-
-    }
-
-    public void buttonTest(View view) {
-        Log.d("adapter size", String.valueOf(viewModel.getAdapter().getItemCount()));
-        Log.d("recycler size", String.valueOf(recyclerView.getChildCount()));
-
-        for (Ingredient ingredient : viewModel.getRecipeWithIngredients().ingredients) {
-            Log.d("ingredient", ingredient.getName());
-        }
-    }
 
     @Override
     public void deleteIngredient(int position) {
         if (viewModel.getRecipeWithIngredients().ingredients.size() > 1) {
             viewModel.getRecipeWithIngredients().ingredients.remove(position);
-            recyclerView.removeViewAt(position);
+            viewModel.getRecyclerView().removeViewAt(position);
         }
     }
 
@@ -371,81 +441,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     public void onClickMyRecipe(View view) {
         Intent intent = new Intent(this, LoadRecipeActivity.class);
         startActivity(intent);
-    }
-
-    private void setupRecipeWithDefaultData() {
-        if (viewModel.getRecipeWithIngredients() == null) {
-            viewModel.setRecipeWithIngredients(new RecipeWithIngredients());
-        }
-        if (viewModel.getRecipeWithIngredients().recipe == null) {
-            viewModel.getRecipeWithIngredients().recipe = new Recipe();
-        }
-
-        // Recipe
-        Recipe recipe = viewModel.getRecipeWithIngredients().recipe;
-        recipe.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
-        recipe.setId(0);
-        recipe.setName("");
-        recipe.setServingSize(0);
-        recipe.setCookTimeMinutes(0);
-        recipe.setTemperature(0);
-        recipe.setTemperatureMeasurement("F");
-        recipe.setConversionTemperatureMeasurement("F");
-        recipe.setConversionType("Multiply by");
-        recipe.setConversionAmount(0);
-        recipe.setNotes("");
-
-        recipe.setFromSystem("All");
-        recipe.setToSystem("All");
-        // These views are not data bound.
-        RecipeViewModel.setSpinnerToValue(findViewById(R.id.fromMeasSystem), "All");
-        RecipeViewModel.setSpinnerToValue(findViewById(R.id.toMeasSystem), "All");
-
-        // Ingredients
-        if (viewModel.getRecipeWithIngredients().ingredients != null) {
-            viewModel.getRecipeWithIngredients().ingredients.clear();
-        }
-
-        if (recyclerView != null) {
-            recyclerView.removeAllViews();
-        }
-
-        viewModel.getRecipeWithIngredients().ingredients = new ArrayList<>();
-        Ingredient ingredient;
-
-        for(int i = 0; i < 3; i++) {
-            //Log.d("adapter size b", String.valueOf(viewModel.getAdapter().getItemCount()));
-            //Log.d("recycler size b", String.valueOf(recyclerView.getChildCount()));
-
-            ingredient = new Ingredient();
-            ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients());
-            ingredient.setId(0);
-            ingredient.setRecipeId(0);
-            ingredient.setName("");
-            ingredient.setQuantity(0);
-            ingredient.setMeasurement("select");
-            ingredient.setConversionMeasurement("select");
-            ingredient.setIsConversionIngredient(false);
-            ingredient.setConversionIngredientQuantity(0);
-            viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
-
-            //viewModel.getAdapter().notifyItemInserted(i);
-            //View ingredientView = recyclerView.getLayoutManager().getChildAt(1);
-
-
-            //Log.d("adapter size a", String.valueOf(viewModel.getAdapter().getItemCount()));
-            //Log.d("recycler size a", String.valueOf(recyclerView.getChildCount()));
-
-            //CheckBox checkBox = ingredientView.findViewById(R.id.checkBoxIsConvIngredient);
-           // EditText editText = ingredientView.findViewById(R.id.editOneIngredient);
-            //TextView textView = ingredientView.findViewById(R.id.calcConvQuantity);
-
-           // checkBox.setVisibility(View.INVISIBLE);
-         //   editText.setVisibility(View.INVISIBLE);
-        //    textView.setVisibility(View.VISIBLE);
-
-        }
-
     }
 
     public static Double convertMeasurement(Double quantity, String startingUnit, String endingUnit) {
