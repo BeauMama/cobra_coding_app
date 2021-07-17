@@ -116,6 +116,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         textView.setAdapter(adapter);
 
         viewModel.getRecyclerView().scrollToPosition(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
+
     }
 
     private void setupRecipeWithDefaultData() {
