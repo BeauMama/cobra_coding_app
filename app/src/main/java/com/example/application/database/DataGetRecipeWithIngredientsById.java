@@ -1,5 +1,7 @@
 package com.example.application.database;
 
+import android.util.Log;
+
 import com.example.application.model.Ingredient;
 import com.example.application.model.Recipe;
 import com.example.application.model.RecipeWithIngredients;

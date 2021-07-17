@@ -4,8 +4,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
-import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.InverseBindingListener;
@@ -23,6 +21,7 @@ public class SpinnerBindingAdapter {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
         if (newSelectedValue != null) {
             int pos = ((ArrayAdapter<String>) spinner.getAdapter()).getPosition(newSelectedValue);
             spinner.setSelection(pos, true);

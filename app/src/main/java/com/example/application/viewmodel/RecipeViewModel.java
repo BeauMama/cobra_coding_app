@@ -151,6 +151,7 @@ public class RecipeViewModel extends ViewModel {
     }
 
     public static Boolean setSpinnerToValue(Spinner spinner, String value) {
+
         for (int itemPosition = 0; itemPosition < spinner.getAdapter().getCount(); itemPosition++) {
             String itemValue = (String) spinner.getAdapter().getItem(itemPosition);
             if (itemValue.toLowerCase().equals(value.toLowerCase())) {

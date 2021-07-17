@@ -198,7 +198,7 @@
 
   <Spinner
       android:id="@+id/fromMeasSystem"
-      android:onItemSelected="@{spinnerItemSelected.fromMeasurementSelected}"
+      android:onItemSelected="@{spinnerItemSelected.fromSystemSelected}"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
@@ -221,7 +221,7 @@
 
   <Spinner
       android:id="@+id/toMeasSystem"
-      android:onItemSelected="@{spinnerItemSelected.toMeasurementSelected}"
+      android:onItemSelected="@{spinnerItemSelected.toSystemSelected}"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"

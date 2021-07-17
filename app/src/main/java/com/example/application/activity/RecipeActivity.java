@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -72,8 +73,12 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         viewModel.setBinding(DataBindingUtil.setContentView(this, R.layout.activity_recipe));
         initializeRecycleView();
+
         viewModel.getBinding().setViewModel(viewModel);
+
         viewModel.getBinding().setSpinnerItemSelected(this);
+
+
     }
 
     private void initializeRecycleView() {
@@ -85,42 +90,16 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @SuppressLint("LongLogTag")
     public void buttonTest(View view) {
-        Log.d("model adapter item count", String.valueOf(viewModel.getAdapter().getItemCount()));
-        Log.d("recycler adapter item count", String.valueOf(viewModel.getRecyclerView().getAdapter().getItemCount()));
-        Log.d("recycler manager item count", String.valueOf(viewModel.getRecyclerView().getLayoutManager().getItemCount()));
-        Log.d("ingredient size", String.valueOf(viewModel.getRecipeWithIngredients().ingredients.size()));
 
-        Log.d("recycler child count", String.valueOf(viewModel.getRecyclerView().getChildCount()));
-        Log.d("recycler manager child count", String.valueOf(viewModel.getRecyclerView().getLayoutManager().getChildCount()));
-
-        int i = 0;
         for (Ingredient ingredient : viewModel.getRecipeWithIngredients().ingredients) {
-            Log.d("ingredient", "name: " + ingredient.getName());
-            try {
-                View ingredientView1 = Objects.requireNonNull(viewModel.getRecyclerView().getLayoutManager().findViewByPosition(i));
-                if (ingredientView1 == null) {
-                    Log.d("ingredient1", "null");
-                } else {
-                    Log.d("ingredient1", "not null");
-                }
-                View ingredientView2 = Objects.requireNonNull(viewModel.getRecyclerView().findViewHolderForLayoutPosition(i)).itemView;
-                if (ingredientView2 == null) {
-                    Log.d("ingredient2", "null");
-                } else {
-                    Log.d("ingredient2", "not null");
-                }
-                Spinner spinnerMeasurement = ingredientView2.findViewById(R.id.measurement);
-                Log.d("found spinner " + i, String.valueOf(spinnerMeasurement.getSelectedItem()));
-            }
-            catch (Exception e) {
-                Log.d("exception", String.valueOf(e));
-                Log.d("error spinner", String.valueOf(i));
-            }
-            i++;
+            Log.d("ingredient", "name: " + ingredient.getConversionMeasurement());
         }
     }
 
     public void addIngredient(View view) {
+        //Get auto complete to work when you add new ingredient.
+        AutoCompleteTextView textView = findViewById(R.id.ingredientName);
+
         Ingredient ingredient = new Ingredient(); //creates new
         ingredient.setName("");
         ingredient.setMeasurement("select");
@@ -132,7 +111,11 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getBinding().setViewModel(viewModel); //Bind new ingredient to the viewModel(rebinding add to the bind)
         viewModel.getBinding().setSpinnerItemSelected(this);
 
-        //recyclerView.scrollToPosition(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, viewModel.getIngredientNames());
+        textView.setThreshold(1);
+        textView.setAdapter(adapter);
+
+        viewModel.getRecyclerView().scrollToPosition(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
     }
 
     private void setupRecipeWithDefaultData() {
@@ -241,17 +224,12 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     @Override
-    public void fromMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
+    public void fromSystemSelected(AdapterView<?> parent, View view, int position, long id) {
         // Set up spinner with correct value from model when initializing it
         if (initializeFromSystem) {
             initializeFromSystem = false;
-            for (int itemPosition = 0; itemPosition < parent.getAdapter().getCount(); itemPosition++) {
-                String itemValue = (String) parent.getAdapter().getItem(itemPosition);
-                if (itemValue.equals(viewModel.getRecipeWithIngredients().recipe.getFromSystem())) {
-                    parent.setSelection(itemPosition);
-                    break;
-                }
-            }
+            RecipeViewModel.setSpinnerToValue((Spinner) parent, viewModel.getRecipeWithIngredients().recipe.getFromSystem());
+
         }
 
         String systemSelected = parent.getSelectedItem().toString();
@@ -278,10 +256,14 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     @Override
-    public void toMeasurementSelected(AdapterView<?> parent, View view, int position, long id) {
+    public void toSystemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("tomMeasSelected", parent.getSelectedItem().toString());
+
         // Set up spinner with correct value from model when initializing it
         if (initializeToSystem) {
             initializeToSystem = false;
+            RecipeViewModel.setSpinnerToValue((Spinner) parent, viewModel.getRecipeWithIngredients().recipe.getToSystem());
+
             for (int itemPosition = 0; itemPosition < parent.getAdapter().getCount(); itemPosition++) {
                 String itemValue = (String) parent.getAdapter().getItem(itemPosition);
                 if (itemValue.equals(viewModel.getRecipeWithIngredients().recipe.getToSystem())) {
@@ -398,8 +380,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         return recipeValid;
     }
 
-
-
     public void deleteRecipe(View view) {
         AlertDialog alertDialog = new AlertDialog.Builder( this )
                 //Set message
@@ -421,7 +401,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
                         }
 
                         setupRecipeWithDefaultData();
-                        finish();
                     }
 
                 } )
