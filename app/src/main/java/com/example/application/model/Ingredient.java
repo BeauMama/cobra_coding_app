@@ -70,10 +70,15 @@ public class Ingredient extends BaseObservable {
     }
     public void setQuantity(double quantity) {
         this.quantity = quantity;
-        notifyPropertyChanged(BR.quantityString);
-        notifyPropertyChanged(BR.quantityConvertedString);
+        try {
+            for (Ingredient ingredient : recipeWithIngredients.ingredients) {
+                ingredient.notifyPropertyChanged(BR.quantityConvertedString);
+            }
+        }
+        catch (Exception e) {
+        }
     }
-    @Bindable
+
     public String getQuantityString() {
         if (getQuantity() == 0) {
             return null;
@@ -133,12 +138,33 @@ public class Ingredient extends BaseObservable {
     @Bindable
     public String getQuantityConvertedString() {
 
+        Boolean hasConversionIngredient = false;
+
+        // Don't show a converted quantity if the user does not have a measurement selected for the one ingredient
+        if (getRecipeWithIngredients().recipe.getConversionType().toLowerCase().equals("one ingredient")) {
+            for (Ingredient ingredient : getRecipeWithIngredients().ingredients) {
+                if (ingredient.getIsConversionIngredient()) {
+                    hasConversionIngredient = true;
+                    if (ingredient.getMeasurement().toLowerCase().equals("select") ||
+                             ingredient.getConversionMeasurement().toLowerCase().equals("select")) {
+                        return "0";
+                    }
+                }
+            }
+            if (!hasConversionIngredient) {
+                return "0";
+            }
+        }
+
+        if (getMeasurement().toLowerCase().equals("select") || getConversionMeasurement().toLowerCase().equals("select")) {
+            return "0";
+        }
+
         try {
             double value = RecipeActivity.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement());
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
             return decimalFormat.format(value);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return "";
         }
     }
