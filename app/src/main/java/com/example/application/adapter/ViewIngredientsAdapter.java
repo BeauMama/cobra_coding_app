@@ -126,13 +126,11 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
                 // After changing the spinner list, set it back to what it was selected to before if the item
                 // is still in the list
                 RecipeViewModel.setSpinnerToValue(spinnerConversionMeasurement, oldMeasurementValue);
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
-
     }
 
     @Override
@@ -176,9 +174,8 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             spinnerFromSystem = activity.findViewById(R.id.fromMeasSystem);
             spinnerToSystem = activity.findViewById( R.id.toMeasSystem );
 
+        }
 
-
-                   }
         public TextView getTextView() {
             return textView;
         }

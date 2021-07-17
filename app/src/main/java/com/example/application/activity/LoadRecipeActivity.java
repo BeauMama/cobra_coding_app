@@ -45,7 +45,6 @@ public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeL
         initializeRecycleView();
 
         binding.setViewModel(viewModel);
-
     }
 
     private void initializeDatabase() {
@@ -78,5 +77,4 @@ public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeL
         intent.putExtra("id", recipeIdSelected);
         startActivity(intent);
     }
-
 }

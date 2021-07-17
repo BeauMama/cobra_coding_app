@@ -77,8 +77,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getBinding().setViewModel(viewModel);
 
         viewModel.getBinding().setSpinnerItemSelected(this);
-
-
     }
 
     private void initializeRecycleView() {
@@ -86,14 +84,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getRecyclerView().setLayoutManager(new LinearLayoutManager(this));
         viewModel.setViewIngredientsAdapter(viewModel.getAdapter());
         viewModel.getRecyclerView().setAdapter(viewModel.getViewIngredientsAdapter());
-    }
-
-    @SuppressLint("LongLogTag")
-    public void buttonTest(View view) {
-
-        for (Ingredient ingredient : viewModel.getRecipeWithIngredients().ingredients) {
-            Log.d("ingredient", "name: " + ingredient.getConversionMeasurement());
-        }
     }
 
     public void addIngredient(View view) {
@@ -108,6 +98,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients()); //ingredient news to reference the recipe
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient); //Add it to the recipe to the model
         viewModel.getAdapter().notifyItemInserted(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
+        viewModel.getAdapter().notifyDataSetChanged();
         viewModel.getBinding().setViewModel(viewModel); //Bind new ingredient to the viewModel(rebinding add to the bind)
         viewModel.getBinding().setSpinnerItemSelected(this);
 
@@ -116,7 +107,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         textView.setAdapter(adapter);
 
         viewModel.getRecyclerView().scrollToPosition(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
-
     }
 
     private void setupRecipeWithDefaultData() {
@@ -171,23 +161,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             ingredient.setIsConversionIngredient(false);
             ingredient.setConversionIngredientQuantity(0);
             viewModel.getRecipeWithIngredients().ingredients.add(ingredient);
-
-            //viewModel.getAdapter().notifyItemInserted(i);
-
-//            View ingredientView = recyclerView.getLayoutManager().findViewByPosition(i);
-
-//            if (ingredientView != null) {
-//                CheckBox checkBox = ingredientView.findViewById(R.id.checkBoxIsConvIngredient);
-//                EditText editText = ingredientView.findViewById(R.id.editOneIngredient);
-//                TextView textView = ingredientView.findViewById(R.id.calcConvQuantity);
-//
-//                checkBox.setVisibility(View.INVISIBLE);
-//                editText.setVisibility(View.INVISIBLE);
-//                textView.setVisibility(View.VISIBLE);
-//            }
-
         }
-
     }
 
     @Override
@@ -230,7 +204,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         if (initializeFromSystem) {
             initializeFromSystem = false;
             RecipeViewModel.setSpinnerToValue((Spinner) parent, viewModel.getRecipeWithIngredients().recipe.getFromSystem());
-
         }
 
         String systemSelected = parent.getSelectedItem().toString();
@@ -252,7 +225,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
                 // is still in the list
                 RecipeViewModel.setSpinnerToValue(spinnerMeasurement, oldMeasurementValue);
             }
-
         }
     }
 
@@ -416,12 +388,17 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
                 .show();
     }
 
-
     @Override
     public void deleteIngredient(int position) {
+        Log.d("position", String.valueOf(position));
+        Log.d("model count", String.valueOf(viewModel.getRecipeWithIngredients().ingredients.size()));
+        Log.d("adapter count", String.valueOf(viewModel.getAdapter().getItemCount()));
         if (viewModel.getRecipeWithIngredients().ingredients.size() > 1) {
             viewModel.getRecipeWithIngredients().ingredients.remove(position);
-            viewModel.getRecyclerView().removeViewAt(position);
+            viewModel.getAdapter().notifyItemRemoved(position);
+            viewModel.getAdapter().notifyDataSetChanged();
+
+
         }
     }
 
@@ -727,9 +704,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
                 if (!endingUnit.equals("units")){ System.out.println("Invalid Entry"); }
                 else { return quantity; }
         }
-
         return quantity;
     }
-
-
 }
