@@ -13,7 +13,7 @@ import java.util.List;
 
 @Dao
 public interface DataDao {
-    @Query("SELECT * FROM Recipe ORDER BY id DESC")
+    @Query("SELECT * FROM Recipe ORDER BY name")
     List<Recipe> getAllRecipes();
 
     @Transaction
@@ -46,25 +46,10 @@ public interface DataDao {
         String temperatureMeasurement, String conversionTemperatureMeasurement, String conversionType,
         double conversionAmount, String notes, String fromSystem, String toSystem);
 
-    @Query("UPDATE Ingredient " +
-           "SET recipeId = :recipeId, " +
-           "name = :name, " +
-           "quantity = :quantity, " +
-           "measurement = :measurement, " +
-           "conversionMeasurement = :conversionMeasurement, " +
-           "isConversionIngredient = :isConversionIngredient, " +
-           "conversionIngredientQuantity = :conversionIngredientQuantity " +
-           "WHERE id = :id")
-    int updateIngredient(int id, int recipeId, String name, double quantity, String measurement,
-        String conversionMeasurement, Boolean isConversionIngredient, double conversionIngredientQuantity);
-
-    @Query("DELETE FROM Ingredient WHERE recipeId = :recipeId AND id NOT IN (:ids)")
-    void deleteIngredientsNotInId(int recipeId, List<Integer> ids);
-
     @Query("DELETE FROM Recipe WHERE id = :recipeId")
     void deleteRecipeById(int recipeId);
 
     @Query("DELETE FROM Ingredient WHERE recipeId = :recipeId")
-    void deleteIngredientByRecipeId(int recipeId);
+    void deleteIngredientsByRecipeId(int recipeId);
 
 }

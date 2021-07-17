@@ -1,12 +1,6 @@
 package com.example.application.database;
 
-import com.example.application.model.Ingredient;
-import com.example.application.model.Recipe;
-import com.example.application.model.RecipeWithIngredients;
-
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 public class DataDeleteRecipe implements Callable<Boolean> {
@@ -22,7 +16,7 @@ public class DataDeleteRecipe implements Callable<Boolean> {
     public Boolean call() throws InvalidParameterException {
         if (recipeId != 0) {
             dataDao.deleteRecipeById(recipeId);
-            dataDao.deleteIngredientByRecipeId(recipeId);
+            dataDao.deleteIngredientsByRecipeId(recipeId);
             return true;
         } else {
             return false;

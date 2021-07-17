@@ -30,6 +30,7 @@ public class DataGetRecipeWithIngredientsById implements Callable<RecipeWithIngr
             // so the ingredient.getQuantityIncreaseDecreaseString method can calculate what
             // it needs to
             ingredient.setRecipeWithIngredients(recipeWithIngredients);
+            Log.d("load ingredient", String.valueOf(ingredient.getId()));
         }
 
         return recipeWithIngredients;
