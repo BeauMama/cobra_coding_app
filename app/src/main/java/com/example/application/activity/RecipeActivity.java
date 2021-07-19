@@ -87,13 +87,20 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     public void addIngredient(View view) {
+        /*
+        Add new ingredient in the recyclerview.
+         */
+
         //Get auto complete to work when you add new ingredient.
         AutoCompleteTextView textView = findViewById(R.id.ingredientName);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, viewModel.getIngredientNames());
+        textView.setThreshold(1);
+        textView.setAdapter(adapter);
 
-        Ingredient ingredient = new Ingredient(); //creates new
-        ingredient.setName("");
-        ingredient.setMeasurement("select");
-        ingredient.setConversionMeasurement("select");
+        Ingredient ingredient = new Ingredient(); //creates new ingredient
+        ingredient.setName(""); //Setup with blank name
+        ingredient.setMeasurement("select"); //Setup to measurement system
+        ingredient.setConversionMeasurement("select"); //Setup from measurement system
         ingredient.setIsConversionIngredient(false);
         ingredient.setRecipeWithIngredients(viewModel.getRecipeWithIngredients()); //ingredient news to reference the recipe
         viewModel.getRecipeWithIngredients().ingredients.add(ingredient); //Add it to the recipe to the model
@@ -102,14 +109,14 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         viewModel.getBinding().setViewModel(viewModel); //Bind new ingredient to the viewModel(rebinding add to the bind)
         viewModel.getBinding().setSpinnerItemSelected(this);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, viewModel.getIngredientNames());
-        textView.setThreshold(1);
-        textView.setAdapter(adapter);
 
         viewModel.getRecyclerView().scrollToPosition(viewModel.getRecipeWithIngredients().ingredients.size() - 1);
     }
 
     private void setupRecipeWithDefaultData() {
+        /*
+        Setup recipe with default values.
+         */
         if (viewModel.getRecipeWithIngredients() == null) {
             viewModel.setRecipeWithIngredients(new RecipeWithIngredients());
         }
@@ -166,6 +173,10 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @Override
     public void convertBySelected(AdapterView<?> parent, View view, int position, long id) {
+        /*
+        Use show new edit text box, and hid view text boxes if Converted by "One Ingredient" is picked.
+         */
+
         String convertBy = parent.getItemAtPosition(position).toString();
 
         int visibility;
@@ -354,6 +365,9 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     public void deleteRecipe(View view) {
+        /*
+        Setup double confirmation when deleting a recipe.
+         */
         AlertDialog alertDialog = new AlertDialog.Builder( this )
                 //Set message
                 .setTitle( "Are you sure you want to delete the recipe." )

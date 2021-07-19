@@ -9,7 +9,9 @@ import android.view.View;
 import com.example.application.R;
 
 public class MainActivity extends AppCompatActivity {
-
+    /*Main splash screen. Holds two buttons. One to go to the LoadReceipeActivity
+    and one to go to the RecipeActivity.
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
