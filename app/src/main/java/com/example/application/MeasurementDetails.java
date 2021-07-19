@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public enum MeasurementDetails {
+    /*
+    Setup Enum class to handle set measurement, measurementSystem, and measurementType for the recipe.
+     */
+
     SELECT("select", "select", "select"),
     CELSIUS("C", "Metric","temperature"),
     FAHRENHEIT("F", "Imperial","temperature"),
