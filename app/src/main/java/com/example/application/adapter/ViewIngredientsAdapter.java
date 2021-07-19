@@ -27,7 +27,9 @@ import com.example.application.viewmodel.RecipeViewModel;
 import org.jetbrains.annotations.NotNull;
 
 public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredientsAdapter.ViewHolder> {
-
+    /*
+    Setup adapter to handle recyclerview handling.
+     */
     private int layoutId;
     private RecipeViewModel viewModel;
     private OnClickListener onClickListener;
@@ -64,6 +66,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         RecipeViewModel.setSpinnerToValue(viewHolder.spinnerMeasurement,
                 viewModel.getRecipeWithIngredients().ingredients.get(position).getMeasurement());
 
+        //setup adapter to handle to/from conversation measurements types.
         String measurementType = MeasurementDetails.getMeasurementType(viewHolder.spinnerMeasurement.getSelectedItem().toString());
         ArrayAdapter adapterConversionMeasurement = new ArrayAdapter(activity, android.R.layout.simple_list_item_checked,
                 MeasurementDetails.getMeasurements(viewHolder.spinnerToSystem.getSelectedItem().toString(), measurementType));
