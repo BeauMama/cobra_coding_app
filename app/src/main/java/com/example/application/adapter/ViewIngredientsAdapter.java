@@ -13,13 +13,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application.BR;
-import com.example.application.MeasurementDetails;
+import com.example.application.model.MeasurementDetails;
 import com.example.application.R;
 import com.example.application.databinding.IngredientlistRowBinding;
 import com.example.application.viewmodel.RecipeViewModel;

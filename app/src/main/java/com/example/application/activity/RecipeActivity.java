@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import com.example.application.MeasurementDetails;
+import com.example.application.model.MeasurementDetails;
 import com.example.application.R;
 import com.example.application.adapter.ViewIngredientsAdapter;
 import com.example.application.database.DataDao;

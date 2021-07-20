@@ -9,7 +9,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.application.MeasurementDetails;
+import com.example.application.model.MeasurementDetails;
 import com.example.application.R;
 import com.example.application.adapter.ViewIngredientsAdapter;
 import com.example.application.databinding.ActivityRecipeBinding;
