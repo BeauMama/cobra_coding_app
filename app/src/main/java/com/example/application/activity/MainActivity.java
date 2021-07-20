@@ -1,11 +1,9 @@
 package com.example.application.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import com.example.application.R;
 
 public class MainActivity extends AppCompatActivity {

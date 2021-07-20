@@ -169,9 +169,9 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
             checkBoxIsConvIngredient.setOnClickListener(this);
 
             spinnerMeasurement = itemView.findViewById(R.id.measurement);
-            spinnerConversionMeasurement = itemView.findViewById( R.id.convMeasurement );
+            spinnerConversionMeasurement = itemView.findViewById(R.id.convMeasurement);
             spinnerFromSystem = activity.findViewById(R.id.fromMeasSystem);
-            spinnerToSystem = activity.findViewById( R.id.toMeasSystem );
+            spinnerToSystem = activity.findViewById(R.id.toMeasSystem);
 
         }
 

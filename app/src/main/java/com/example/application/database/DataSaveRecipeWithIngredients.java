@@ -45,7 +45,6 @@ public class DataSaveRecipeWithIngredients implements Callable<RecipeWithIngredi
                 dataDao.insertIngredient(ingredient);
             }
         }
-
         return dataDao.getRecipeWithIngredientsById((int) recipeId);
     }
 }

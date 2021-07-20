@@ -63,7 +63,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         initializeRecycleView();
 
         viewModel.getBinding().setViewModel(viewModel);
-
         viewModel.getBinding().setSpinnerItemSelected(this);
     }
 
@@ -265,7 +264,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             ExecutorService executorService = Executors.newFixedThreadPool(3);
             try {
                 viewModel.setRecipeWithIngredients(executorService.submit(dataSaveRecipeWithIngredients).get());
-                Toast.makeText( this,"Recipe saved", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Recipe saved", Toast.LENGTH_SHORT).show();
 
             } catch (ExecutionException e) {
                 e.printStackTrace();
@@ -306,7 +305,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
 
         if (!recipeValid) {
-            Toast.makeText( this, message, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
 
         return recipeValid;
@@ -316,19 +315,19 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         /*
         Setup double confirmation when deleting a recipe.
          */
-        AlertDialog alertDialog = new AlertDialog.Builder( this )
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
                 //Set message
-                .setTitle( "Are you sure you want to delete the recipe." )
+                .setTitle("Are you sure you want to delete the recipe.")
                 //Set positive button
-                .setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Recipe will be deleted.
-                        DataDeleteRecipe dataDeleteRecipe = new DataDeleteRecipe( dataDao, viewModel.getRecipeWithIngredients().recipe.getId() );
+                        DataDeleteRecipe dataDeleteRecipe = new DataDeleteRecipe(dataDao, viewModel.getRecipeWithIngredients().recipe.getId());
 
-                        ExecutorService executorService = Executors.newFixedThreadPool( 3 );
+                        ExecutorService executorService = Executors.newFixedThreadPool(3);
                         try {
-                            executorService.submit( dataDeleteRecipe ).get();
+                            executorService.submit(dataDeleteRecipe).get();
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {
@@ -338,15 +337,15 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
                         setupRecipeWithDefaultData();
                     }
 
-                } )
+                })
                 //Set negative button
-                .setNegativeButton( "No", new DialogInterface.OnClickListener() {
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Message will show that recipe was not deleted.
-                        Toast.makeText( getApplicationContext(), "Recipe was not deleted.", Toast.LENGTH_LONG ).show();
+                        Toast.makeText(getApplicationContext(), "Recipe was not deleted.", Toast.LENGTH_LONG).show();
                     }
-                } )
+                })
                 .show();
     }
 

@@ -1,10 +1,8 @@
 package com.example.application.database;
 
 import android.util.Log;
-
 import com.example.application.model.Ingredient;
 import com.example.application.model.RecipeWithIngredients;
-
 import java.security.InvalidParameterException;
 import java.util.concurrent.Callable;
 

@@ -32,7 +32,6 @@ public class Ingredient extends BaseObservable {
     public RecipeWithIngredients getRecipeWithIngredients() {
         return recipeWithIngredients;
     }
-
     @Ignore
     public void setRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients) {
         this.recipeWithIngredients = recipeWithIngredients;

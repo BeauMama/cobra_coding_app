@@ -8,12 +8,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.InverseBindingAdapter;
 import androidx.databinding.InverseBindingListener;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.application.R;
 
 public class SpinnerConvertByAdapter {

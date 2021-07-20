@@ -36,14 +36,9 @@ public class Recipe extends BaseObservable {
     public RecipeWithIngredients getRecipeWithIngredients() {
         return recipeWithIngredients;
     }
-
     @Ignore
     public void setRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients) {
         this.recipeWithIngredients = recipeWithIngredients;
-    }
-
-    public ArrayList<String> getTest() {
-        return new ArrayList<>(Arrays.asList("cinnamon", "flour", "oil", "water", "F", "C"));
     }
 
     public int getId() {
@@ -94,7 +89,6 @@ public class Recipe extends BaseObservable {
             this.setServingSize(0);
         }
     }
-
 
     public int getCookTimeMinutes() {
         return cookTimeMinutes;

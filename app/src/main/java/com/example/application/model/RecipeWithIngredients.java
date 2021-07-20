@@ -15,5 +15,4 @@ public class RecipeWithIngredients {
     )
 
     public List<Ingredient> ingredients;
-
 }

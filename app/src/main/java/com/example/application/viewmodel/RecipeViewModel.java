@@ -1,6 +1,5 @@
 package com.example.application.viewmodel;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -124,7 +123,7 @@ public class RecipeViewModel extends ViewModel {
     }
 
     public void init(Activity activity) {
-        adapter = new ViewIngredientsAdapter( this, activity);
+        adapter = new ViewIngredientsAdapter(this, activity);
         this.activity = activity;
     }
 

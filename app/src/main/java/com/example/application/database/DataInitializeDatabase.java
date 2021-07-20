@@ -1,7 +1,6 @@
 package com.example.application.database;
 
 import android.content.Context;
-
 import androidx.room.Room;
 
 public class DataInitializeDatabase {
