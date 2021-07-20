@@ -16,6 +16,9 @@ import com.example.application.databinding.ActivityRecipeBinding;
 import com.example.application.model.RecipeWithIngredients;
 import java.util.List;
 
+/**
+ * The view model to be used for the RecipeActivity.
+ */
 public class RecipeViewModel extends ViewModel {
 
     private RecipeWithIngredients recipeWithIngredients;
@@ -29,7 +32,6 @@ public class RecipeViewModel extends ViewModel {
     public ActivityRecipeBinding getBinding() {
         return binding;
     }
-
     public void setBinding(ActivityRecipeBinding binding) {
         this.binding = binding;
     }
@@ -37,7 +39,6 @@ public class RecipeViewModel extends ViewModel {
     public ViewIngredientsAdapter getViewIngredientsAdapter() {
         return viewIngredientsAdapter;
     }
-
     public void setViewIngredientsAdapter(ViewIngredientsAdapter viewIngredientsAdapter) {
         this.viewIngredientsAdapter = viewIngredientsAdapter;
     }
@@ -45,13 +46,27 @@ public class RecipeViewModel extends ViewModel {
     public RecyclerView getRecyclerView() {
         return recyclerView;
     }
-
     public void setRecyclerView(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
 
         initializeRecyclerViewListener();
     }
 
+    /**
+     * Used to initialize the view model.
+     *
+     * @param activity The activity for the view model.
+     */
+    public void init(Activity activity) {
+        adapter = new ViewIngredientsAdapter(this, activity);
+        this.activity = activity;
+    }
+
+    /**
+     * Sets up the recyclerview listener so controls can be updated as they come into view.
+     * This method uses an on scroll listener and could be more efficient if it was a different
+     * listener to run when a new row in the recyclerview becomes partially visible.
+     */
     private void initializeRecyclerViewListener() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -79,7 +94,7 @@ public class RecipeViewModel extends ViewModel {
                         Spinner spinnerConvMeasurement = ingredientView.findViewById(R.id.convMeasurement);
                         String oldConvMeasurementValue = spinnerConvMeasurement.getSelectedItem().toString();
 
-
+                        // Set up controls for the one ingredient setting.
                         if (convType.toLowerCase().equals("one ingredient")) {
                             checkBoxIsConvIngredient.setVisibility(View.VISIBLE);
                             if (checkBoxIsConvIngredient.isChecked()) {
@@ -115,16 +130,10 @@ public class RecipeViewModel extends ViewModel {
                         // After changing the spinner list, set it back to what it was selected to before if the item
                         // is still in the list
                         RecipeViewModel.setSpinnerToValue(spinnerConvMeasurement, oldConvMeasurementValue);
-
                     }
                 }
             }
         });
-    }
-
-    public void init(Activity activity) {
-        adapter = new ViewIngredientsAdapter(this, activity);
-        this.activity = activity;
     }
 
     public ViewIngredientsAdapter getAdapter() { return adapter; }
@@ -132,7 +141,6 @@ public class RecipeViewModel extends ViewModel {
     public RecipeWithIngredients getRecipeWithIngredients() {
         return recipeWithIngredients;
     }
-
     public void setRecipeWithIngredients(RecipeWithIngredients recipeWithIngredients) {
         this.recipeWithIngredients = recipeWithIngredients;
     }
@@ -140,7 +148,6 @@ public class RecipeViewModel extends ViewModel {
     public List<String> getIngredientNames() {
         return ingredientNames;
     }
-
     public void setIngredientNames(List<String> ingredientNames) {
         this.ingredientNames = ingredientNames;
     }

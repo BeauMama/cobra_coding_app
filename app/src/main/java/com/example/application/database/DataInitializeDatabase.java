@@ -17,6 +17,7 @@ public class DataInitializeDatabase {
 
     /**
      * Creates a single instance of the database.
+     *
      * @param context The context for the application.
      * @return A data access object.
      */

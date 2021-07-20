@@ -15,6 +15,7 @@ public class DataGetRecipeWithIngredientsById implements Callable<RecipeWithIngr
 
     /**
      * Constructor
+     *
      * @param dataDao The data access object.
      * @param id The id of the recipe to get.
      */
@@ -25,6 +26,7 @@ public class DataGetRecipeWithIngredientsById implements Callable<RecipeWithIngr
 
     /**
      * Get a recipe and its related ingredients by id.
+     *
      * @return A recipe with its ingredients.
      * @throws InvalidParameterException Throws exception if invalid parameter is used.
      */

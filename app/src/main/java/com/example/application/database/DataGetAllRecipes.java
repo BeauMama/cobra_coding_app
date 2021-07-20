@@ -14,6 +14,7 @@ public class DataGetAllRecipes implements Callable<List<Recipe>> {
 
     /**
      * Constructor
+     *
      * @param dataDao The data access object.
      */
     public DataGetAllRecipes(DataDao dataDao) {
@@ -21,7 +22,8 @@ public class DataGetAllRecipes implements Callable<List<Recipe>> {
     }
 
     /**
-     * Get all recipes in the database
+     * Get all recipes in the database.
+     *
      * @return A list of recipes
      * @throws InvalidParameterException Throws exception if invalid parameter is used.
      */

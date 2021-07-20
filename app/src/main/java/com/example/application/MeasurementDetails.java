@@ -3,11 +3,10 @@ package com.example.application;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Enum class to handle set measurement, measurementSystem, and measurementType for the recipe.
+ */
 public enum MeasurementDetails {
-    /*
-    Setup Enum class to handle set measurement, measurementSystem, and measurementType for the recipe.
-     */
-
     SELECT("select", "select", "select"),
     CELSIUS("C", "Metric","temperature"),
     FAHRENHEIT("F", "Imperial","temperature"),
@@ -30,13 +29,29 @@ public enum MeasurementDetails {
     private final String measurementSystem;
     private final String measurementType;
 
-    //Constructor
-    MeasurementDetails(String measurement,String measurementSystem, String measurementType){
+    /**
+     * Constructor
+     *
+     * @param measurement The name of the measurement.
+     * @param measurementSystem The system for the measurement.
+     * @param measurementType The measurement type like volume, weight, temperature.
+     * @return the enum.
+     */
+    MeasurementDetails(String measurement, String measurementSystem, String measurementType){
         this.measurement = measurement;
         this.measurementSystem = measurementSystem;
         this.measurementType = measurementType;
     }
 
+    /**
+     * Gets all the related measurements for a specific system and type.
+     *
+     * @param measurementSystem The measurement system to get measurements for. Use all to get
+     *                          measurements for all systems.
+     * @param measurementType The measurement type to get measurements for. Use all to get
+     *                        measurements for all types.
+     * @return A list of measurements.
+     */
     public static List<String> getMeasurements(String measurementSystem, String measurementType) {
         List<String> measurements = new ArrayList<>();
         for (MeasurementDetails measurement : MeasurementDetails.values()) {
@@ -56,6 +71,12 @@ public enum MeasurementDetails {
         return measurements;
     }
 
+    /**
+     * Gets the type of measurement.
+     *
+     * @param measurement The measurement to get the type for.
+     * @return The type of the measurement.
+     */
     public static String getMeasurementType(String measurement) {
         String measurementType = "unknown";
         for (MeasurementDetails measurementDetails : MeasurementDetails.values()) {

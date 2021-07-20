@@ -13,6 +13,7 @@ public class DataGetIngredientNames implements Callable<List<String>> {
 
     /**
      * Constructor
+     *
      * @param dataDao The data access object.
      */
     public DataGetIngredientNames(DataDao dataDao) {
@@ -21,6 +22,7 @@ public class DataGetIngredientNames implements Callable<List<String>> {
 
     /**
      * Get names of all the ingredients in the database.
+     *
      * @return List of ingredient names.
      * @throws InvalidParameterException Throws exception if invalid parameter is used.
      */

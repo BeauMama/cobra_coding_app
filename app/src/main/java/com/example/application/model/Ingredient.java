@@ -99,6 +99,7 @@ public class Ingredient extends BaseObservable {
     /**
      * Increases or decreases the quantity of an ingredient based on how the user
      * wants to change the size of the recipe.
+     *
      * @return The increased or decreased quantity.
      */
     public double getQuantityIncreaseDecrease() {
@@ -142,6 +143,7 @@ public class Ingredient extends BaseObservable {
     /**
      * Converts the quantity of an ingredient based on how the user wants to increase or decrease
      * the recipe in addition to what measurement the ingredient is in and what to convert it to.
+     *
      * @return The quantity for the ingredient after increasing/decreasing and converting the
      *         measurement.
      */

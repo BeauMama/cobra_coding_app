@@ -18,6 +18,7 @@ public class DataSaveRecipeWithIngredients implements Callable<RecipeWithIngredi
 
     /**
      * Constructor
+     *
      * @param dataDao The data access object.
      * @param recipeWithIngredients The recipe and its ingredients to save.
      */
@@ -29,6 +30,7 @@ public class DataSaveRecipeWithIngredients implements Callable<RecipeWithIngredi
 
     /**
      * Save a recipe and its related ingredients.
+     *
      * @return The id that the recipe was assigned when saving.
      * @throws InvalidParameterException Throws exception if invalid parameter is used.
      */

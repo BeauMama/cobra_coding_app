@@ -16,6 +16,7 @@ import java.util.List;
 public interface DataDao {
     /**
      * Used for the LoadRecipeActivity to get all recipes.
+     *
      * @return A list of recipes.
      */
     @Query("SELECT * FROM Recipe ORDER BY name")
@@ -23,6 +24,7 @@ public interface DataDao {
 
     /**
      * Gets a recipe with ingredients.
+     *
      * @param id The id of the recipe with ingredients to get.
      * @return A recipe with ingredients.
      */
@@ -31,8 +33,8 @@ public interface DataDao {
     RecipeWithIngredients getRecipeWithIngredientsById(int id);
 
     /**
-     *  Gets all the ingredient names to be used for the ingredient
-     *  name autocomplete.
+     *  Gets all the ingredient names to be used for the ingredient name autocomplete.
+     *
      * @return A list of ingredient names.
      */
     @Query("SELECT DISTINCT name FROM Ingredient ORDER BY name")
@@ -40,6 +42,7 @@ public interface DataDao {
 
     /**
      * Inserts a recipe into the database.
+     *
      * @param recipe The recipe to save.
      * @return The id for the recipe that was saved.
      */
@@ -48,6 +51,7 @@ public interface DataDao {
 
     /**
      * Inserts an ingredient into the database.
+     *
      * @param ingredient The ingredient to save.
      * @return The id for the ingredient that was saved.
      */
@@ -56,6 +60,7 @@ public interface DataDao {
 
     /**
      * Updates an existing recipe.
+     *
      * @param id The recipe id.
      * @param name The recipe name.
      * @param servingSize The recipe serving size.
@@ -89,14 +94,16 @@ public interface DataDao {
         double conversionAmount, String notes, String fromSystem, String toSystem);
 
     /**
-     * Deletes a recipe
+     * Deletes a recipe.
+     *
      * @param recipeId The recipe id to delete.
      */
     @Query("DELETE FROM Recipe WHERE id = :recipeId")
     void deleteRecipeById(int recipeId);
 
     /**
-     * Deletes all ingredients for a recipe
+     * Deletes all ingredients for a recipe.
+     *
      * @param recipeId The recipe id for the ingredients to delete.
      */
     @Query("DELETE FROM Ingredient WHERE recipeId = :recipeId")
