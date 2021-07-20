@@ -21,6 +21,12 @@ public class DataDeleteRecipe implements Callable<Boolean> {
         this.recipeId = recipeId;
     }
 
+    /**
+     * Delets a recipe and all the related ingredients.
+     * @return True if the recipe was deleted (when the recipe id is not 0)
+     *         False if the recipe id was not deleted (when recipe id is 0)
+     * @throws InvalidParameterException Throws exception if invalid parameter is used.
+     */
     public Boolean call() throws InvalidParameterException {
         if (recipeId != 0) {
             dataDao.deleteRecipeById(recipeId);
