@@ -40,11 +40,13 @@ public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeL
 
         initializeDatabase();
         loadAllRecipes();
+    }
 
-        ActivityLoadRecipeBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_load_recipe);
-        initializeRecycleView();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        binding.setViewModel(viewModel);
+        loadAllRecipes();
     }
 
     private void initializeDatabase() {
@@ -61,6 +63,10 @@ public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeL
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        ActivityLoadRecipeBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_load_recipe);
+        initializeRecycleView();
+        binding.setViewModel(viewModel);
     }
 
     private void initializeRecycleView() {
