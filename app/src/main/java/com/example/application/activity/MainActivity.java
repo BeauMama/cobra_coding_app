@@ -9,7 +9,7 @@ import android.view.View;
 import com.example.application.R;
 
 public class MainActivity extends AppCompatActivity {
-    /*Main splash screen. Holds two buttons. One to go to the LoadReceipeActivity
+    /*Main splash screen. Holds two buttons. One to go to the LoadRecipeActivity
     and one to go to the RecipeActivity.
     */
     @Override

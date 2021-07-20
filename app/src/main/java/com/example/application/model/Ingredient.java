@@ -3,16 +3,12 @@ package com.example.application.model;
 import androidx.annotation.NonNull;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
-import androidx.databinding.ObservableInt;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
 import com.example.application.BR;
 import com.example.application.activity.RecipeActivity;
-
 import java.text.DecimalFormat;
-import java.util.List;
 
 @Entity
 public class Ingredient extends BaseObservable {
@@ -138,7 +134,7 @@ public class Ingredient extends BaseObservable {
     @Bindable
     public String getQuantityConvertedString() {
 
-        Boolean hasConversionIngredient = false;
+        boolean hasConversionIngredient = false;
 
         // Don't show a converted quantity if the user does not have a measurement selected for the one ingredient
         if (getRecipeWithIngredients().recipe.getConversionType().toLowerCase().equals("one ingredient")) {

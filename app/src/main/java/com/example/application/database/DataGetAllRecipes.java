@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 
 public class DataGetAllRecipes implements Callable<List<Recipe>> {
 
-    private DataDao dataDao;
+    private final DataDao dataDao;
 
     public DataGetAllRecipes(DataDao dataDao) {
         this.dataDao = dataDao;

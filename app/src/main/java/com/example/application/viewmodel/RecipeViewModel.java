@@ -1,24 +1,20 @@
 package com.example.application.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.application.MeasurementDetails;
 import com.example.application.R;
 import com.example.application.adapter.ViewIngredientsAdapter;
 import com.example.application.databinding.ActivityRecipeBinding;
 import com.example.application.model.RecipeWithIngredients;
-
 import java.util.List;
 
 public class RecipeViewModel extends ViewModel {
@@ -102,7 +98,7 @@ public class RecipeViewModel extends ViewModel {
 
 
                         // From Measurement System
-                        ArrayAdapter<String> fromMeasSystemAdapter = new ArrayAdapter<String>(ingredientView.getContext(), android.R.layout.simple_list_item_checked, measurements);
+                        ArrayAdapter<String> fromMeasSystemAdapter = new ArrayAdapter<>(ingredientView.getContext(), android.R.layout.simple_list_item_checked, measurements);
                         fromMeasSystemAdapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
                         spinnerMeasurement.setAdapter(fromMeasSystemAdapter);
                         // After changing the spinner list, set it back to what it was selected to before if the item
@@ -113,7 +109,7 @@ public class RecipeViewModel extends ViewModel {
                         String measurementTypeSelected = MeasurementDetails.getMeasurementType(spinnerMeasurement.getSelectedItem().toString());
                         List<String> convMeasurements = MeasurementDetails.getMeasurements(toMeasSystem, measurementTypeSelected);
 
-                        ArrayAdapter<String> toMeasSystemAdapter = new ArrayAdapter<String>(ingredientView.getContext(), android.R.layout.simple_list_item_checked, convMeasurements);
+                        ArrayAdapter<String> toMeasSystemAdapter = new ArrayAdapter<>(ingredientView.getContext(), android.R.layout.simple_list_item_checked, convMeasurements);
                         toMeasSystemAdapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
                         spinnerConvMeasurement.setAdapter(toMeasSystemAdapter);
 
@@ -128,7 +124,7 @@ public class RecipeViewModel extends ViewModel {
     }
 
     public void init(Activity activity) {
-        adapter = new ViewIngredientsAdapter(R.layout.recipelist_row, this, activity);
+        adapter = new ViewIngredientsAdapter( this, activity);
         this.activity = activity;
     }
 

@@ -4,9 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +18,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class ViewRecipeListAdapter extends RecyclerView.Adapter<ViewRecipeListAdapter.ViewHolder> {
 
-    private int layoutId;
-    private LoadRecipeViewModel viewModel;
-    private SelectItemListener selectItemListener;
+    private final LoadRecipeViewModel viewModel;
+    private final SelectItemListener selectItemListener;
 
-    public ViewRecipeListAdapter(@LayoutRes int layoutId, LoadRecipeViewModel viewModel, SelectItemListener selectItemListener) {
-        this.layoutId = layoutId;
+    public ViewRecipeListAdapter(LoadRecipeViewModel viewModel, SelectItemListener selectItemListener) {
         this.viewModel = viewModel;
         this.selectItemListener = selectItemListener;
     }
@@ -52,10 +47,9 @@ public class ViewRecipeListAdapter extends RecyclerView.Adapter<ViewRecipeListAd
         return viewModel.getRecipes().size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView recipeNameTextView;
-        private LinearLayout linearLayout;
-        private SelectItemListener selectItemListener;
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final LinearLayout linearLayout;
+        private final SelectItemListener selectItemListener;
         public RecipelistRowBinding recipelistRowBinding;
 
         public ViewHolder(@NonNull @NotNull RecipelistRowBinding recipelistRowBinding, SelectItemListener selectItemListener) {

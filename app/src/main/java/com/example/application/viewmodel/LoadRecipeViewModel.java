@@ -1,11 +1,8 @@
 package com.example.application.viewmodel;
 
 import androidx.lifecycle.ViewModel;
-
-import com.example.application.R;
 import com.example.application.adapter.ViewRecipeListAdapter;
 import com.example.application.model.Recipe;
-
 import java.util.List;
 
 public class LoadRecipeViewModel extends ViewModel {
@@ -14,7 +11,7 @@ public class LoadRecipeViewModel extends ViewModel {
     private ViewRecipeListAdapter adapter;
 
     public void init(ViewRecipeListAdapter.SelectItemListener selectItemListener) {
-        adapter = new ViewRecipeListAdapter(R.layout.recipelist_row, this, selectItemListener);
+        adapter = new ViewRecipeListAdapter(this, selectItemListener);
     }
 
     public ViewRecipeListAdapter getAdapter() { return adapter; }

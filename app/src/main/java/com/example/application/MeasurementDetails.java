@@ -1,9 +1,7 @@
 package com.example.application;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 public enum MeasurementDetails {
     /*
@@ -56,17 +54,6 @@ public enum MeasurementDetails {
             }
         }
         return measurements;
-    }
-
-    public static String getMeasurementSystem(String measurement) {
-        String measurementSystem = "unknown";
-        for (MeasurementDetails measurementDetails : MeasurementDetails.values()) {
-            if (measurementDetails.measurement.toLowerCase().equals(measurement.toLowerCase())) {
-                measurementSystem = measurementDetails.measurementSystem;
-                break;
-            }
-        }
-        return measurementSystem;
     }
 
     public static String getMeasurementType(String measurement) {

@@ -1,27 +1,19 @@
 package com.example.application.activity;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.application.MeasurementDetails;
 import com.example.application.R;
 import com.example.application.adapter.ViewIngredientsAdapter;
@@ -31,16 +23,12 @@ import com.example.application.database.DataGetIngredientNames;
 import com.example.application.database.DataGetRecipeWithIngredientsById;
 import com.example.application.database.DataInitializeDatabase;
 import com.example.application.database.DataSaveRecipeWithIngredients;
-import com.example.application.databinding.ActivityRecipeBinding;
 import com.example.application.model.Ingredient;
 import com.example.application.model.Recipe;
 import com.example.application.model.RecipeWithIngredients;
 import com.example.application.viewmodel.RecipeViewModel;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -65,7 +53,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             viewModel.init(this);
         }
 
-        if (loadRecipeWithIngredients() == false) {
+        if (!loadRecipeWithIngredients()) {
             setupRecipeWithDefaultData();
         }
 
@@ -172,44 +160,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     @Override
-    public void convertBySelected(AdapterView<?> parent, View view, int position, long id) {
-        /*
-        Use show new edit text box, and hid view text boxes if Converted by "One Ingredient" is picked.
-         */
-
-        String convertBy = parent.getItemAtPosition(position).toString();
-
-        int visibility;
-        if (convertBy.toLowerCase().equals("one ingredient")) {
-            visibility = View.VISIBLE;
-        } else {
-            visibility = View.INVISIBLE;
-        }
-
-        for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
-            View ingredient = viewModel.getRecyclerView().getLayoutManager().findViewByPosition(i);
-            CheckBox checkbox = ingredient.findViewById(R.id.checkBoxIsConvIngredient);
-            EditText editText = ingredient.findViewById(R.id.editOneIngredient);
-            TextView textView = ingredient.findViewById(R.id.calcConvQuantity);
-
-            checkbox.setVisibility(visibility);
-
-            if (visibility == View.VISIBLE) {
-                if (checkbox.isChecked()) {
-                    editText.setVisibility(View.VISIBLE);
-                    textView.setVisibility(View.INVISIBLE);
-                } else {
-                    editText.setVisibility(View.INVISIBLE);
-                    textView.setVisibility(View.VISIBLE);
-                }
-            } else {
-                editText.setVisibility(View.INVISIBLE);
-                textView.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    @Override
     public void fromSystemSelected(AdapterView<?> parent, View view, int position, long id) {
         // Set up spinner with correct value from model when initializing it
         if (initializeFromSystem) {
@@ -222,7 +172,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
         List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, "all");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, measurements);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, measurements);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
 
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
@@ -241,8 +191,6 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @Override
     public void toSystemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("tomMeasSelected", parent.getSelectedItem().toString());
-
         // Set up spinner with correct value from model when initializing it
         if (initializeToSystem) {
             initializeToSystem = false;
@@ -271,7 +219,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
                 List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, measurementTypeSelected);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, measurements);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, measurements);
                 adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
 
                 spinnerConvMeasurement.setAdapter(adapter);
@@ -327,8 +275,8 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         }
     }
 
-    private Boolean validRecipe() {
-        Boolean recipeValid = true;
+    private boolean validRecipe() {
+        boolean recipeValid = true;
         String message = "";
 
         if (viewModel.getRecipeWithIngredients().recipe.getName().equals("")) {
@@ -404,15 +352,10 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
     @Override
     public void deleteIngredient(int position) {
-        Log.d("position", String.valueOf(position));
-        Log.d("model count", String.valueOf(viewModel.getRecipeWithIngredients().ingredients.size()));
-        Log.d("adapter count", String.valueOf(viewModel.getAdapter().getItemCount()));
         if (viewModel.getRecipeWithIngredients().ingredients.size() > 1) {
             viewModel.getRecipeWithIngredients().ingredients.remove(position);
             viewModel.getAdapter().notifyItemRemoved(position);
             viewModel.getAdapter().notifyDataSetChanged();
-
-
         }
     }
 

@@ -30,15 +30,13 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     /*
     Setup adapter to handle recyclerview handling.
      */
-    private int layoutId;
-    private RecipeViewModel viewModel;
-    private OnClickListener onClickListener;
-    private Activity activity;
+    private final RecipeViewModel viewModel;
+    private final OnClickListener onClickListener;
+    private final Activity activity;
     private int selectPosition = -1;
     private Boolean initializeSpinners = true;
 
-    public ViewIngredientsAdapter(@LayoutRes int layoutId, RecipeViewModel viewModel, Activity activity) {
-        this.layoutId = layoutId;
+    public ViewIngredientsAdapter(RecipeViewModel viewModel, Activity activity) {
         this.viewModel = viewModel;
         this.onClickListener = (OnClickListener) activity;
         this.activity = activity;
@@ -115,7 +113,7 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
                 viewModel.getRecipeWithIngredients().ingredients.get(position).setMeasurement(measurementSelected);
 
-                Spinner spinnerConversionMeasurement = (Spinner) viewHolder.spinnerConversionMeasurement;
+                Spinner spinnerConversionMeasurement = viewHolder.spinnerConversionMeasurement;
 
 
                 String oldMeasurementValue = spinnerConversionMeasurement.getSelectedItem().toString();
@@ -142,24 +140,22 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private AutoCompleteTextView textView;
-        private Button button;
-        private OnClickListener onClickListener;
+        private final AutoCompleteTextView textView;
+        private final Button button;
+        private final OnClickListener onClickListener;
         public IngredientlistRowBinding ingredientlistRowBinding;
-        private TextView calcConvQty;
-        private CheckBox checkBoxIsConvIngredient;
-        private EditText byIngredient;
-        private Spinner spinnerMeasurement;
-        private Spinner spinnerConversionMeasurement;
-        private Spinner spinnerFromSystem;
-        private Spinner spinnerToSystem;
-        private Spinner spinnerConvertBy;
+        private final TextView calcConvQty;
+        private final CheckBox checkBoxIsConvIngredient;
+        private final EditText byIngredient;
+        private final Spinner spinnerMeasurement;
+        private final Spinner spinnerConversionMeasurement;
+        private final Spinner spinnerFromSystem;
+        private final Spinner spinnerToSystem;
 
         public ViewHolder(@NonNull @NotNull IngredientlistRowBinding ingredientlistRowBinding, OnClickListener onClickListener) {
             super(ingredientlistRowBinding.getRoot());
             this.ingredientlistRowBinding = ingredientlistRowBinding;
 
-            spinnerConvertBy = activity.findViewById(R.id.convType );
             calcConvQty = itemView.findViewById(R.id.calcConvQuantity);
             textView = itemView.findViewById(R.id.ingredientName);
             ArrayAdapter adapter = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, viewModel.getIngredientNames());
@@ -182,19 +178,10 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
         public TextView getTextView() {
             return textView;
         }
-        public TextView getCalcConvQty() {
-            return calcConvQty;
-        }
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.buttonDeleteIngredient:
-                    onClickListener.deleteIngredient(getAdapterPosition());
-                    break;
-                default:
-                    break;
-            }
+            onClickListener.deleteIngredient(getAdapterPosition());
         }
 
         public void bind(RecipeViewModel viewModel, int position) {
@@ -206,6 +193,5 @@ public class ViewIngredientsAdapter extends RecyclerView.Adapter<ViewIngredients
 
     public interface OnClickListener {
         void deleteIngredient(int position);
-        //void ingredientCheckboxClick(int position);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.application.adapter;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;

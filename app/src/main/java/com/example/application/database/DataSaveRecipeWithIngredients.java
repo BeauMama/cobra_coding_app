@@ -1,20 +1,17 @@
 package com.example.application.database;
 
-import android.util.Log;
-
 import com.example.application.model.Ingredient;
 import com.example.application.model.Recipe;
 import com.example.application.model.RecipeWithIngredients;
-
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 public class DataSaveRecipeWithIngredients implements Callable<RecipeWithIngredients> {
 
-    private DataDao dataDao;
-    private Recipe recipe;
-    private List<Ingredient> ingredients;
+    private final DataDao dataDao;
+    private final Recipe recipe;
+    private final List<Ingredient> ingredients;
 
     public DataSaveRecipeWithIngredients(DataDao dataDao, RecipeWithIngredients recipeWithIngredients) {
         this.dataDao = dataDao;

@@ -5,8 +5,8 @@ import java.util.concurrent.Callable;
 
 public class DataDeleteRecipe implements Callable<Boolean> {
 
-    private DataDao dataDao;
-    private int recipeId;
+    private final DataDao dataDao;
+    private final int recipeId;
 
     public DataDeleteRecipe(DataDao dataDao, int recipeId) {
         this.dataDao = dataDao;

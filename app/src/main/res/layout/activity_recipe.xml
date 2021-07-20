@@ -42,7 +42,7 @@
       android:layout_marginRight="8dp"
       android:autofillHints="Quantity"
       android:background="@android:drawable/editbox_dropdown_light_frame"
-      android:hint="@string/recipe_quanity"
+      android:hint="@string/recipe_quantity"
       android:inputType="number"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
@@ -71,7 +71,7 @@
       android:layout_marginTop="16dp"
       android:autofillHints="Temp"
       android:background="@android:drawable/editbox_dropdown_light_frame"
-      android:hint="@string/tempature_to_cook"
+      android:hint="@string/temperature_to_cook"
       android:inputType="number"
       android:text="@={viewModel.getRecipeWithIngredients().recipe.temperatureString}"
       app:layout_constraintStart_toEndOf="@+id/cookTimeMinutes"

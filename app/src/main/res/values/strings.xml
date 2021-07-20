@@ -5,10 +5,10 @@
     <string name="my_recipe">My Recipes</string>
     <string name="my_recipe_list">My Recipe List</string>
     <string name="add_recipe">Add New Recipe</string>
-    <string name="ingredent_name">Ingredent Name</string>
-    <string name="tempature_to_cook">Temp</string>
+    <string name="ingredient_name">Ingredient Name</string>
+    <string name="temperature_to_cook">Temp</string>
     <string name="time_to_cook">Time Min.</string>
-    <string name="recipe_quanity">Servings</string>
+    <string name="recipe_quantity">Servings</string>
     <string name="recipe_name">Recipe Name</string>
     <string name="recipe_notes">Notes</string>
     <string name="conversion_amount"></string>
@@ -20,7 +20,7 @@
     <string name="fromSystem">From</string>
     <string name="toSystem">To</string>
     <string name="conv_ing">Conv by Ing</string>
-    <string name="conv_quanity"></string>
+    <string name="conv_quantity"></string>
     <string name="conv_measurement"></string>
     <string name="conv_temperature">Conv Temp</string>
 
