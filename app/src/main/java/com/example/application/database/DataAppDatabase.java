@@ -8,7 +8,7 @@ import com.example.application.model.Recipe;
 /**
  * The database.
  */
-@Database(entities = {Recipe.class, Ingredient.class}, version = 24, exportSchema = false)
+@Database(entities = {Recipe.class, Ingredient.class}, version = 25, exportSchema = false)
 public abstract class DataAppDatabase extends RoomDatabase {
     public abstract DataDao dataDao();
 }

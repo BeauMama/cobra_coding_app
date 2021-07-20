@@ -10,6 +10,10 @@ import com.example.application.BR;
 import com.example.application.activity.RecipeActivity;
 import java.text.DecimalFormat;
 
+/**
+ * The ingredient model that contains all the information related to an ingredient
+ * as well as methods to get information about the ingredients to use for the UI.
+ */
 @Entity
 public class Ingredient extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
@@ -68,7 +72,7 @@ public class Ingredient extends BaseObservable {
         try {
             for (Ingredient ingredient : recipeWithIngredients.ingredients) {
                 ingredient.notifyPropertyChanged(BR.quantityConvertedString);
-            }
+           }
         }
         catch (Exception e) {
         }
@@ -92,6 +96,11 @@ public class Ingredient extends BaseObservable {
         }
     }
 
+    /**
+     * Increases or decreases the quantity of an ingredient based on how the user
+     * wants to change the size of the recipe.
+     * @return The increased or decreased quantity.
+     */
     public double getQuantityIncreaseDecrease() {
 
         double quantityConverted = getQuantity();
@@ -130,12 +139,17 @@ public class Ingredient extends BaseObservable {
         return quantityConverted;
     }
 
+    /**
+     * Converts the quantity of an ingredient based on how the user wants to increase or decrease
+     * the recipe in addition to what measurement the ingredient is in and what to convert it to.
+     * @return The quantity for the ingredient after increasing/decreasing and converting the
+     *         measurement.
+     */
     @Bindable
     public String getQuantityConvertedString() {
-
         boolean hasConversionIngredient = false;
 
-        // Don't show a converted quantity if the user does not have a measurement selected for the one ingredient
+        // Unable to show a converted quantity if the user does not have a measurement selected for the one ingredient.
         if (getRecipeWithIngredients().recipe.getConversionType().toLowerCase().equals("one ingredient")) {
             for (Ingredient ingredient : getRecipeWithIngredients().ingredients) {
                 if (ingredient.getIsConversionIngredient()) {
@@ -151,6 +165,7 @@ public class Ingredient extends BaseObservable {
             }
         }
 
+        // Unable to show a converted quantity if the user has not selected a measurement type.
         if (getMeasurement().toLowerCase().equals("select") || getConversionMeasurement().toLowerCase().equals("select")) {
             return "0";
         }

@@ -12,6 +12,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * The recipe model that contains all the information related to a recipe
+ * as well as methods to get information about the recipe to use for the UI.
+ */
 @Entity
 public class Recipe extends BaseObservable {
     @PrimaryKey(autoGenerate = true)
