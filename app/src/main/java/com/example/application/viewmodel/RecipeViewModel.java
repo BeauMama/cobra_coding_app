@@ -145,6 +145,14 @@ public class RecipeViewModel extends ViewModel {
         this.ingredientNames = ingredientNames;
     }
 
+    /**
+     * Changes the value of a spinner.
+     *
+     * @param spinner The spinner that you want to set to a specific value.
+     * @param value The value that you want to set the spinner to.
+     * @return If the spinner was able to be set to the value, then true is returned.
+     *         If not, then false is returned.
+     */
     public static Boolean setSpinnerToValue(Spinner spinner, String value) {
 
         for (int itemPosition = 0; itemPosition < spinner.getAdapter().getCount(); itemPosition++) {
