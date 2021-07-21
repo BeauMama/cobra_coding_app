@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Gives the user the ability to pick a saved recipe from a list.
+ * Has a list of recipes for the user to be able to pick a saved recipe.
  */
 public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeListAdapter.SelectItemListener {
 
