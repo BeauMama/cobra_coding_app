@@ -290,7 +290,7 @@
       android:layout_marginRight="16dp"
       android:layout_marginBottom="8dp"
       android:background="@android:drawable/editbox_background_normal"
-      android:onClick="onClickMyRecipe"
+      android:onClick="onClickMyRecipes"
       android:text="@string/my_recipe_button"
       android:textSize="12sp"
       app:backgroundTint="@color/design_default_color_secondary_variant"
