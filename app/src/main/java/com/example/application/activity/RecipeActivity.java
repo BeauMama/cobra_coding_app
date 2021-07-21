@@ -242,7 +242,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     /**
      * Deletes the ingredient from the database and clears the recipe to the default.
      *
-     * @param view
+     * @param view The view that was clicked.
      */
     public void deleteRecipe(View view) {
         // Setup double confirmation when deleting a recipe.
@@ -281,7 +281,7 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
     }
 
     /**
-     * Checks if the user filled out the recipe correct.
+     * Checks if the user filled out the recipe correctly.
      *
      * @return True if the recipe has been filled out correctly.
      *         False if the recipe has not been filled out correctly.
@@ -323,6 +323,11 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
         return recipeValid;
     }
 
+    /**
+     * Saves the recipe to the database.
+     *
+     * @param view The view that was clicked.
+     */
     public void saveRecipe(View view) {
         if (isValidRecipe()) {
             // The recipe is valid. Save it to the database.
@@ -340,17 +345,40 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             }
         }
     }
+
+    /**
+     * Goes to the LoadRecipeActivity.
+     *
+     * @param view The view that was clicked.
+     */
+    public void onClickMyRecipes(View view) {
+        Intent intent = new Intent(this, LoadRecipeActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Listener method when the from system spinner is changed to update the UI and
+     * data model accordingly.
+     *
+     * @param parent The AdapterView where the selection happened.
+     * @param view The view within the AdapterView that was clicked.
+     * @param position The position of the view in the adapter.
+     * @param id The row id of the item that is selected.
+     */
     @Override
     public void fromSystemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // Set up spinner with correct value from model when initializing it
+        // Set up the spinner with the correct values from the model when initializing it.
         if (initializeFromSystem) {
             initializeFromSystem = false;
             RecipeViewModel.setSpinnerToValue((Spinner) parent, viewModel.getRecipeWithIngredients().recipe.getFromSystem());
         }
 
+        // Update the model with the selected item.
         String systemSelected = parent.getSelectedItem().toString();
         viewModel.getRecipeWithIngredients().recipe.setFromSystem(systemSelected);
 
+        // Update each ingredient measurement spinner with the appropriate values based on the
+        // from system.
         List<String> measurements = MeasurementDetails.getMeasurements(systemSelected, "all");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, measurements);
@@ -363,16 +391,25 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
                 String oldMeasurementValue = spinnerMeasurement.getSelectedItem().toString();
                 spinnerMeasurement.setAdapter(adapter);
 
-                // After changing the spinner list, set it back to what it was selected to before if the item
-                // is still in the list
+                // After changing the spinner list, set it back to what it was if it is
+                // still in the list
                 RecipeViewModel.setSpinnerToValue(spinnerMeasurement, oldMeasurementValue);
             }
         }
     }
 
+    /**
+     * Listener method when the to system spinner is changed to update the UI and
+     * data model accordingly.
+     *
+     * @param parent The AdapterView where the selection happened.
+     * @param view The view within the AdapterView that was clicked.
+     * @param position The position of the view in the adapter.
+     * @param id The row id of the item that is selected.
+     */
     @Override
     public void toSystemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // Set up spinner with correct value from model when initializing it
+        // Set up the spinner with the correct values from the model when initializing it.
         if (initializeToSystem) {
             initializeToSystem = false;
             RecipeViewModel.setSpinnerToValue((Spinner) parent, viewModel.getRecipeWithIngredients().recipe.getToSystem());
@@ -385,9 +422,13 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
                 }
             }
         }
+
+        // Update the model with the selected item.
         String systemSelected = parent.getSelectedItem().toString();
         viewModel.getRecipeWithIngredients().recipe.setToSystem(systemSelected);
 
+        // Update each ingredient conversion measurement spinner with the appropriate values
+        // based on the ingredient measurement selected and the to system selected.
         for(int i = 0; i < viewModel.getAdapter().getItemCount(); i++) {
             View ingredient = viewModel.getRecyclerView().getLayoutManager().findViewByPosition(i);
 
@@ -405,15 +446,10 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
 
                 spinnerConvMeasurement.setAdapter(adapter);
 
-                // After changing the spinner list, set it back to what it was selected to before if the item
-                // is still in the list
+                // After changing the spinner list, set it back to what it was if it is
+                // still in the list
                 RecipeViewModel.setSpinnerToValue(spinnerConvMeasurement, oldMeasurementValue);
             }
         }
     }
-
-
-
-
-
 }

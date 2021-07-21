@@ -48,11 +48,23 @@ public class LoadRecipeActivity extends AppCompatActivity implements ViewRecipeL
         loadAllRecipes();
     }
 
+    /**
+     * Sets up the RecyclerView when resuming the activity.
+     */
     @Override
     protected void onResume() {
         super.onResume();
 
-        // Reload the recipes when coming back to the activity.
+        loadAllRecipes();
+    }
+
+    /**
+     * Sets up the RecyclerView when restarting the activity.
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
         loadAllRecipes();
     }
 
