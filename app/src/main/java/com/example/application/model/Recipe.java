@@ -8,6 +8,8 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import com.example.application.BR;
 import com.example.application.activity.RecipeActivity;
+import com.example.application.viewmodel.RecipeViewModel;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,7 +167,7 @@ public class Recipe extends BaseObservable {
 
     @Bindable
     public String getTemperatureConvertedString() {
-        double value = RecipeActivity.convertMeasurement((double) getTemperature(), getTemperatureMeasurement(), getConversionTemperatureMeasurement());
+        double value = RecipeViewModel.convertMeasurement((double) getTemperature(), getTemperatureMeasurement(), getConversionTemperatureMeasurement());
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         return decimalFormat.format(value);
     }

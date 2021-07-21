@@ -8,6 +8,8 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import com.example.application.BR;
 import com.example.application.activity.RecipeActivity;
+import com.example.application.viewmodel.RecipeViewModel;
+
 import java.text.DecimalFormat;
 
 /**
@@ -128,7 +130,7 @@ public class Ingredient extends BaseObservable {
                     for (Ingredient ingredient : getRecipeWithIngredients().ingredients) {
                         if (ingredient.getIsConversionIngredient() && ingredient.getQuantity() != 0) {
                             quantityConverted = getQuantity() *
-                                    RecipeActivity.convertMeasurement(ingredient.getConversionIngredientQuantity(),
+                                    RecipeViewModel.convertMeasurement(ingredient.getConversionIngredientQuantity(),
                                             ingredient.getConversionMeasurement(), ingredient.getMeasurement()) /
                                     ingredient.getQuantity();
                             break;
@@ -173,7 +175,7 @@ public class Ingredient extends BaseObservable {
         }
 
         try {
-            double value = RecipeActivity.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement());
+            double value = RecipeViewModel.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement());
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
             return decimalFormat.format(value);
         } catch (Exception e) {
@@ -244,7 +246,7 @@ public class Ingredient extends BaseObservable {
         if (getConversionIngredientQuantity() == 0) {
             return null;
         } else {
-            double value = RecipeActivity.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement());
+            double value = RecipeViewModel.convertMeasurement(getQuantityIncreaseDecrease(), getMeasurement(), getConversionMeasurement());
             DecimalFormat decimalFormat = new DecimalFormat("#.##");
             return decimalFormat.format(value);
         }
