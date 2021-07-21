@@ -295,19 +295,21 @@ public class RecipeActivity extends AppCompatActivity implements ViewIngredients
             recipeValid = false;
 
         } else {
-            for (Ingredient ingredient : viewModel.getRecipeWithIngredients().ingredients) {
+            for (int i = 0; i < viewModel.getRecipeWithIngredients().ingredients.size(); i++ ) {
+                Ingredient ingredient = viewModel.getRecipeWithIngredients().ingredients.get(i);
+
                 if (ingredient.getName().equals("")) {
-                    message = "Please enter an ingredient name";
+                    message = "Ingredient " + (i + 1) + " is missing a name";
                     recipeValid = false;
                     break;
                 }
                 if (ingredient.getMeasurement().toLowerCase().equals("select")) {
-                    message = "Please select a measurement for the ingredient";
+                    message = "Ingredient " + (i + 1) + " needs a measurement";
                     recipeValid = false;
                     break;
                 }
                 if (ingredient.getConversionMeasurement().toLowerCase().equals("select")) {
-                    message = "Please select a conversion measurement for the ingredient";
+                    message = "Ingredient " + (i + 1) + " needs a conversion measurement";
                     recipeValid = false;
                     break;
                 }
