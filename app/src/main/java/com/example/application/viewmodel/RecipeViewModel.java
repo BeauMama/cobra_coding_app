@@ -171,284 +171,260 @@ public class RecipeViewModel extends ViewModel {
         }
         return false;
     }
-    public static Double convertMeasurement(Double quantity, String startingUnit, String endingUnit) {
-        /*
-        Take the quantity from the user input, use the starting and ending unit of measurements to determine the correct conversion formula.
-        Then return the new value.
 
-        This method will only convert from volume to volume, weight to weight, temperature to temperature, and units does not change.
+    /**
+     * Take the quantity from the user input, use the starting and ending unit of measurements to determine the correct conversion formula.
+     * Then return the new value.
+     * <p>
+     * This method will only convert from volume to volume, weight to weight, temperature to temperature, and units does not change.
+     * <p>
+     * This method will convert between US Imperial and Metric within the above approved conversion units.
+     *
+     * @param quantity The quantity to convert.
+     * @param startingMeasurement The measurement for the quantity.
+     * @param endingMeasurement The measurement to convert to.
+     * @return The new quantity from changing to the converted measurement.
+     */
+    public static Double convertMeasurement(Double quantity, String startingMeasurement, String endingMeasurement) {
 
-        This method will convert between US Imperial and Metric within the above approved conversion units.
-         */
-
-        switch (startingUnit) {
+        switch (startingMeasurement) {
             case "fluid ounces":
-                if ("cups".equals(endingUnit)) {
+                if ("cups".equals(endingMeasurement)) {
                     quantity /= 8;
-                } else if ("teaspoons".equals(endingUnit)) {
+                } else if ("teaspoons".equals(endingMeasurement)) {
                     quantity *= 6;
-                } else if ("tablespoons".equals(endingUnit)) {
+                } else if ("tablespoons".equals(endingMeasurement)) {
                     quantity *= 2;
-                } else if ("pints".equals(endingUnit)) {
+                } else if ("pints".equals(endingMeasurement)) {
                     quantity /= 16;
-                } else if ("quarts".equals(endingUnit)) {
+                } else if ("quarts".equals(endingMeasurement)) {
                     quantity /= 32;
-                } else if ("gallons".equals(endingUnit)) {
+                } else if ("gallons".equals(endingMeasurement)) {
                     quantity /= 128;
-                } else if ("milliliters".equals(endingUnit)) {
+                } else if ("milliliters".equals(endingMeasurement)) {
                     quantity *= 29.574;
-                } else if ("liters".equals(endingUnit)) {
+                } else if ("liters".equals(endingMeasurement)) {
                     quantity /= 33.814;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
             case "cups":
-                if ("fluid ounces".equals(endingUnit)) {
+                if ("fluid ounces".equals(endingMeasurement)) {
                     quantity *= 8;
-                } else if ("teaspoons".equals(endingUnit)) {
+                } else if ("teaspoons".equals(endingMeasurement)) {
                     quantity *= 48;
-                } else if ("tablespoons".equals(endingUnit)) {
+                } else if ("tablespoons".equals(endingMeasurement)) {
                     quantity *= 16;
-                } else if ("pints".equals(endingUnit)) {
+                } else if ("pints".equals(endingMeasurement)) {
                     quantity /= 2;
-                } else if ("quarts".equals(endingUnit)) {
+                } else if ("quarts".equals(endingMeasurement)) {
                     quantity /= 4;
-                } else if ("gallons".equals(endingUnit)) {
+                } else if ("gallons".equals(endingMeasurement)) {
                     quantity /= 16;
-                } else if ("milliliters".equals(endingUnit)) {
+                } else if ("milliliters".equals(endingMeasurement)) {
                     quantity *= 237;
-                } else if ("liters".equals(endingUnit)) {
+                } else if ("liters".equals(endingMeasurement)) {
                     quantity /= 4.227;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
             case "teaspoons":
-                if ("fluid ounces".equals(endingUnit)) {
+                if ("fluid ounces".equals(endingMeasurement)) {
                     quantity /= 6;
-                } else if ("cups".equals(endingUnit)) {
+                } else if ("cups".equals(endingMeasurement)) {
                     quantity /= 48;
-                } else if ("tablespoons".equals(endingUnit)) {
+                } else if ("tablespoons".equals(endingMeasurement)) {
                     quantity /= 3;
-                } else if ("pints".equals(endingUnit)) {
+                } else if ("pints".equals(endingMeasurement)) {
                     quantity /= 96;
-                } else if ("quarts".equals(endingUnit)) {
+                } else if ("quarts".equals(endingMeasurement)) {
                     quantity /= 192;
-                } else if ("gallons".equals(endingUnit)) {
+                } else if ("gallons".equals(endingMeasurement)) {
                     quantity /= 768;
-                } else if ("milliliters".equals(endingUnit)) {
+                } else if ("milliliters".equals(endingMeasurement)) {
                     quantity *= 4.929;
-                } else if ("liters".equals(endingUnit)) {
+                } else if ("liters".equals(endingMeasurement)) {
                     quantity /= 203;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
             case "tablespoons":
-                if ("fluid ounces".equals(endingUnit)) {
+                if ("fluid ounces".equals(endingMeasurement)) {
                     quantity /= 2;
-                } else if ("cups".equals(endingUnit)) {
+                } else if ("cups".equals(endingMeasurement)) {
                     quantity /= 16;
-                } else if ("teaspoons".equals(endingUnit)) {
+                } else if ("teaspoons".equals(endingMeasurement)) {
                     quantity *= 3;
-                } else if ("pints".equals(endingUnit)) {
+                } else if ("pints".equals(endingMeasurement)) {
                     quantity /= 32;
-                } else if ("quarts".equals(endingUnit)) {
+                } else if ("quarts".equals(endingMeasurement)) {
                     quantity /= 64;
-                } else if ("gallons".equals(endingUnit)) {
+                } else if ("gallons".equals(endingMeasurement)) {
                     quantity /= 256;
-                } else if ("milliliters".equals(endingUnit)) {
+                } else if ("milliliters".equals(endingMeasurement)) {
                     quantity *= 14.787;
-                } else if ("liters".equals(endingUnit)) {
+                } else if ("liters".equals(endingMeasurement)) {
                     quantity /= 67.628;
-                } else {
-                    System.out.println("Invalid entry");
                 }
 
                 break;
             case "pints":
-                if ("fluid ounces".equals(endingUnit)) {
+                if ("fluid ounces".equals(endingMeasurement)) {
                     quantity *= 16;
-                } else if ("cups".equals(endingUnit)) {
+                } else if ("cups".equals(endingMeasurement)) {
                     quantity *= 2;
-                } else if ("teaspoons".equals(endingUnit)) {
+                } else if ("teaspoons".equals(endingMeasurement)) {
                     quantity *= 96;
-                } else if ("tablespoons".equals(endingUnit)) {
+                } else if ("tablespoons".equals(endingMeasurement)) {
                     quantity *= 32;
-                } else if ("quarts".equals(endingUnit)) {
+                } else if ("quarts".equals(endingMeasurement)) {
                     quantity /= 2;
-                } else if ("gallons".equals(endingUnit)) {
+                } else if ("gallons".equals(endingMeasurement)) {
                     quantity /= 8;
-                } else if ("milliliters".equals(endingUnit)) {
+                } else if ("milliliters".equals(endingMeasurement)) {
                     quantity *= 473;
-                } else if ("liters".equals(endingUnit)) {
+                } else if ("liters".equals(endingMeasurement)) {
                     quantity /= 2.113;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
             case "quarts":
-                if ("fluid ounces".equals(endingUnit)) {
+                if ("fluid ounces".equals(endingMeasurement)) {
                     quantity *= 32;
-                } else if ("cups".equals(endingUnit)) {
+                } else if ("cups".equals(endingMeasurement)) {
                     quantity *= 3.94314;
-                } else if ("teaspoons".equals(endingUnit)) {
+                } else if ("teaspoons".equals(endingMeasurement)) {
                     quantity *= 192;
-                } else if ("tablespoons".equals(endingUnit)) {
+                } else if ("tablespoons".equals(endingMeasurement)) {
                     quantity *= 64;
-                } else if ("pints".equals(endingUnit)) {
+                } else if ("pints".equals(endingMeasurement)) {
                     quantity *= 2;
-                } else if ("gallons".equals(endingUnit)) {
+                } else if ("gallons".equals(endingMeasurement)) {
                     quantity /= 4;
-                } else if ("milliliters".equals(endingUnit)) {
+                } else if ("milliliters".equals(endingMeasurement)) {
                     quantity *= 946.353;
-                } else if ("liters".equals(endingUnit)) {
+                } else if ("liters".equals(endingMeasurement)) {
                     quantity /= 1.057;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
             case "gallons":
-                if ("fluid ounces".equals(endingUnit)) {
+                if ("fluid ounces".equals(endingMeasurement)) {
                     quantity *= 128;
-                } else if ("cups".equals(endingUnit)) {
+                } else if ("cups".equals(endingMeasurement)) {
                     quantity *= 16;
-                } else if ("teaspoons".equals(endingUnit)) {
+                } else if ("teaspoons".equals(endingMeasurement)) {
                     quantity *= 768;
-                } else if ("tablespoons".equals(endingUnit)) {
+                } else if ("tablespoons".equals(endingMeasurement)) {
                     quantity *= 256;
-                } else if ("pints".equals(endingUnit)) {
+                } else if ("pints".equals(endingMeasurement)) {
                     quantity *= 8;
-                } else if ("quarts".equals(endingUnit)) {
+                } else if ("quarts".equals(endingMeasurement)) {
                     quantity *= 4;
-                } else if ("milliliters".equals(endingUnit)) {
+                } else if ("milliliters".equals(endingMeasurement)) {
                     quantity *= 3785.41;
-                } else if ("liters".equals(endingUnit)) {
+                } else if ("liters".equals(endingMeasurement)) {
                     quantity *= 3.78541;
-                } else {
-                    System.out.println("Error in spelling Perhaps.");
                 }
 
                 break;
             case "ounces":
-                if ("pounds".equals(endingUnit)) {
+                if ("pounds".equals(endingMeasurement)) {
                     quantity /= 16;
-                } else if ("grams".equals(endingUnit)) {
+                } else if ("grams".equals(endingMeasurement)) {
                     quantity *= 28.35;
-                } else if ("kilograms".equals(endingUnit)) {
+                } else if ("kilograms".equals(endingMeasurement)) {
                     quantity /= 35.274;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
             case "pounds":
-                if ("ounces".equals(endingUnit)) {
+                if ("ounces".equals(endingMeasurement)) {
                     quantity *= 16;
-                } else if ("grams".equals(endingUnit)) {
+                } else if ("grams".equals(endingMeasurement)) {
                     quantity *= 454;
-                } else if ("kilograms".equals(endingUnit)) {
+                } else if ("kilograms".equals(endingMeasurement)) {
                     quantity /= 2.205;
-                } else {
-                    System.out.println("Error in spelling Perhaps.");
                 }
 
                 break;
             case "milliliters":
-                if ("fluid ounces".equals(endingUnit)) {
+                if ("fluid ounces".equals(endingMeasurement)) {
                     quantity /= 28.413;
-                } else if ("cups".equals(endingUnit)) {
+                } else if ("cups".equals(endingMeasurement)) {
                     quantity *= 0.00422675;
-                } else if ("teaspoons".equals(endingUnit)) {
+                } else if ("teaspoons".equals(endingMeasurement)) {
                     quantity *= 0.202884;
-                } else if ("tablespoons".equals(endingUnit)) {
+                } else if ("tablespoons".equals(endingMeasurement)) {
                     quantity *= 0.067628;
-                } else if ("pints".equals(endingUnit)) {
+                } else if ("pints".equals(endingMeasurement)) {
                     quantity *= 0.00211338;
-                } else if ("quarts".equals(endingUnit)) {
+                } else if ("quarts".equals(endingMeasurement)) {
                     quantity *= 0.00105669;
-                } else if ("gallons".equals(endingUnit)) {
+                } else if ("gallons".equals(endingMeasurement)) {
                     quantity *= 0.000264172;
-                } else if ("liters".equals(endingUnit)) {
+                } else if ("liters".equals(endingMeasurement)) {
                     quantity *= 0.001;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
             case "liters":
-                if ("fluid ounces".equals(endingUnit)) {
+                if ("fluid ounces".equals(endingMeasurement)) {
                     quantity *= 35.195;
-                } else if ("cups".equals(endingUnit)) {
+                } else if ("cups".equals(endingMeasurement)) {
                     quantity *= 4.22675;
-                } else if ("teaspoons".equals(endingUnit)) {
+                } else if ("teaspoons".equals(endingMeasurement)) {
                     quantity *= 168.936;
-                } else if ("tablespoons".equals(endingUnit)) {
+                } else if ("tablespoons".equals(endingMeasurement)) {
                     quantity *= 56.3121;
-                } else if ("pints".equals(endingUnit)) {
+                } else if ("pints".equals(endingMeasurement)) {
                     quantity *= 2.11338;
-                } else if ("quarts".equals(endingUnit)) {
+                } else if ("quarts".equals(endingMeasurement)) {
                     quantity *= 1.05669;
-                } else if ("gallons".equals(endingUnit)) {
+                } else if ("gallons".equals(endingMeasurement)) {
                     quantity *= 0.264172;
-                } else if ("milliliters".equals(endingUnit)) {
+                } else if ("milliliters".equals(endingMeasurement)) {
                     quantity *= 1000;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
             case "grams":
-                if ("ounces".equals(endingUnit)) {
+                if ("ounces".equals(endingMeasurement)) {
                     quantity /= 28.35;
-                } else if ("pounds".equals(endingUnit)) {
+                } else if ("pounds".equals(endingMeasurement)) {
                     quantity /= 454;
-                } else if ("kilograms".equals(endingUnit)) {
+                } else if ("kilograms".equals(endingMeasurement)) {
                     quantity /= 1000;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
             case "kilograms":
-                if ("ounces".equals(endingUnit)) {
+                if ("ounces".equals(endingMeasurement)) {
                     quantity *= 35.274;
-                } else if ("pounds".equals(endingUnit)) {
+                } else if ("pounds".equals(endingMeasurement)) {
                     quantity *= 2.205;
-                } else if ("grams".equals(endingUnit)) {
+                } else if ("grams".equals(endingMeasurement)) {
                     quantity *= 1000;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
 
             case "F": //Temperature
-                //Temperature
-                if ("C".equals(endingUnit)) {
+                if ("C".equals(endingMeasurement)) {
                     quantity = (quantity - 32) * 5 / 9;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
                 break;
 
             case "C": //Temperature
-                if ("F".equals(endingUnit)) {
+                if ("F".equals(endingMeasurement)) {
                     quantity = (quantity * 9 / 5) + 32;
-                } else {
-                    System.out.println("Invalid Entry");
                 }
 
             case "units": //Units
-                if (!endingUnit.equals("units")){ System.out.println("Invalid Entry"); }
-                else { return quantity; }
+                if (endingMeasurement.equals("units")) {
+                    return quantity;
+                }
         }
         return quantity;
     }
