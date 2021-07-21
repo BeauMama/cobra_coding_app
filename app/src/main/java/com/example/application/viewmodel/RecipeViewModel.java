@@ -63,7 +63,7 @@ public class RecipeViewModel extends ViewModel {
     }
 
     /**
-     * Sets up the recyclerview listener so controls can be updated as they come into view.
+     * Sets up the RecyclerView listener so controls can be updated as they come into view.
      * This method uses an on scroll listener and could be more efficient if it was a different
      * listener to run when a new row in the recyclerview becomes partially visible.
      */
@@ -88,7 +88,7 @@ public class RecipeViewModel extends ViewModel {
                     if (ingredientView != null) {
                         CheckBox checkBoxIsConvIngredient = ingredientView.findViewById(R.id.checkBoxIsConvIngredient);
                         TextView calcConvQty = ingredientView.findViewById(R.id.calcConvQuantity);
-                        EditText byIngredient = ingredientView.findViewById(R.id.editOneIngredient);
+                        EditText byIngredient = ingredientView.findViewById(R.id.editIngredientQty);
                         Spinner spinnerMeasurement = ingredientView.findViewById(R.id.measurement);
                         String oldMeasurementValue = spinnerMeasurement.getSelectedItem().toString();
                         Spinner spinnerConvMeasurement = ingredientView.findViewById(R.id.convMeasurement);

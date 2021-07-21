@@ -7,20 +7,27 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.application.BR;
 import com.example.application.viewmodel.LoadRecipeViewModel;
 import com.example.application.R;
 import com.example.application.databinding.RecipelistRowBinding;
 import com.example.application.model.Recipe;
-
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * The adapter for the RecyclerView for a list of recipes located in the LoadRecipeActivity.
+ */
 public class ViewRecipeListAdapter extends RecyclerView.Adapter<ViewRecipeListAdapter.ViewHolder> {
 
     private final LoadRecipeViewModel viewModel;
     private final SelectItemListener selectItemListener;
 
+    /**
+     * Constructor.
+     *
+     * @param viewModel The view model for adapter to access.
+     * @param selectItemListener The listener from the activity.
+     */
     public ViewRecipeListAdapter(LoadRecipeViewModel viewModel, SelectItemListener selectItemListener) {
         this.viewModel = viewModel;
         this.selectItemListener = selectItemListener;
@@ -56,8 +63,8 @@ public class ViewRecipeListAdapter extends RecyclerView.Adapter<ViewRecipeListAd
             super(recipelistRowBinding.getRoot());
             this.recipelistRowBinding = recipelistRowBinding;
 
+            // Set up listener.
             linearLayout = itemView.findViewById(R.id.linearLayoutRecipeList);
-
             this.selectItemListener = selectItemListener;
             linearLayout.setOnClickListener(this);
         }
